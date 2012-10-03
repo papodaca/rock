@@ -55,7 +55,7 @@ if (!defined('APP_DIR')) {
  *
  * Leaving this constant undefined will result in it being defined in Cake/bootstrap.php
  */
-define('CAKE_CORE_INCLUDE_PATH', 'C:' . DS . 'dev' . DS . 'UniServer' . DS . 'www' . DS . 'cake' . DS . 'lib');
+//define('CAKE_CORE_INCLUDE_PATH', 'C:' . DS . 'dev' . DS . 'UniServer' . DS . 'www' . DS . 'cake' . DS . 'lib');
 
 /**
  * Editing below this line should not be necessary.

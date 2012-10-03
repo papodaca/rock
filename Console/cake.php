@@ -22,7 +22,7 @@ $dispatcher = 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
 
 if (function_exists('ini_set')) {
 	$root = dirname(dirname(dirname(__FILE__)));
-	ini_set('include_path', $root . PATH_SEPARATOR . 'C:' . $ds . 'dev' . $ds . 'UniServer' . $ds . 'www' . $ds . 'cake' . $ds . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+	ini_set('include_path', $root . PATH_SEPARATOR . __CAKE_PATH__ . PATH_SEPARATOR . ini_get('include_path'));
 }
 
 if (!include $dispatcher) {
