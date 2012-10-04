@@ -52,8 +52,8 @@ class SongFixture extends CakeTestFixture {
 			'song_format_id' => 1,
 			'rock_id' => 1,
 			'length_sec' => 1,
-			'created' => '2012-10-03 23:15:50',
-			'modified' => '2012-10-03 23:15:50'
+			'created' => '2012-10-04 07:46:56',
+			'modified' => '2012-10-04 07:46:56'
 		),
 	);
 

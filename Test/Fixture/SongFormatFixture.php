@@ -31,8 +31,8 @@ class SongFormatFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created' => '2012-10-03 23:15:49',
-			'modified' => '2012-10-03 23:15:49'
+			'created' => '2012-10-04 07:46:56',
+			'modified' => '2012-10-04 07:46:56'
 		),
 	);
 

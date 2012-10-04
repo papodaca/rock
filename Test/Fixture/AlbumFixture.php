@@ -37,8 +37,8 @@ class AlbumFixture extends CakeTestFixture {
 			'name' => 'Lorem ipsum dolor sit amet',
 			'art_id' => 1,
 			'artist_id' => 1,
-			'created' => '2012-10-03 23:15:43',
-			'modified' => '2012-10-03 23:15:43'
+			'created' => '2012-10-04 07:46:55',
+			'modified' => '2012-10-04 07:46:55'
 		),
 	);
 

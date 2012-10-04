@@ -31,8 +31,8 @@ class RockFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'path' => 'Lorem ipsum dolor sit amet',
-			'created' => '2012-10-03 23:15:47',
-			'modified' => '2012-10-03 23:15:47'
+			'created' => '2012-10-04 07:46:56',
+			'modified' => '2012-10-04 07:46:56'
 		),
 	);
 

@@ -33,8 +33,8 @@ class RoleFixture extends CakeTestFixture {
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
 			'level' => 1,
-			'created' => '2012-10-03 23:15:48',
-			'modified' => '2012-10-03 23:15:48'
+			'created' => '2012-10-04 07:46:56',
+			'modified' => '2012-10-04 07:46:56'
 		),
 	);
 

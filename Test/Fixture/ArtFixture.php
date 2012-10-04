@@ -32,8 +32,8 @@ class ArtFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'rock_id' => 1,
-			'created' => '2012-10-03 23:15:44',
-			'modified' => '2012-10-03 23:15:44'
+			'created' => '2012-10-04 07:46:55',
+			'modified' => '2012-10-04 07:46:55'
 		),
 	);
 

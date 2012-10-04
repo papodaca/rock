@@ -31,8 +31,8 @@ class GenreFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created' => '2012-10-03 23:15:45',
-			'modified' => '2012-10-03 23:15:45'
+			'created' => '2012-10-04 07:46:55',
+			'modified' => '2012-10-04 07:46:55'
 		),
 	);
 
