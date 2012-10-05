@@ -17,6 +17,7 @@ class GenresController extends AppController {
 	public function index() {
 		$this->Genre->recursive = 0;
 		$this->set('genres', $this->paginate());
+		$this->set('_serialize', 'genres');
 	}
 
 /**
