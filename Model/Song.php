@@ -6,7 +6,6 @@ App::uses('AppModel', 'Model');
  * @property Album $Album
  * @property Genre $Genre
  * @property Artist $Artist
- * @property SongFormat $SongFormat
  * @property Rock $Rock
  * @property PlaylistElement $PlaylistElement
  */
@@ -18,16 +17,6 @@ class Song extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'song_format_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'rock_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -75,13 +64,6 @@ class Song extends AppModel {
 		'Artist' => array(
 			'className' => 'Artist',
 			'foreignKey' => 'artist_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'SongFormat' => array(
-			'className' => 'SongFormat',
-			'foreignKey' => 'song_format_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

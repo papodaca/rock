@@ -94,7 +94,6 @@
 		<th><?php echo __('Album Id'); ?></th>
 		<th><?php echo __('Genre Id'); ?></th>
 		<th><?php echo __('Artist Id'); ?></th>
-		<th><?php echo __('Song Format Id'); ?></th>
 		<th><?php echo __('Rock Id'); ?></th>
 		<th><?php echo __('Length Sec'); ?></th>
 		<th><?php echo __('Created'); ?></th>
@@ -112,7 +111,6 @@
 			<td><?php echo $song['album_id']; ?></td>
 			<td><?php echo $song['genre_id']; ?></td>
 			<td><?php echo $song['artist_id']; ?></td>
-			<td><?php echo $song['song_format_id']; ?></td>
 			<td><?php echo $song['rock_id']; ?></td>
 			<td><?php echo $song['length_sec']; ?></td>
 			<td><?php echo $song['created']; ?></td>

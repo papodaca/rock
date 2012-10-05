@@ -1,11 +1,11 @@
 <?php
-App::uses('ArtsController', 'Controller');
+App::uses('MTypesController', 'Controller');
 
 /**
- * ArtsController Test Case
+ * MTypesController Test Case
  *
  */
-class ArtsControllerTest extends ControllerTestCase {
+class MTypesControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -13,12 +13,12 @@ class ArtsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.art',
-		'app.rock',
 		'app.m_type',
-		'app.song',
+		'app.rock',
+		'app.art',
 		'app.album',
 		'app.artist',
+		'app.song',
 		'app.genre',
 		'app.playlist_element',
 		'app.playlist'

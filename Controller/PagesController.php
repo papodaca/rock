@@ -29,6 +29,8 @@
  */
 class PagesController extends AppController {
 
+    public $components = array('RequestHandler');
+
 /**
  * This controller does not use a model
  *

@@ -6,17 +6,39 @@ CREATE SCHEMA IF NOT EXISTS `rock` DEFAULT CHARACTER SET utf8 ;
 USE `rock` ;
 
 -- -----------------------------------------------------
+-- Table `rock`.`m_types`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rock`.`m_types` ;
+
+CREATE  TABLE IF NOT EXISTS `rock`.`m_types` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `type` VARCHAR(60) NOT NULL ,
+  `extension` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `rock`.`rocks`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `rock`.`rocks` ;
 
 CREATE  TABLE IF NOT EXISTS `rock`.`rocks` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `path` VARCHAR(4096) NOT NULL ,
+  `system_path` VARCHAR(4096) NULL ,
+  `remote_path` VARCHAR(2048) NULL ,
+  `m_type_id` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_rocks_mime_types1` (`m_type_id` ASC) ,
+  CONSTRAINT `fk_rocks_mime_types1`
+    FOREIGN KEY (`m_type_id` )
+    REFERENCES `rock`.`m_types` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -102,21 +124,6 @@ CREATE  TABLE IF NOT EXISTS `rock`.`genres` (
   `name` VARCHAR(60) NOT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`, `created`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `rock`.`song_formats`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `rock`.`song_formats` ;
-
-CREATE  TABLE IF NOT EXISTS `rock`.`song_formats` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
@@ -135,7 +142,6 @@ CREATE  TABLE IF NOT EXISTS `rock`.`songs` (
   `album_id` INT NULL ,
   `genre_id` INT NULL ,
   `artist_id` INT NULL ,
-  `song_format_id` INT NOT NULL ,
   `rock_id` INT NOT NULL ,
   `length_sec` INT NOT NULL ,
   `created` DATETIME NOT NULL ,
@@ -145,7 +151,6 @@ CREATE  TABLE IF NOT EXISTS `rock`.`songs` (
   INDEX `fk_Song_Album` (`album_id` ASC) ,
   INDEX `fk_Song_Genre1` (`genre_id` ASC) ,
   INDEX `fk_Song_Artist1` (`artist_id` ASC) ,
-  INDEX `fk_Song_SongFormat1` (`song_format_id` ASC) ,
   INDEX `fk_Song_Path1` (`rock_id` ASC) ,
   CONSTRAINT `fk_Song_Album`
     FOREIGN KEY (`album_id` )
@@ -160,11 +165,6 @@ CREATE  TABLE IF NOT EXISTS `rock`.`songs` (
   CONSTRAINT `fk_Song_Artist1`
     FOREIGN KEY (`artist_id` )
     REFERENCES `rock`.`artists` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Song_SongFormat1`
-    FOREIGN KEY (`song_format_id` )
-    REFERENCES `rock`.`song_formats` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Song_Path1`

@@ -16,10 +16,10 @@ class ArtistsControllerTest extends ControllerTestCase {
 		'app.artist',
 		'app.art',
 		'app.rock',
+		'app.m_type',
 		'app.song',
 		'app.album',
 		'app.genre',
-		'app.song_format',
 		'app.playlist_element',
 		'app.playlist'
 	);

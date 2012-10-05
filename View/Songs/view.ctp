@@ -36,11 +36,6 @@
 			<?php echo $this->Html->link($song['Artist']['name'], array('controller' => 'artists', 'action' => 'view', $song['Artist']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Song Format'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($song['SongFormat']['name'], array('controller' => 'song_formats', 'action' => 'view', $song['SongFormat']['id'])); ?>
-			&nbsp;
-		</dd>
 		<dt><?php echo __('Rock'); ?></dt>
 		<dd>
 			<?php echo $this->Html->link($song['Rock']['id'], array('controller' => 'rocks', 'action' => 'view', $song['Rock']['id'])); ?>
@@ -76,8 +71,6 @@
 		<li><?php echo $this->Html->link(__('New Genre'), array('controller' => 'genres', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Artists'), array('controller' => 'artists', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Artist'), array('controller' => 'artists', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Song Formats'), array('controller' => 'song_formats', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Song Format'), array('controller' => 'song_formats', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Rocks'), array('controller' => 'rocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Rock'), array('controller' => 'rocks', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Playlist Elements'), array('controller' => 'playlist_elements', 'action' => 'index')); ?> </li>

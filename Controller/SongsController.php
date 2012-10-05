@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class SongsController extends AppController {
 
+    public $components = array('RequestHandler');
+
 /**
  * index method
  *
@@ -50,9 +52,8 @@ class SongsController extends AppController {
 		$albums = $this->Song->Album->find('list');
 		$genres = $this->Song->Genre->find('list');
 		$artists = $this->Song->Artist->find('list');
-		$songFormats = $this->Song->SongFormat->find('list');
 		$rocks = $this->Song->Rock->find('list');
-		$this->set(compact('albums', 'genres', 'artists', 'songFormats', 'rocks'));
+		$this->set(compact('albums', 'genres', 'artists', 'rocks'));
 	}
 
 /**
@@ -80,9 +81,8 @@ class SongsController extends AppController {
 		$albums = $this->Song->Album->find('list');
 		$genres = $this->Song->Genre->find('list');
 		$artists = $this->Song->Artist->find('list');
-		$songFormats = $this->Song->SongFormat->find('list');
 		$rocks = $this->Song->Rock->find('list');
-		$this->set(compact('albums', 'genres', 'artists', 'songFormats', 'rocks'));
+		$this->set(compact('albums', 'genres', 'artists', 'rocks'));
 	}
 
 /**

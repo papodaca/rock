@@ -13,10 +13,10 @@ class GenreFixture extends CakeTestFixture {
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 60, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
-			'PRIMARY' => array('column' => array('id', 'created'), 'unique' => 1),
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'id_UNIQUE' => array('column' => 'id', 'unique' => 1)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
@@ -31,8 +31,8 @@ class GenreFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
-			'created' => '2012-10-04 07:46:55',
-			'modified' => '2012-10-04 07:46:55'
+			'created' => '2012-10-05 07:53:26',
+			'modified' => '2012-10-05 07:53:26'
 		),
 	);
 

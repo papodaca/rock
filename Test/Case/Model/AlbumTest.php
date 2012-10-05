@@ -15,8 +15,13 @@ class AlbumTest extends CakeTestCase {
 	public $fixtures = array(
 		'app.album',
 		'app.art',
+		'app.rock',
+		'app.mime_type',
 		'app.artist',
-		'app.song'
+		'app.song',
+		'app.genre',
+		'app.playlist_element',
+		'app.playlist'
 	);
 
 /**

@@ -1,11 +1,11 @@
 <?php
-App::uses('Song', 'Model');
+App::uses('MType', 'Model');
 
 /**
- * Song Test Case
+ * MType Test Case
  *
  */
-class SongTest extends CakeTestCase {
+class MTypeTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -13,15 +13,9 @@ class SongTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.song',
-		'app.album',
-		'app.art',
+		'app.m_type',
 		'app.rock',
-		'app.mime_type',
-		'app.artist',
-		'app.genre',
-		'app.playlist_element',
-		'app.playlist'
+		'app.mime_type'
 	);
 
 /**
@@ -31,7 +25,7 @@ class SongTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Song = ClassRegistry::init('Song');
+		$this->MType = ClassRegistry::init('MType');
 	}
 
 /**
@@ -40,7 +34,7 @@ class SongTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->Song);
+		unset($this->MType);
 
 		parent::tearDown();
 	}

@@ -14,7 +14,14 @@ class GenreTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'app.genre',
-		'app.song'
+		'app.song',
+		'app.album',
+		'app.art',
+		'app.rock',
+		'app.mime_type',
+		'app.artist',
+		'app.playlist_element',
+		'app.playlist'
 	);
 
 /**

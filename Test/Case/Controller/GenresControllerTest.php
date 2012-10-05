@@ -18,8 +18,8 @@ class GenresControllerTest extends ControllerTestCase {
 		'app.album',
 		'app.art',
 		'app.rock',
+		'app.m_type',
 		'app.artist',
-		'app.song_format',
 		'app.playlist_element',
 		'app.playlist'
 	);

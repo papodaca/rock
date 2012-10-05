@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class ArtistsController extends AppController {
 
+    public $components = array('RequestHandler');
+
 /**
  * index method
  *

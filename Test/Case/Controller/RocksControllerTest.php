@@ -14,12 +14,12 @@ class RocksControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'app.rock',
+		'app.m_type',
 		'app.art',
 		'app.album',
 		'app.artist',
 		'app.song',
 		'app.genre',
-		'app.song_format',
 		'app.playlist_element',
 		'app.playlist'
 	);

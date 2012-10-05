@@ -15,7 +15,13 @@ class PlaylistTest extends CakeTestCase {
 	public $fixtures = array(
 		'app.playlist',
 		'app.playlist_element',
-		'app.song'
+		'app.song',
+		'app.album',
+		'app.art',
+		'app.rock',
+		'app.mime_type',
+		'app.artist',
+		'app.genre'
 	);
 
 /**

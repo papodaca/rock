@@ -10,7 +10,6 @@
 		echo $this->Form->input('album_id');
 		echo $this->Form->input('genre_id');
 		echo $this->Form->input('artist_id');
-		echo $this->Form->input('song_format_id');
 		echo $this->Form->input('rock_id');
 		echo $this->Form->input('length_sec');
 	?>
@@ -29,8 +28,6 @@
 		<li><?php echo $this->Html->link(__('New Genre'), array('controller' => 'genres', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Artists'), array('controller' => 'artists', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Artist'), array('controller' => 'artists', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Song Formats'), array('controller' => 'song_formats', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Song Format'), array('controller' => 'song_formats', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Rocks'), array('controller' => 'rocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Rock'), array('controller' => 'rocks', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Playlist Elements'), array('controller' => 'playlist_elements', 'action' => 'index')); ?> </li>

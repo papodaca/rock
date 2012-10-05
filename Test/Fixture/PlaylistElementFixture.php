@@ -37,8 +37,8 @@ class PlaylistElementFixture extends CakeTestFixture {
 			'playlist_id' => 1,
 			'song_id' => 1,
 			'order_nr' => 1,
-			'created' => '2012-10-04 07:46:55',
-			'modified' => '2012-10-04 07:46:55'
+			'created' => '2012-10-05 07:53:26',
+			'modified' => '2012-10-05 07:53:26'
 		),
 	);
 

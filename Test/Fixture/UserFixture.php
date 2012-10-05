@@ -40,8 +40,8 @@ class UserFixture extends CakeTestFixture {
 			'password_hs' => 'Lorem ipsum dolor sit amet',
 			'password_sl' => 'Lorem ipsum dolor sit amet',
 			'role_id' => 1,
-			'created' => '2012-10-04 07:46:56',
-			'modified' => '2012-10-04 07:46:56'
+			'created' => '2012-10-05 07:53:27',
+			'modified' => '2012-10-05 07:53:27'
 		),
 	);
 

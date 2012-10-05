@@ -19,9 +19,9 @@ class PlaylistsControllerTest extends ControllerTestCase {
 		'app.album',
 		'app.art',
 		'app.rock',
+		'app.m_type',
 		'app.artist',
-		'app.genre',
-		'app.song_format'
+		'app.genre'
 	);
 
 /**
