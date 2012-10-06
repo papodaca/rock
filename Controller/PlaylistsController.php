@@ -17,6 +17,7 @@ class PlaylistsController extends AppController {
 	public function index() {
 		$this->Playlist->recursive = 0;
 		$this->set('playlists', $this->paginate());
+        $this->set('_serialize', 'playlists');
 	}
 
 /**
@@ -32,6 +33,7 @@ class PlaylistsController extends AppController {
 			throw new NotFoundException(__('Invalid playlist'));
 		}
 		$this->set('playlist', $this->Playlist->read(null, $id));
+        $this->set('_serialize', 'playlist');
 	}
 
 /**
