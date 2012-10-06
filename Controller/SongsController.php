@@ -32,6 +32,7 @@ class SongsController extends AppController {
 			throw new NotFoundException(__('Invalid song'));
 		}
 		$this->set('song', $this->Song->read(null, $id));
+        $this->set('_serialize', 'song');
 	}
 
 /**

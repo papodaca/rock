@@ -17,6 +17,7 @@ class AlbumsController extends AppController {
 	public function index() {
 		$this->Album->recursive = 0;
 		$this->set('albums', $this->paginate());
+        $this->set('_serialize', 'albums');
 	}
 
 /**
@@ -32,6 +33,7 @@ class AlbumsController extends AppController {
 			throw new NotFoundException(__('Invalid album'));
 		}
 		$this->set('album', $this->Album->read(null, $id));
+        $this->set('_serialize', 'album');
 	}
 
 /**
