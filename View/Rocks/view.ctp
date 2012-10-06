@@ -44,3 +44,8 @@
 		<li><?php echo $this->Html->link(__('New M Type'), array('controller' => 'm_types', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+
+<audio >
+  <source src="http://localhost/rock/rocks/get/<?php echo $rock['Rock']['id']; ?>" type="<?php echo $rock['MType']['type']; ?>">
+Your browser does not support the audio element.
+</audio>
