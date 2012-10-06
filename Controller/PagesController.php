@@ -44,26 +44,20 @@ class PagesController extends AppController {
  * @param string What page to display
  */
 	public function display() {
-		$path = func_get_args();
+        //serve up the index.html file!
+        $this->viewClass = 'Media';
 
-		$count = count($path);
-		if (!$count) {
-			$this->redirect('/');
-		}
-		$page = $subpage = $title = null;
-
-		if (!empty($path[0])) {
-			$page = $path[0];
-		}
-		if (!empty($path[1])) {
-			$subpage = $path[1];
-		}
-		if (!empty($path[$count - 1])) {
-			$title = Inflector::humanize($path[$count - 1]);
-		}
-		$this->set(compact('page', 'subpage'));
-		$this->set('title_for_layout', $title);
-		$this->render(implode('/', $path));
+            $params = array(
+                'id'        => "index.html",
+                'name'      => "index",
+                'download'  => false,
+                'extension' => "html",
+                'mimeType'  => array(
+                    "html" => "text/html"
+                ),
+                'path'      => APP . 'webroot' . DS
+            );
+            $this->set($params);
 	}
 
 }
