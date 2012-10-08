@@ -5,20 +5,130 @@
         <title>Rock, your world.</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
+		
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
 		<link rel="stylesheet" href="css/jquery-ui-slider.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/jquery-1.8.2.min.js"></script>
+        <script src="js/vendor/handlebars.js"></script>
 		<script src="js/vendor/bootstrap.min.js"></script>
-		<script src="js/vendor/jquery-ui-slider.min.js"></script>j
+		<script src="js/vendor/jquery-ui-slider.min.js"></script>
+
+        <script src="js/main.js"></script>
+
+        <script id="albumTemplate" type="text/x-handlebars-template">
+	        <div class="span10">
+		        <div class="page-header">
+		          <h1>{{album.name}} <small>by {{album.artist}}</small></h1>
+		        </div>
+		        <div class="row-fluid">
+			        <div class="span2"><img alt="artwork" src="{{getArt}}" class="img-polaroid"/></div>
+			        <div class="span10">
+				        {{{album.wiki.summary}}}
+			        </div>
+		        </div>
+		        <table class="table table-condensed table-hover table-striped">
+		          <thead>
+			        <tr>
+			          <th class="span1">#</th>
+			          <th>Title</th>
+			          <th class="span3">Artist</th>
+			          <th class="span1">Length</th>
+			        </tr>
+		          </thead>
+		          <tbody>
+			        {{#each album.tracks.track}}
+			        <tr>
+			          <td>{{TrackNr}}</td>
+			          <td><button class="btn btn-link"><i class="icon-play-circle"></i></button> {{name}}</td>
+			          <td>{{artist.name}}</td>
+			          <td>{{secondsToMinutes duration}}</td>
+			        </tr>
+			        {{/each}}
+		          </tbody>
+		        </table>
+	        </div>
+        </script>
     </head>
     <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="brand">Rock</a>
+                    <div id="navBarRight" class="form-inline navbar-form pull-left" style="display: none;">
+                        <div class="btn-group">
+                            <button class="btn btn-inverse"><i class="icon-th-large"></i> Albums</button>
+                            <button class="btn btn-inverse"><i class="icon-user"></i> Artists</button>
+                            <button class="btn btn-inverse"><i class="icon-bullhorn"></i> Genres</button>
+                            <button class="btn btn-inverse"><i class="icon-list-ul"></i> Playlists</button>
+                            <button class="btn btn-inverse"><i class="icon-music"></i> Songs</button>
+                        </div>
+                    </div>
+                    <div id="navBarLefts" class="form-inline navbar-form pull-right control-group" >
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-envelope error"></i></span>
+                            <input type="text" id="loginEmailTextBox" class="input-medium error" placeholder="Email">
+                        </div>
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-key"></i></span>
+                            <input type="password" id="loginPasswordTextBox" class="input-medium" placeholder="Password">
+                        </div>
+                        <button class="btn btn-primary" onclick="handleLoginButton()">Sign in</button>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#registerModal">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content" class="container-fluid" style="margin-top: 40px;">
+            <div class="hero-unit">
+              <h1 >Rock</h1>
+              <p>Play your music from your browser. Any where in the <i class="icon-globe"></i>.</p>
+              <p>
+                <a class="btn btn-primary btn-large">
+                  Learn more
+                </a>
+              </p>
+            </div>
+        </div>
+        <div class="modal fade" id="registerModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove-sign"></i></button>
+                <h3 id="registerModalLabel">Register</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="registerName">Name</label>
+                        <div class="controls">
+                            <input type="text" id="registerName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">Email</label>
+                        <div class="controls">
+                            <input type="text" id="iregisterEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="registerPassword">Password</label>
+                        <div class="controls">
+                            <input type="password" id="registerPassword" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="registerPassword2">Confirm Password</label>
+                        <div class="controls">
+                            <input type="password" id="registerPassword2" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </div>
     </body>
 </html>
