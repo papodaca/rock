@@ -57,7 +57,7 @@
             <div class="navbar-inner">
                 <div class="container-fluid">
                     <a class="brand">Rock</a>
-                    <div id="navBarRight" class="form-inline navbar-form pull-left" style="display: none;">
+                    <div id="navBarRight" class="form-inline navbar-form pull-left hidden" >
                         <div class="btn-group">
                             <button class="btn btn-inverse"><i class="icon-th-large"></i> Albums</button>
                             <button class="btn btn-inverse"><i class="icon-user"></i> Artists</button>
@@ -92,7 +92,23 @@
               </p>
             </div>
         </div>
-        <div class="modal fade" id="registerModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true" style="display: none;">
+		<div class="navbar navbar-fixed-bottom">
+			<div class="navbar-inner">
+				<div class="container">
+					<div class="nav pull-left">
+						<div class="cb_inline_block" >
+							<button class="btn btn-inverse" ><i class="icon-backward"></i></button>
+							<button class="btn btn-success" ><i class="icon-play"></i></button>
+							<button class="btn btn-inverse" ><i class="icon-forward"></i></button>
+							<button class="btn btn-info" ><i class="icon-list-ul"></i></button>
+							<button id="volumeButton" class="btn" data-original-title="Volume" ><i class="icon-volume-up"></i></button>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="modal fade hidden" id="registerModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove-sign"></i></button>
                 <h3 id="registerModalLabel">Register</h3>
@@ -130,5 +146,8 @@
                 <button id="registerSubmitButton" class="btn btn-primary">Submit</button>
             </div>
         </div>
+		<div id="volumePopover" class="hide" >
+			<div id="volumeSlider" ></div>
+		</div>
     </body>
 </html>

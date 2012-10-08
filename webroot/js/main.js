@@ -34,6 +34,28 @@ function init() {
     $("#loginButton").click(function () {
         $(this).addClass("disabled loading");
     });
+	
+	$("#volumeButton").click(function () {
+        $('#example').popover('toggle');
+    });
+	
+	$("#volumeSlider").slider({
+        orientation: "horizontal",
+        range: "min",
+        min: 0,
+        max: 100,
+        value: 50,
+        slide: function (event, ui) {
+            console.log(ui.value);
+        }
+    });
+	
+	$('#volumeButton').popover({
+		placement: "top",
+		content: getVolumePopover()
+	});
+	
+
 
     /*$.ajax({
         type: 'GET',
@@ -56,5 +78,8 @@ function handleLoginButton() {
     if($("#loginPasswordTextBox").val() === "") {
         $("#loginPasswordTextBox").addClass("error");
     }
+}
 
+function getVolumePopover() {
+	return $("#volumeSlider").clone();
 }
