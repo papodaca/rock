@@ -28,7 +28,11 @@ function init() {
     })
 
     $("#registerSubmitButton").click(function () {
-        $("#registerSubmitButton").addClass("disabled loading");
+        $(this).addClass("disabled loading");
+    });
+
+    $("#loginButton").click(function () {
+        $(this).addClass("disabled loading");
     });
 
     /*$.ajax({
