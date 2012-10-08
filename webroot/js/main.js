@@ -24,7 +24,12 @@ function init() {
         $("#registerEmail").val("");
         $("#registerPassword").val("");
         $("#registerPassword2").val("");
+        $("#registerSubmitButton").removeClass("disabled loading");
     })
+
+    $("#registerSubmitButton").click(function () {
+        $("#registerSubmitButton").addClass("disabled loading");
+    });
 
     /*$.ajax({
         type: 'GET',
