@@ -21,7 +21,18 @@ function setupHandlebars() {
 }
 
 function calculatePercentage(x, width) {
-    return Math.ceil((x / width)*100) + "%";
+    return (x / width)*100;
+}
+
+function secondsToMinutes(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var seconds = Math.floor(seconds % 60);
+    var result = minutes + ":";
+    if(seconds < 10) {
+        result += "0";
+    }
+    result += seconds;
+    return result;
 }
 
 function init() {
@@ -55,23 +66,51 @@ function init() {
 
     $('#muteButton').click(function () {
         $(this).toggleClass("btn-danger");
+        var audio = document.getElementById("audioPlayer");
+        if(audio.muted) {
+            audio.muted = false;
+        } else {
+            audio.muted = true;
+        }
     });
 
     $("#volumeSlider #slider").click(function(event) {
         var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-        $("#volumeSlider #slider div.bar").css("width", percent );
-        $("#volumeSlider #echo").html(percent);
+        $("#volumeSlider #slider div.bar").css("width", percent + "%");
+        $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+
+        var audio = document.getElementById("audioPlayer");
+        audio.volume = percent / 100;
     });
 
     $("#volumeSlider #slider").mousemove(function(event) {
         var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-        $("#volumeSlider #echo").html(percent);
+        $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
     });
 
     $("#volumeSlider #slider").mouseout(function (event) {
         var width = $("#volumeSlider #slider div.bar").css("width").replace("px","");;
         var percent = calculatePercentage(width, event.currentTarget.clientWidth);
-        $("#volumeSlider #echo").html(percent);
+        $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+    });
+
+    $("#playPauseButton").click(function (event) {
+        var audio = document.getElementById("audioPlayer");
+        if (audio.paused == false) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        $("#playPauseButton i").toggleClass("icon-play");
+        $("#playPauseButton i").toggleClass("icon-pause");
+    });
+
+    $("#playbackBar div.progress").click(function (event) {
+        var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+        $("#playbackBar div.progress div.bar").css("width", percent + "%");
+
+        var audio = document.getElementById("audioPlayer");
+        audio.currentTime = audio.duration * (percent / 100);
     });
 
 
@@ -87,3 +126,36 @@ function init() {
 
 }
 $(document).ready(init);
+
+function animLoop( render, time) {
+    var running, lastFrame = +new Date,
+        raf = window.mozRequestAnimationFrame    ||
+              window.webkitRequestAnimationFrame ||
+              window.msRequestAnimationFrame     ||
+              window.oRequestAnimationFrame;
+    function loop( now ) {
+        // stop the loop if render returned false
+        if ( running !== false ) {
+            raf( loop, null );
+            var deltaT = now - lastFrame;
+            if ( deltaT > time ) {
+                running = render( deltaT );
+                lastFrame = now;
+            }
+        }
+    }
+    loop( lastFrame );
+}
+
+//main Loop
+animLoop(function (deltaT) {
+    var audio = document.getElementById("audioPlayer");
+    var playStatus = secondsToMinutes(audio.currentTime) + " / ";
+    playStatus += secondsToMinutes(audio.duration);
+    var percent = calculatePercentage(audio.currentTime, audio.duration);
+    var percent_buffered = calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
+
+    $("#playProgress a.brand").html(playStatus);
+    $("#playbackBar div.progress div.bar").css("width", percent + "%");
+    $("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+}, 250);

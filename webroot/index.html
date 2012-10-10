@@ -92,19 +92,27 @@
               </p>
             </div>
         </div>
-		<div class="navbar navbar-fixed-bottom">
+		<div class="navbar navbar-inverse navbar-fixed-bottom">
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<div class="nav pull-left">
-						<div class="cb_inline_block" >
-							<button class="btn btn-inverse" rel="tooltip" title="Back"><i class="icon-backward"></i></button>
-							<button class="btn btn-success" ><i class="icon-play"></i></button>
-							<button class="btn btn-inverse" ><i class="icon-forward"></i></button>
-							<button class="btn btn-info" ><i class="icon-reorder"></i></button>
-                            <button id="muteButton" class="btn" ><i class="icon-volume-off"></i></button>
-							<button id="volumeButton" class="btn" ><i class="icon-volume-up"></i></button>
-						</div>
+						<button class="btn btn-inverse" rel="tooltip" title="Back"><i class="icon-backward"></i></button>
+						<button id="playPauseButton" class="btn btn-success" style="width: 41px"><i class="icon-play"></i></button>
+						<button class="btn btn-inverse" ><i class="icon-forward"></i></button>
+						<button class="btn btn-info" ><i class="icon-reorder"></i></button>
+                        <button id="muteButton" class="btn" ><i class="icon-volume-off"></i></button>
+						<button id="volumeButton" class="btn" ><i class="icon-volume-up"></i></button>
+                        <audio id="audioPlayer" preload="auto " src="http://localhost/rock/rocks/get/1" ></audio>
 					</div>
+                    <div id="playbackBar" class="nav" style="margin-top: 9px;">
+                        <div class="progress active span8" style="margin-bottom: 0px;">
+                            <div class="bar"></div>
+                            <div class="bar bar-striped bar-info"></div>
+		                </div>
+                    </div>
+                    <div id="playProgress" class="nav pull-right">
+                        <a class="brand" ></a>
+                    </div>
 				</div>
 			</div>
 		</div>
