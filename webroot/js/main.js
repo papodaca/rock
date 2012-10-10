@@ -66,8 +66,8 @@ function init() {
 
     $('#volumeButton').click(function () {
         var p = $(this).offset();
-        p.left = p.left - ($("#volumePopover").width() / 2) + ($(this).outerWidth(true) / 2);
-        p.top = p.top - $("#volumePopover").outerHeight(true) + 5;
+        p.left = p.left - ($("#volumePopover").width() / 2) + ($(this).outerWidth(false) / 2);
+        p.top = p.top - $("#volumePopover").outerHeight(true) + 10;
         $("#volumePopover").offset(p);
 
         $("#volumePopover").toggleClass("out");
