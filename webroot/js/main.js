@@ -106,11 +106,14 @@ function init() {
     });
 
     $("#playbackBar div.progress").click(function (event) {
-        var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-        $("#playbackBar div.progress div.bar").css("width", percent + "%");
-
         var audio = document.getElementById("audioPlayer");
-        audio.currentTime = audio.duration * (percent / 100);
+
+        if(audio.seekable && audio.seekable.length > 0) {
+            var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+            $("#playbackBar div.progress div.bar").css("width", percent + "%");
+            audio.currentTime = audio.duration * (percent / 100);
+        }
+        
     });
 
 
