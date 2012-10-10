@@ -1,5 +1,6 @@
-Templates = {};
-function init() {
+var Templates = {};
+
+function setupHandlebars() {
     Templates["album"] = Handlebars.compile($("#albumTemplate").html());
 
     Handlebars.registerHelper('secondsToMinutes', function (seconds) {
@@ -17,8 +18,15 @@ function init() {
     Handlebars.registerHelper("getArt", function (seconds) {
         return this.album.image[2]["#text"];
     });
+}
 
-    //$('#registerModal').modal({});
+function calculatePercentage(x, width) {
+    return Math.ceil((x / width)*100) + "%";
+}
+
+function init() {
+    setupHandlebars();
+
     $("#registerModal").on("hidden", function () {
         $("#registerName").val("");
         $("#registerEmail").val("");
@@ -34,27 +42,37 @@ function init() {
     $("#loginButton").click(function () {
         $(this).addClass("disabled loading");
     });
-	
-	$("#volumeButton").click(function () {
-        $('#example').popover('toggle');
+
+    $('#volumeButton').click(function () {
+        var p = $(this).offset();
+        p.left = p.left - ($("#volumePopover").width() / 2) + ($(this).outerWidth(true) / 2);
+        p.top = p.top - $("#volumePopover").outerHeight(true) + 5;
+        $("#volumePopover").offset(p);
+
+        $("#volumePopover").toggleClass("out");
+        $("#volumePopover").toggleClass("in");
     });
-	
-	$("#volumeSlider").slider({
-        orientation: "horizontal",
-        range: "min",
-        min: 0,
-        max: 100,
-        value: 50,
-        slide: function (event, ui) {
-            console.log(ui.value);
-        }
+
+    $('#muteButton').click(function () {
+        $(this).toggleClass("btn-danger");
     });
-	
-	$('#volumeButton').popover({
-		placement: "top",
-		content: getVolumePopover()
-	});
-	
+
+    $("#volumeSlider #slider").click(function(event) {
+        var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+        $("#volumeSlider #slider div.bar").css("width", percent );
+        $("#volumeSlider #echo").html(percent);
+    });
+
+    $("#volumeSlider #slider").mousemove(function(event) {
+        var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+        $("#volumeSlider #echo").html(percent);
+    });
+
+    $("#volumeSlider #slider").mouseout(function (event) {
+        var width = $("#volumeSlider #slider div.bar").css("width").replace("px","");;
+        var percent = calculatePercentage(width, event.currentTarget.clientWidth);
+        $("#volumeSlider #echo").html(percent);
+    });
 
 
     /*$.ajax({
@@ -69,17 +87,3 @@ function init() {
 
 }
 $(document).ready(init);
-
-
-function handleLoginButton() {
-    if($("#loginEmailTextBox").val() === "") {
-        $("#loginEmailTextBox").addClass("error");
-    }
-    if($("#loginPasswordTextBox").val() === "") {
-        $("#loginPasswordTextBox").addClass("error");
-    }
-}
-
-function getVolumePopover() {
-	return $("#volumeSlider").clone();
-}

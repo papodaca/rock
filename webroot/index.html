@@ -94,23 +94,23 @@
         </div>
 		<div class="navbar navbar-fixed-bottom">
 			<div class="navbar-inner">
-				<div class="container">
+				<div class="container-fluid">
 					<div class="nav pull-left">
 						<div class="cb_inline_block" >
-							<button class="btn btn-inverse" ><i class="icon-backward"></i></button>
+							<button class="btn btn-inverse" rel="tooltip" title="Back"><i class="icon-backward"></i></button>
 							<button class="btn btn-success" ><i class="icon-play"></i></button>
 							<button class="btn btn-inverse" ><i class="icon-forward"></i></button>
-							<button class="btn btn-info" ><i class="icon-list-ul"></i></button>
-							<button id="volumeButton" class="btn" data-original-title="Volume" ><i class="icon-volume-up"></i></button>
-							
+							<button class="btn btn-info" ><i class="icon-reorder"></i></button>
+                            <button id="muteButton" class="btn" ><i class="icon-volume-off"></i></button>
+							<button id="volumeButton" class="btn" ><i class="icon-volume-up"></i></button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-        <div class="modal fade hidden" id="registerModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal hide fade" id="registerModal" data-backdrop="static" tabindex="-1" role="dialog">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove-sign"></i></button>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
                 <h3 id="registerModalLabel">Register</h3>
             </div>
             <div class="modal-body">
@@ -146,8 +146,14 @@
                 <button id="registerSubmitButton" class="btn btn-primary">Submit</button>
             </div>
         </div>
-		<div id="volumePopover" class="hide" >
-			<div id="volumeSlider" ></div>
-		</div>
+        <div id="volumePopover" class="popover fade top out row span4 section" style="display: block; z-index: 1040;">
+	        <div class="arrow"></div>
+	        <div class="popover-content">
+	        <div id="volumeSlider" class="row">
+		        <div id="slider" class="progress span3"><div class="bar" style="width: 50%;"></div>
+		        </div>
+		        <div id="echo" class="span">50%</div></div>
+	        </div>
+        </div>
     </body>
 </html>
