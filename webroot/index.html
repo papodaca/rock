@@ -95,7 +95,7 @@
 		<div class="navbar navbar-inverse navbar-fixed-bottom">
 			<div class="navbar-inner">
 				<div class="container-fluid">
-					<div class="nav pull-left">
+					<div id="plabackControls" class="nav pull-left">
 						<button class="btn btn-inverse" rel="tooltip" title="Back"><i class="icon-backward"></i></button>
 						<button id="playPauseButton" class="btn btn-success" style="width: 41px"><i class="icon-play"></i></button>
 						<button class="btn btn-inverse" ><i class="icon-forward"></i></button>
@@ -105,9 +105,9 @@
                         <audio id="audioPlayer" preload="auto " src="http://localhost/rock/rocks/get/1" ></audio>
 					</div>
                     <div id="playbackBar" class="nav" style="margin-top: 9px;">
-                        <div class="progress active span8" style="margin-bottom: 0px;">
+                        <div class="progress" style="margin-bottom: 0px;">
                             <div class="bar"></div>
-                            <div class="bar bar-striped bar-info"></div>
+                            <div class="bar bar-info"></div>
 		                </div>
                     </div>
                     <div id="playProgress" class="nav pull-right">

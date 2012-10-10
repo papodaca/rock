@@ -26,8 +26,18 @@ function calculatePercentage(x, width) {
 
 function secondsToMinutes(seconds) {
     var minutes = Math.floor(seconds / 60);
+	var hours = 0;
+	var result = ""
+	if(minutes > 60) {
+		hours = Math.floor(minutes / 60);
+		minutes = Math.floor(minutes % 60);
+		result += hours + ":";
+		if(minutes < 10) {
+			result += "0";
+		}
+	}
     var seconds = Math.floor(seconds % 60);
-    var result = minutes + ":";
+    result += minutes + ":";
     if(seconds < 10) {
         result += "0";
     }
@@ -130,6 +140,15 @@ function init() {
 }
 $(document).ready(init);
 
+
+
+$(window).resize(function (event) {
+	var progressBarWidth = $("#playProgress").offset().left - 15 - ($("#plabackControls").offset().left + $("#plabackControls").outerWidth(true));
+	
+	$("#playbackBar").css("width", progressBarWidth + "px");
+});
+
+
 function animLoop( render, time) {
     var running, lastFrame = +new Date,
         raf = window.mozRequestAnimationFrame    ||
@@ -152,13 +171,17 @@ function animLoop( render, time) {
 
 //main Loop
 animLoop(function (deltaT) {
-    var audio = document.getElementById("audioPlayer");
-    var playStatus = secondsToMinutes(audio.currentTime) + " / ";
-    playStatus += secondsToMinutes(audio.duration);
-    var percent = calculatePercentage(audio.currentTime, audio.duration);
-    var percent_buffered = calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
+	try {
+		var audio = document.getElementById("audioPlayer");
+		var playStatus = secondsToMinutes(audio.currentTime) + " / ";
+		playStatus += secondsToMinutes(audio.duration);
+		var percent = calculatePercentage(audio.currentTime, audio.duration);
+		var percent_buffered = calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
 
-    $("#playProgress a.brand").html(playStatus);
-    $("#playbackBar div.progress div.bar").css("width", percent + "%");
-    $("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+		$("#playProgress a.brand").html(playStatus);
+		$("#playbackBar div.progress div.bar").css("width", percent + "%");
+		$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+	} catch (e) {
+		
+	}
 }, 250);
