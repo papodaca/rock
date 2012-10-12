@@ -258,6 +258,108 @@ CREATE  TABLE IF NOT EXISTS `rock`.`playlist_elements` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `rock`.`podcasts`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rock`.`podcasts` ;
+
+CREATE  TABLE IF NOT EXISTS `rock`.`podcasts` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(60) NOT NULL ,
+  `rocks_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_podcast_rocks1` (`rocks_id` ASC) ,
+  CONSTRAINT `fk_podcast_rocks1`
+    FOREIGN KEY (`rocks_id` )
+    REFERENCES `rock`.`rocks` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rock`.`podcast_episode`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rock`.`podcast_episode` ;
+
+CREATE  TABLE IF NOT EXISTS `rock`.`podcast_episode` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `podcasts_id` INT NOT NULL ,
+  `songs_id` INT NOT NULL ,
+  INDEX `fk_podcasts_has_songs_songs1` (`songs_id` ASC) ,
+  INDEX `fk_podcasts_has_songs_podcasts1` (`podcasts_id` ASC) ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  CONSTRAINT `fk_podcasts_has_songs_podcasts1`
+    FOREIGN KEY (`podcasts_id` )
+    REFERENCES `rock`.`podcasts` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_podcasts_has_songs_songs1`
+    FOREIGN KEY (`songs_id` )
+    REFERENCES `rock`.`songs` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rock`.`user_podcast_episodes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rock`.`user_podcast_episodes` ;
+
+CREATE  TABLE IF NOT EXISTS `rock`.`user_podcast_episodes` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `users_id` INT NOT NULL ,
+  `podcast_episode_id` INT NOT NULL ,
+  `location` INT NOT NULL DEFAULT 0 ,
+  `played` TINYINT(1) NOT NULL DEFAULT false ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_users_has_podcasts_has_songs_users1` (`users_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_user_podcast_episodes_podcast_episode1` (`podcast_episode_id` ASC) ,
+  CONSTRAINT `fk_users_has_podcasts_has_songs_users1`
+    FOREIGN KEY (`users_id` )
+    REFERENCES `rock`.`users` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_podcast_episodes_podcast_episode1`
+    FOREIGN KEY (`podcast_episode_id` )
+    REFERENCES `rock`.`podcast_episode` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rock`.`user_podcast_subscriptions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rock`.`user_podcast_subscriptions` ;
+
+CREATE  TABLE IF NOT EXISTS `rock`.`user_podcast_subscriptions` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `users_id` INT NOT NULL ,
+  `podcasts_id` INT NOT NULL ,
+  `created` DATETIME NOT NULL ,
+  `modified` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_users_has_podcasts_podcasts1` (`podcasts_id` ASC) ,
+  INDEX `fk_users_has_podcasts_users1` (`users_id` ASC) ,
+  UNIQUE INDEX `di_UNIQUE` (`id` ASC) ,
+  CONSTRAINT `fk_users_has_podcasts_users1`
+    FOREIGN KEY (`users_id` )
+    REFERENCES `rock`.`users` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_has_podcasts_podcasts1`
+    FOREIGN KEY (`podcasts_id` )
+    REFERENCES `rock`.`podcasts` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -284,6 +386,10 @@ INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (13, 'audio/x-mo
 INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (14, 'image/jpeg', 'jpg');
 INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (15, 'image/jpeg', 'jpeg');
 INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (16, 'image/png', 'png');
+INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (17, 'application/rss+xml', 'rss');
+INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (18, 'application/rss+xml', 'xml');
+INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (19, 'application/atom+xml', 'atom');
+INSERT INTO `rock`.`m_types` (`id`, `type`, `extension`) VALUES (20, 'application/atom+xml', 'xml');
 
 COMMIT;
 

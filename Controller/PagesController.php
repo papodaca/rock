@@ -59,5 +59,4 @@ class PagesController extends AppController {
             );
             $this->set($params);
 	}
-
 }

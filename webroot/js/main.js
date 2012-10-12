@@ -125,6 +125,11 @@ function init() {
         }
         
     });
+	
+	$("#goButton").click(function (event) {
+		var audio = document.getElementById("audioPlayer");
+		audio.src = $("#mediaLocation").val();
+	});
 
 
     /*$.ajax({

@@ -4,8 +4,17 @@ App::uses('AppModel', 'Model');
  * User Model
  *
  * @property Role $Role
+ * @property HasPodcast $HasPodcast
+ * @property HasPodcastsHasSong $HasPodcastsHasSong
  */
 class User extends AppModel {
+
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'name';
 
 /**
  * Validation rules
@@ -81,4 +90,43 @@ class User extends AppModel {
 			'order' => ''
 		)
 	);
+
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'HasPodcast' => array(
+			'className' => 'HasPodcast',
+			'joinTable' => 'users_has_podcasts',
+			'foreignKey' => 'user_id',
+			'associationForeignKey' => 'has_podcast_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
+		),
+		'HasPodcastsHasSong' => array(
+			'className' => 'HasPodcastsHasSong',
+			'joinTable' => 'users_has_podcasts_has_songs',
+			'foreignKey' => 'user_id',
+			'associationForeignKey' => 'has_podcasts_has_song_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
+		)
+	);
+
 }

@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * SongFormat Model
+ * Genre Model
  *
  * @property Song $Song
  */
-class SongFormat extends AppModel {
+class Genre extends AppModel {
 
 /**
  * Validation rules
@@ -35,7 +35,7 @@ class SongFormat extends AppModel {
 	public $hasMany = array(
 		'Song' => array(
 			'className' => 'Song',
-			'foreignKey' => 'song_format_id',
+			'foreignKey' => 'genre_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
