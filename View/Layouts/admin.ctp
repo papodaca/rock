@@ -35,7 +35,7 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo __('Rock Admin.') ?></h1>
+			<h1><?php echo $this->Html->link(__('Rock Admin.'), array('controller' => '')); ?></h1>
 		</div>
 		<div id="content">
 
