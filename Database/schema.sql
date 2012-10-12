@@ -2,6 +2,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+DROP SCHEMA IF EXISTS `rock` ;
 CREATE SCHEMA IF NOT EXISTS `rock` DEFAULT CHARACTER SET utf8 ;
 USE `rock` ;
 
@@ -182,8 +183,6 @@ CREATE  TABLE IF NOT EXISTS `rock`.`roles` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(62) NOT NULL ,
   `level` INT NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
@@ -524,5 +523,16 @@ INSERT INTO `rock`.`genres` (`id`, `name`) VALUES (123, 'Drum Solo');
 INSERT INTO `rock`.`genres` (`id`, `name`) VALUES (124, 'A capella');
 INSERT INTO `rock`.`genres` (`id`, `name`) VALUES (125, 'Euro-House');
 INSERT INTO `rock`.`genres` (`id`, `name`) VALUES (126, 'Dance Hall');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `rock`.`roles`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `rock`;
+INSERT INTO `rock`.`roles` (`id`, `name`, `level`) VALUES (1, 'Admin', 0);
+INSERT INTO `rock`.`roles` (`id`, `name`, `level`) VALUES (2, 'User', 10);
+INSERT INTO `rock`.`roles` (`id`, `name`, `level`) VALUES (3, 'Guest', 20);
 
 COMMIT;
