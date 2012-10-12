@@ -16,16 +16,6 @@
 			<?php echo h($role['Role']['level']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($role['Role']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($role['Role']['modified']); ?>
-			&nbsp;
-		</dd>
 	</dl>
 </div>
 <div class="actions">
