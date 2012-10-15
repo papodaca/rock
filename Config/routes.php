@@ -37,6 +37,9 @@
  * how to customize the loading of plugin routes.
  */
     Router::parseExtensions();
+
+    Router::mapResources('users');
+
 	CakePlugin::routes();
 
 /**

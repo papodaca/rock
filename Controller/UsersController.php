@@ -15,6 +15,8 @@ class UsersController extends AppController {
  */
 	public $components = array('RequestHandler');
 
+    private $defaultRole = 'User';
+
 /**
  * login method
  *
@@ -30,7 +32,26 @@ class UsersController extends AppController {
  * @return void
  */
 	public function add() {
-		//register
+		$data = $this->request->data;
+
+        $data['password_sl'] = bin2hex(openssl_random_pseudo_bytes(64, $cstrong));
+
+        $data['password_hs'] = hash('sha512', $data['password'] . $data['password_sl']);
+
+        unset($data['password']);
+
+        $role = $this->User->Role->find('first', array('conditions' => array('Role.name' => $this->defaultRole)));
+        
+        $data['role_id'] = intval($role['Role']['id']);
+
+        $this->User->create();
+        if(! $this->User->save($data)) {
+            throw new BadRequestException("Invalid user.");
+        }
+        
+        $this->set('data', array('id' => $this->User->id));
+
+        $this->set('_serialize', 'data');
 	}
 
 /**

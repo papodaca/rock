@@ -15,12 +15,19 @@ class SongsController extends AppController {
  */
 	public $components = array('RequestHandler');
 
+    public $paginate = array(
+            'limit' => 20
+        );	
+
 /**
  * index method
  *
  * @return void
  */
-	public function index() {
+	public function index($limit = null) {
+        if($limit != null) {
+            $paginate['limit'] = $limit;
+        }
 		$this->Song->recursive = 0;
 		$this->set('songs', $this->paginate());
         $this->set('_serialize', 'songs');

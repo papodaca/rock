@@ -57,7 +57,33 @@ function init() {
     })
 
     $("#registerSubmitButton").click(function () {
-        $(this).addClass("disabled loading");
+        $("#registerPassword").parent().parent().removeClass("error");
+        $("#registerPassword2").parent().parent().removeClass("error");
+        if ($("#registerPassword").val() === $("#registerPassword2").val()) {
+            $(this).addClass("disabled loading");
+            data = {
+                "name": $("#registerName").val(),
+                "email": $("#registerEmail").val(),
+                "password": $("#registerPassword").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "users.json",
+                data: data,
+                success: function (msg) {
+                    $("#registerModal").modal("hide");
+                },
+                error: function (msg) {
+                    document.write(msg.responseText);
+                }
+            });
+        } else {
+            $("#registerPassword").parent().parent().addClass("error");
+            $("#registerPassword2").parent().parent().addClass("error");
+        }
+
+
     });
 
     $("#loginButton").click(function () {
@@ -145,12 +171,13 @@ function init() {
 }
 $(document).ready(init);
 
+function resizePlaybackBar() {
+	return $("#playProgress").offset().left - 15 - ($("#plabackControls").offset().left + $("#plabackControls").outerWidth(true));
+	//$("#playbackBar").css("width", progressBarWidth + "px");
+}
 
-
-$(window).resize(function (event) {
-	var progressBarWidth = $("#playProgress").offset().left - 15 - ($("#plabackControls").offset().left + $("#plabackControls").outerWidth(true));
-	
-	$("#playbackBar").css("width", progressBarWidth + "px");
+$(window).resize(function() {
+    $("#playbackBar").css("width", resizePlaybackBar() + "px");
 });
 
 
@@ -176,17 +203,20 @@ function animLoop( render, time) {
 
 //main Loop
 animLoop(function (deltaT) {
-	try {
-		var audio = document.getElementById("audioPlayer");
-		var playStatus = secondsToMinutes(audio.currentTime) + " / ";
-		playStatus += secondsToMinutes(audio.duration);
-		var percent = calculatePercentage(audio.currentTime, audio.duration);
-		var percent_buffered = calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
+    try {
+        var audio = document.getElementById("audioPlayer");
+        var playStatus = secondsToMinutes(audio.currentTime) + " / ";
+        playStatus += secondsToMinutes(audio.duration);
+        var percent = calculatePercentage(audio.currentTime, audio.duration);
+        var percent_buffered = calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
 
-		$("#playProgress a.brand").html(playStatus);
-		$("#playbackBar div.progress div.bar").css("width", percent + "%");
-		$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
-	} catch (e) {
-		
-	}
+        $("#playProgress a.brand").html(playStatus);
+        $("#playbackBar div.progress div.bar").css("width", percent + "%");
+        $("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+        if($("#playbackBar").css("width") !== resizePlaybackBar()) {
+            $("#playbackBar").css("width", resizePlaybackBar() + "px");
+        }
+    } catch (e) {
+
+    }
 }, 250);

@@ -69,13 +69,21 @@ class RocksController extends AppController {
 							ADMIN
 
 ***********************************************************************/
+
+    public $paginate = array(
+            'limit' => 20
+        );
 	
 /**
  * admin_index method
  *
  * @return void
  */
-	public function admin_index() {
+	public function admin_index($limit = null) {
+        if(limit != null) {
+            $paginate['limit'] = $limit;
+        }
+
 		$this->Rock->recursive = 0;
 		$this->set('rocks', $this->paginate());
 	}

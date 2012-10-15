@@ -20,13 +20,21 @@ class MTypesController extends AppController {
 							ADMIN
 
 ***********************************************************************/
-	
+
+    public $paginate = array(
+            'limit' => 20
+        );	
+
 /**
  * admin_index method
  *
  * @return void
  */
-	public function admin_index() {
+	public function admin_index($Limit = null) {
+        if($Limit != null) {
+            $paginate['limit'] = $Limit;
+        }
+
 		$this->MType->recursive = 0;
 		$this->set('mTypes', $this->paginate());
 	}
