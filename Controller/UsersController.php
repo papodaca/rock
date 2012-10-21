@@ -13,8 +13,22 @@ class UsersController extends AppController {
  *
  * @var array
  */
-	public $components = array('RequestHandler');
+    public $components = array(
+        'RequestHandler');/*,
+        'Auth' => array(
+            'authenticate' => array(
+                'Form' => array(
+                    'fields' => array('username' => 'email')
+                )
+            )
+        )
+    );*/
 
+/**
+ * defaultRole
+ *
+ * @var string
+ */
     private $defaultRole = 'User';
 
 /**
@@ -23,7 +37,15 @@ class UsersController extends AppController {
  * @return void
  */
 	public function login() {
-		
+		/*$this->Auth->authenticate = array(
+            AuthComponent::ALL => array('userModel' => 'User'),
+            'Form',
+            'Basic'
+        );*/
+        
+        $this->set('data', array('d'));
+
+        $this->set('_serialize', 'data');
 	}
 
 /**
@@ -41,6 +63,12 @@ class UsersController extends AppController {
         unset($data['password']);
 
         $role = $this->User->Role->find('first', array('conditions' => array('Role.name' => $this->defaultRole)));
+
+        $existingUsers = $this->User->find('first', array('conditions' => array('User.email' => $data['email'])));
+
+        if($existingUsers != false) {
+            throw new BadRequestException("Email in use.");
+        }
         
         $data['role_id'] = intval($role['Role']['id']);
 

@@ -59,6 +59,8 @@ function init() {
     $("#registerSubmitButton").click(function () {
         $("#registerPassword").parent().parent().removeClass("error");
         $("#registerPassword2").parent().parent().removeClass("error");
+        $("#registerPasswordLabel").addClass("hidden");
+        $("#registerEmailLabel").addClass("hidden");
         if ($("#registerPassword").val() === $("#registerPassword2").val()) {
             $(this).addClass("disabled loading");
             data = {
@@ -73,12 +75,22 @@ function init() {
                 data: data,
                 success: function (msg) {
                     $("#registerModal").modal("hide");
+                    Notifier.success("Registration successful.");
                 },
                 error: function (msg) {
-                    document.write(msg.responseText);
+                    if (msg.status === 400) {
+                        if (msg.responseText.indexOf("Email in use.") != -1) {
+                            $("#registerEmailLabel").html("Email in use.").toggleClass("hidden");
+                            $("#registerSubmitButton").removeClass("disabled loading");
+                        }
+                    } else {
+                        console.log(msg);
+                        document.write(msg.responseText);
+                    }
                 }
             });
         } else {
+            $("#registerPasswordLabel").html("Passwords do not match").toggleClass("hidden");
             $("#registerPassword").parent().parent().addClass("error");
             $("#registerPassword2").parent().parent().addClass("error");
         }

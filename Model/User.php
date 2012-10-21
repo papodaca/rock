@@ -96,7 +96,7 @@ class User extends AppModel {
  *
  * @var array
  */
-	public $hasAndBelongsToMany = array(
+	/*public $hasAndBelongsToMany = array(
 		'HasPodcast' => array(
 			'className' => 'HasPodcast',
 			'joinTable' => 'users_has_podcasts',
@@ -127,6 +127,6 @@ class User extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		)
-	);
+	);*/
 
 }
