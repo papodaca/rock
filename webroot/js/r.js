@@ -20,6 +20,6 @@ require.config({
     }
 });
 
-require(['main', 'jquery'], function (main, $, html) {
+require(['main', 'jquery'], function (main, $) {
     $(document).ready(main.init());
 });
