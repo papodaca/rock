@@ -1,234 +1,227 @@
-var Templates = {};
+define(function (require) {
+    var $ = require('jquery'),
+        HandleBars = require('handlebars'),
+		BootStrap = require('bootstrap'),
+        Backbone = require('backbone'),
+		Notifier = require('notifier');
+    return new (Backbone.Model.extend({
+        Templates: {},
+        __this: {},
+		
+        setupHandlebars: function () {
+            var names = ['album'];
+            for (i in names) {
+                _this.Templates[names[i]] = Handlebars.compile($('script#' + names[i] + '[type="text/x-handlebars-template"]').html());
+            }
 
-function setupHandlebars() {
-    Templates["album"] = Handlebars.compile($("#albumTemplate").html());
 
-    Handlebars.registerHelper('secondsToMinutes', function (seconds) {
-        var result = Math.floor(seconds / 60) + ":";
-        if (seconds % 60 < 10) {
-            result += "0"
-        }
-        result += (seconds % 60);
+            Handlebars.registerHelper('secondsToMinutes', function (seconds) {
+                var result = Math.floor(seconds / 60) + ":";
+                if (seconds % 60 < 10) {
+                    result += "0"
+                }
+                result += (seconds % 60);
 
-        return new Handlebars.SafeString(result);
-    });
-    Handlebars.registerHelper("TrackNr", function (seconds) {
-        return this["@attr"]["rank"];
-    });
-    Handlebars.registerHelper("getArt", function (seconds) {
-        return this.album.image[2]["#text"];
-    });
-}
+                return new Handlebars.SafeString(result);
+            });
+            Handlebars.registerHelper("TrackNr", function (seconds) {
+                return _this["@attr"]["rank"];
+            });
+            Handlebars.registerHelper("getArt", function (seconds) {
+                return _this.album.image[2]["#text"];
+            });
+        },
+        calculatePercentage: function (x, width) {
+            return (x / width) * 100;
+        },
+        secondsToMinutes: function (seconds) {
+            var minutes = Math.floor(seconds / 60);
+            var hours = 0;
+            var result = ""
+            if (minutes > 60) {
+                hours = Math.floor(minutes / 60);
+                minutes = Math.floor(minutes % 60);
+                result += hours + ":";
+                if (minutes < 10) {
+                    result += "0";
+                }
+            }
+            var seconds = Math.floor(seconds % 60);
+            result += minutes + ":";
+            if (seconds < 10) {
+                result += "0";
+            }
+            result += seconds;
+            return result;
+        },
+        init: function () {
+            _this = this;
+            _this.setupHandlebars();
 
-function calculatePercentage(x, width) {
-    return (x / width)*100;
-}
+            $("#registerModal").on("hidden", function () {
+                $("#registerName").val("");
+                $("#registerEmail").val("");
+                $("#registerPassword").val("");
+                $("#registerPassword2").val("");
+                $("#registerSubmitButton").removeClass("disabled loading");
+            })
 
-function secondsToMinutes(seconds) {
-    var minutes = Math.floor(seconds / 60);
-	var hours = 0;
-	var result = ""
-	if(minutes > 60) {
-		hours = Math.floor(minutes / 60);
-		minutes = Math.floor(minutes % 60);
-		result += hours + ":";
-		if(minutes < 10) {
-			result += "0";
-		}
-	}
-    var seconds = Math.floor(seconds % 60);
-    result += minutes + ":";
-    if(seconds < 10) {
-        result += "0";
-    }
-    result += seconds;
-    return result;
-}
+            $("#registerSubmitButton").click(function () {
+                $("#registerPassword").parent().parent().removeClass("error");
+                $("#registerPassword2").parent().parent().removeClass("error");
+                $("#registerPasswordLabel").addClass("hidden");
+                $("#registerEmailLabel").addClass("hidden");
+                if ($("#registerPassword").val() === $("#registerPassword2").val()) {
+                    $(this).addClass("disabled loading");
+                    data = {
+                        "name": $("#registerName").val(),
+                        "email": $("#registerEmail").val(),
+                        "password": $("#registerPassword").val()
+                    };
 
-function init() {
-    setupHandlebars();
-
-    $("#registerModal").on("hidden", function () {
-        $("#registerName").val("");
-        $("#registerEmail").val("");
-        $("#registerPassword").val("");
-        $("#registerPassword2").val("");
-        $("#registerSubmitButton").removeClass("disabled loading");
-    })
-
-    $("#registerSubmitButton").click(function () {
-        $("#registerPassword").parent().parent().removeClass("error");
-        $("#registerPassword2").parent().parent().removeClass("error");
-        $("#registerPasswordLabel").addClass("hidden");
-        $("#registerEmailLabel").addClass("hidden");
-        if ($("#registerPassword").val() === $("#registerPassword2").val()) {
-            $(this).addClass("disabled loading");
-            data = {
-                "name": $("#registerName").val(),
-                "email": $("#registerEmail").val(),
-                "password": $("#registerPassword").val()
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "users.json",
-                data: data,
-                success: function (msg) {
-                    $("#registerModal").modal("hide");
-                    Notifier.success("Registration successful.");
-                },
-                error: function (msg) {
-                    if (msg.status === 400) {
-                        if (msg.responseText.indexOf("Email in use.") != -1) {
-                            $("#registerEmailLabel").html("Email in use.").toggleClass("hidden");
-                            $("#registerSubmitButton").removeClass("disabled loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "users.json",
+                        data: data,
+                        success: function (msg) {
+                            $("#registerModal").modal("hide");
+                            Notifier.success("Registration successful.");
+                        },
+                        error: function (msg) {
+                            if (msg.status === 400) {
+                                if (msg.responseText.indexOf("Email in use.") != -1) {
+                                    $("#registerEmailLabel").html("Email in use.").toggleClass("hidden");
+                                    $("#registerSubmitButton").removeClass("disabled loading");
+                                }
+                            } else {
+                                console.log(msg);
+                                document.write(msg.responseText);
+                            }
                         }
-                    } else {
-                        console.log(msg);
-                        document.write(msg.responseText);
-                    }
+                    });
+                } else {
+                    $("#registerPasswordLabel").html("Passwords do not match").toggleClass("hidden");
+                    $("#registerPassword").parent().parent().addClass("error");
+                    $("#registerPassword2").parent().parent().addClass("error");
+                }
+
+
+            });
+
+            $("#loginButton").click(function () {
+                $(this).addClass("disabled loading");
+            });
+
+            $('#volumeButton').click(function () {
+                var p = $(this).offset();
+                p.left = p.left - ($("#volumePopover").width() / 2) + ($(this).outerWidth(false) / 2);
+                p.top = p.top - $("#volumePopover").outerHeight(true) + 10;
+                $("#volumePopover").offset(p);
+
+                $("#volumePopover").toggleClass("out");
+                $("#volumePopover").toggleClass("in");
+            });
+
+            $('#muteButton').click(function () {
+                $(this).toggleClass("btn-danger");
+                var audio = document.getElementById("audioPlayer");
+                if (audio.muted) {
+                    audio.muted = false;
+                } else {
+                    audio.muted = true;
                 }
             });
-        } else {
-            $("#registerPasswordLabel").html("Passwords do not match").toggleClass("hidden");
-            $("#registerPassword").parent().parent().addClass("error");
-            $("#registerPassword2").parent().parent().addClass("error");
-        }
 
+            $("#volumeSlider #slider").click(function (event) {
+                var percent = _this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+                $("#volumeSlider #slider div.bar").css("width", percent + "%");
+                $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
 
-    });
+                var audio = document.getElementById("audioPlayer");
+                audio.volume = percent / 100;
+            });
 
-    $("#loginButton").click(function () {
-        $(this).addClass("disabled loading");
-    });
+            $("#volumeSlider #slider").mousemove(function (event) {
+                var percent = _this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+                $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+            });
 
-    $('#volumeButton').click(function () {
-        var p = $(this).offset();
-        p.left = p.left - ($("#volumePopover").width() / 2) + ($(this).outerWidth(false) / 2);
-        p.top = p.top - $("#volumePopover").outerHeight(true) + 10;
-        $("#volumePopover").offset(p);
+            $("#volumeSlider #slider").mouseout(function (event) {
+                var width = $("#volumeSlider #slider div.bar").css("width").replace("px", ""); ;
+                var percent = _this.calculatePercentage(width, event.currentTarget.clientWidth);
+                $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+            });
 
-        $("#volumePopover").toggleClass("out");
-        $("#volumePopover").toggleClass("in");
-    });
+            $("#playPauseButton").click(function (event) {
+                var audio = document.getElementById("audioPlayer");
+                if (audio.paused == false) {
+                    audio.pause();
+                } else {
+                    audio.play();
+                }
+                $("#playPauseButton i").toggleClass("icon-play");
+                $("#playPauseButton i").toggleClass("icon-pause");
+            });
 
-    $('#muteButton').click(function () {
-        $(this).toggleClass("btn-danger");
-        var audio = document.getElementById("audioPlayer");
-        if(audio.muted) {
-            audio.muted = false;
-        } else {
-            audio.muted = true;
-        }
-    });
+            $("#playbackBar div.progress").click(function (event) {
+                var audio = document.getElementById("audioPlayer");
 
-    $("#volumeSlider #slider").click(function(event) {
-        var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-        $("#volumeSlider #slider div.bar").css("width", percent + "%");
-        $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+                if (audio.seekable && audio.seekable.length > 0) {
+                    var percent = _this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
+                    $("#playbackBar div.progress div.bar").css("width", percent + "%");
+                    audio.currentTime = audio.duration * (percent / 100);
+                }
 
-        var audio = document.getElementById("audioPlayer");
-        audio.volume = percent / 100;
-    });
+            });
+            $(window).resize(function () {
+                $("#playbackBar").css("width", _this.resizePlaybackBar() + "px");
+            });
+            _this.animLoop(function (deltaT) {
+                try {
+                    if (!$("#bottomNavBar").hasClass("hidden")) {
+                        var audio = document.getElementById("audioPlayer");
+                        var playStatus = _this.secondsToMinutes(audio.currentTime) + " / ";
+                        playStatus += _this.secondsToMinutes(audio.duration);
+                        var percent = _this.calculatePercentage(audio.currentTime, audio.duration);
+                        var percent_buffered = _this.calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
 
-    $("#volumeSlider #slider").mousemove(function(event) {
-        var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-        $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
-    });
+                        $("#playProgress a.brand").html(playStatus);
+                        $("#playbackBar div.progress div.bar").css("width", percent + "%");
+                        $("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
 
-    $("#volumeSlider #slider").mouseout(function (event) {
-        var width = $("#volumeSlider #slider div.bar").css("width").replace("px","");;
-        var percent = calculatePercentage(width, event.currentTarget.clientWidth);
-        $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
-    });
+                        var newPlaybackWidth = resizePlaybackBar();
+                        if ($("#playbackBar").css("width") !== newPlaybackWidth) {
+                            $("#playbackBar").css("width", newPlaybackWidth + "px");
+                        }
+                    }
+                } catch (e) {
 
-    $("#playPauseButton").click(function (event) {
-        var audio = document.getElementById("audioPlayer");
-        if (audio.paused == false) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-        $("#playPauseButton i").toggleClass("icon-play");
-        $("#playPauseButton i").toggleClass("icon-pause");
-    });
+                }
+            }, 250);
 
-    $("#playbackBar div.progress").click(function (event) {
-        var audio = document.getElementById("audioPlayer");
-
-        if(audio.seekable && audio.seekable.length > 0) {
-            var percent = calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-            $("#playbackBar div.progress div.bar").css("width", percent + "%");
-            audio.currentTime = audio.duration * (percent / 100);
-        }
-        
-    });
-	
-	$("#goButton").click(function (event) {
-		var audio = document.getElementById("audioPlayer");
-		audio.src = $("#mediaLocation").val();
-	});
-
-
-    /*$.ajax({
-        type: 'GET',
-        dataType: 'jsonp',
-        url: 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=b25b959554ed76058ac220b7b2e0a026&artist=Armin%20van%20Buuren&album=76&format=json',
-        success: function (msg) {
-            $("#content").append(Templates.album(msg));
-        }
-    });*/
-
-
-}
-$(document).ready(init);
-
-function resizePlaybackBar() {
-	return $("#playProgress").offset().left - 15 - ($("#plabackControls").offset().left + $("#plabackControls").outerWidth(true));
-	//$("#playbackBar").css("width", progressBarWidth + "px");
-}
-
-$(window).resize(function() {
-    $("#playbackBar").css("width", resizePlaybackBar() + "px");
-});
-
-
-function animLoop( render, time) {
-    var running, lastFrame = +new Date,
-        raf = window.mozRequestAnimationFrame    ||
-              window.webkitRequestAnimationFrame ||
-              window.msRequestAnimationFrame     ||
-              window.oRequestAnimationFrame;
-    function loop( now ) {
-        // stop the loop if render returned false
-        if ( running !== false ) {
-            raf( loop, null );
-            var deltaT = now - lastFrame;
-            if ( deltaT > time ) {
-                running = render( deltaT );
-                lastFrame = now;
+        },
+        resizePlaybackBar: function () {
+            return $("#playProgress").offset().left - 15 - ($("#plabackControls").offset().left + $("#plabackControls").outerWidth(true));
+        },
+        animLoop: function (render, time) {
+            var running, lastFrame = +new Date,
+                raf = window.mozRequestAnimationFrame ||
+                        window.webkitRequestAnimationFrame ||
+                        window.msRequestAnimationFrame ||
+                        window.oRequestAnimationFrame;
+            function loop(now) {
+                // stop the loop if render returned false
+                if (running !== false) {
+                    raf(loop, null);
+                    var deltaT = now - lastFrame;
+                    if (deltaT > time) {
+                        running = render(deltaT);
+                        lastFrame = now;
+                    }
+                }
             }
+            loop(lastFrame);
         }
-    }
-    loop( lastFrame );
-}
 
-//main Loop
-animLoop(function (deltaT) {
-    try {
-        var audio = document.getElementById("audioPlayer");
-        var playStatus = secondsToMinutes(audio.currentTime) + " / ";
-        playStatus += secondsToMinutes(audio.duration);
-        var percent = calculatePercentage(audio.currentTime, audio.duration);
-        var percent_buffered = calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
-
-        $("#playProgress a.brand").html(playStatus);
-        $("#playbackBar div.progress div.bar").css("width", percent + "%");
-        $("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
-        if($("#playbackBar").css("width") !== resizePlaybackBar()) {
-            $("#playbackBar").css("width", resizePlaybackBar() + "px");
-        }
-    } catch (e) {
-
-    }
-}, 250);
+    }))();
+});
