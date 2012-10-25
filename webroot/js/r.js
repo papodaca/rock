@@ -4,7 +4,7 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
-		'notifier': {
+        'notifier': {
             deps: ['jquery'],
             exports: 'Notifier'
         }
@@ -15,10 +15,11 @@ require.config({
         'handlebars': 'vendor/handlebars',
         'notifier': 'vendor/notifier',
         'backbone': 'vendor/backbone',
-        'underscore': 'vendor/underscore'
+        'underscore': 'vendor/underscore',
+		'text': 'vendor/text'
     }
 });
 
-require(['main', 'jquery'], function (main, $) {
+require(['main', 'jquery'], function (main, $, html) {
     $(document).ready(main.init());
 });
