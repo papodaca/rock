@@ -16,7 +16,7 @@ require.config({
         'notifier': 'vendor/notifier',
         'backbone': 'vendor/backbone',
         'underscore': 'vendor/underscore',
-		'text': 'vendor/text'
+        'text': 'vendor/text'
     }
 });
 
