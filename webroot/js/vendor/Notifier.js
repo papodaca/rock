@@ -1,3 +1,5 @@
+/* Provided by:
+   https://github.com/rlemon/Notifier.js */
 var Notifier = (function() {
     var apply_styles = function(element, style_object) {
         for (var prop in style_object) {
