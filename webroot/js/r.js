@@ -1,17 +1,23 @@
 require.config({
     shim: {
+        'jquery.bootstrap': {
+            deps: ['jquery'],
+            exports: 'jquery'
+        },
         'backbone': {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
         'notifier': {
-            deps: ['jquery'],
             exports: 'Notifier'
+        },
+		'handlebars': {
+            exports: 'Handlebars'
         }
     },
     paths: {
         'jquery': 'vendor/jquery',
-        'bootstrap': 'vendor/bootstrap',
+        'jquery.bootstrap': 'vendor/bootstrap',
         'handlebars': 'vendor/handlebars',
         'notifier': 'vendor/notifier',
         'backbone': 'vendor/backbone',
@@ -20,6 +26,7 @@ require.config({
     }
 });
 
-require(['main', 'jquery'], function (main, $) {
-    $(document).ready(main.init());
+require(['views/MainView', 'jquery'], function (MainView, $) {
+	var mainView = new MainView();
+	$(document.body).html(mainView.el);
 });

@@ -4,11 +4,12 @@ define(function (require) {
 		BootStrap = require('bootstrap'),
         Backbone = require('backbone'),
 		Notifier = require('notifier');
+		
     return new (Backbone.Model.extend({
         Templates: {},
         __this: {},
 		
-        setupHandlebars: function () {
+        /*setupHandlebars: function () {
             var names = ['album'];
             for (i in names) {
                 _this.Templates[names[i]] = Handlebars.compile($('script#' + names[i] + '[type="text/x-handlebars-template"]').html());
@@ -30,7 +31,7 @@ define(function (require) {
             Handlebars.registerHelper("getArt", function (seconds) {
                 return _this.album.image[2]["#text"];
             });
-        },
+        },*/
         calculatePercentage: function (x, width) {
             return (x / width) * 100;
         },
@@ -56,7 +57,7 @@ define(function (require) {
         },
         init: function () {
             _this = this;
-            _this.setupHandlebars();
+            //_this.setupHandlebars();
 
             $("#registerModal").on("hidden", function () {
                 $("#registerName").val("");

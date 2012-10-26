@@ -22,8 +22,6 @@ var Notifier = (function() {
     };
     var config = { /* How long the notification stays visible */
         default_timeout: 5000,
-        /* container for the notifications */
-        container: document.createElement('div'),
         /* container styles for notifications */
         container_styles: {
             position: "fixed",
@@ -68,22 +66,25 @@ var Notifier = (function() {
             width: "36px"
         }
     };
-    apply_styles(config.container, config.container_styles);
-    document.body.appendChild(config.container);
+    //apply_styles(config.container, config.container_styles);
+    //document.body.appendChild(config.container);
     return {
         notify: function(message, title, image) {
+			
+			var container = document.getElementById('notificationContainer');
+			apply_styles(container, config.container_styles);
 
             var notification = document.createElement('div');
             apply_styles(notification, config.box_styles);
 
             notification.onmouseover = function() {
-                apply_styles(this, config.box_styles_hover);
+                apply_styles(notification, config.box_styles_hover);
             };
             notification.onmouseout = function() {
-                apply_styles(this, config.box_styles);
+                apply_styles(notification, config.box_styles);
             };
             notification.onclick = function() {
-                this.style.display = 'none';
+                notification.style.display = 'none';
             };
 
             var icon = document.createElement('img');
@@ -110,7 +111,7 @@ var Notifier = (function() {
                 text.appendChild(message_text);
             }
 
-            config.container.insertBefore(notification, config.container.firstChild);
+            container.insertBefore(notification, container.firstChild);
 
             setTimeout(function() {
                 fade_out(notification);
