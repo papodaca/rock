@@ -22,7 +22,7 @@ define(function(require) {
 			this.$el.append('<div id="notificationContainer"></div>');
 		},
 		resize: function() {
-			this.audioPlayer.resize();
+			this.audioPlayer.resize(this.audioPlayer);
 		},
 		remove: function() {
 			$(window).unbind("resize.app");

@@ -6,6 +6,7 @@ define(function(require) {
     
     return Backbone.View.extend({
         template: Handlebars.compile(Template),
+        audioPlayer: null,
         events: {
             "click #volumeButton": "volumeButtonClick",
             "click #muteButton": "muteButtonClick",
@@ -18,7 +19,7 @@ define(function(require) {
         initialize: function() {
             this.render();
             this.animLoop(this.thisLoop, 250, this);
-            this.resize();
+            this.audioPlayer = this.$("#audioPlayer").get(0);
         },
         render: function() {
             this.$el.append(this.template({}));
@@ -48,81 +49,86 @@ define(function(require) {
         },
         volumeButtonClick: function(event) {
                 var p = $(event.currentTarget).offset();
-                p.left = p.left - ($("#volumePopover").width() / 2) + ($(event.currentTarget).outerWidth(false) / 2);
+                p.left = p.left - (this.$("#volumePopover").width() / 2) + (this.$(event.currentTarget).outerWidth(false) / 2);
                 p.top = p.top - $("#volumePopover").outerHeight(true) + 10;
-                $("#volumePopover").offset(p);
+                this.$("#volumePopover").offset(p);
 
-                $("#volumePopover").toggleClass("out");
-                $("#volumePopover").toggleClass("in");
+                this.$("#volumePopover").toggleClass("out");
+                this.$("#volumePopover").toggleClass("in");
         },
         muteButtonClick: function(event) {
-                $(event.currentTarget).toggleClass("btn-danger");
-                var audio = document.getElementById("audioPlayer");
-                if (audio.muted) {
-                    audio.muted = false;
+                this.$(event.currentTarget).toggleClass("btn-danger");
+                if (this.audioPlayer.muted) {
+                    this.audioPlayer.muted = false;
                 } else {
-                    audio.muted = true;
+                    this.audioPlayer.muted = true;
                 }
         },
         playPauseButtonClick: function(event) {
-                var audio = document.getElementById("audioPlayer");
-                if (audio.paused == false) {
-                    audio.pause();
-                } else {
-                    audio.play();
+                if(this.audioPlayer.src !== "") {
+                    if (this.audioPlayer.paused === false) {
+                        this.audioPlayerpause();
+                    } else {
+                        this.audioPlayer.play();
+                    }
+                    this.$("#playPauseButton i").toggleClass("icon-play");
+                    this.$("#playPauseButton i").toggleClass("icon-pause");
                 }
-                $("#playPauseButton i").toggleClass("icon-play");
-                $("#playPauseButton i").toggleClass("icon-pause");
         },
         volumeSliderClick: function(event) {
             var percent = this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-            $("#volumeSlider #slider div.bar").css("width", percent + "%");
-            $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+            this.$("#volumeSlider #slider div.bar").css("width", percent + "%");
+            this.$("#volumeSlider #echo").html(Math.ceil(percent) + "%");
 
-            var audio = document.getElementById("audioPlayer");
-            audio.volume = percent / 100;
+            this.audioPlayer.volume = percent / 100;
         },
         volumeSliderMouseMove: function(event) {
             var percent = this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-            $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+            this.$("#volumeSlider #echo").html(Math.ceil(percent) + "%");
         },
         volumeSliderMouseOut: function(event) {
-            var width = $("#volumeSlider #slider div.bar").css("width").replace("px", ""); ;
+            var width = this.$("#volumeSlider #slider div.bar").css("width").replace("px", ""); ;
             var percent = this.calculatePercentage(width, event.currentTarget.clientWidth);
-            $("#volumeSlider #echo").html(Math.ceil(percent) + "%");
+            this.$("#volumeSlider #echo").html(Math.ceil(percent) + "%");
         },
         playbackBarClick: function(event) {
-            var audio = document.getElementById("audioPlayer");
-
-            if (audio.seekable && audio.seekable.length > 0) {
+            if (this.audioPlayer.seekable && this.audioPlayer.seekable.length > 0) {
                 var percent = this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
-                $("#playbackBar div.progress div.bar").css("width", percent + "%");
-                audio.currentTime = audio.duration * (percent / 100);
+                this.$("#playbackBar div.progress div.bar").css("width", percent + "%");
+                this.audioPlayer.currentTime = this.audioPlayer.duration * (percent / 100);
             }
         },
-        resize: function() {
-            this.$("#playbackBar").css("width", this.resizePlaybackBar() + "px");
-        },
-        resizePlaybackBar: function () {
-            return this.$("#playProgress").offset().left - 15 - (this.$("#plabackControls").offset().left + this.$("#plabackControls").outerWidth(true));
+        resize: function(_this) {
+            if(_this.audioPlayer.src === "") {
+                _this.$("#playProgress").addClass("hidden");
+                _this.$("#playbackBar").addClass("hidden");
+            } else {
+                
+                var newPlaybackWidth = _this.$("#playProgress").offset().left - 15 - (_this.$("#plabackControls").offset().left + _this.$("#plabackControls").outerWidth(true));
+                var width = _this.$("#playbackBar").css("width");
+                var regex = /[^0-9]/g;
+                if (regex.exec(width)[0] !== newPlaybackWidth) {
+                    _this.$("#playbackBar").css("width", newPlaybackWidth + "px");
+                }
+
+                _this.$("#playProgress").removeClass("hidden");
+                _this.$("#playbackBar").removeClass("hidden");
+            }
         },
         thisLoop: function (deltaT, _this) {
             try {
                 if (!$("#bottomNavBar").hasClass("hidden")) {
-                    var audio = document.getElementById("audioPlayer");
-                    var playStatus = _this.secondsToMinutes(audio.currentTime) + " / ";
-                    playStatus += _this.secondsToMinutes(audio.duration);
-                    var percent = _this.calculatePercentage(audio.currentTime, audio.duration);
-                    var percent_buffered = _this.calculatePercentage(audio.buffered.end(0) - audio.currentTime, audio.duration);
+                    _this.resize(_this);
+                    
 
-                    $("#playProgress a.brand").html(playStatus);
-                    $("#playbackBar div.progress div.bar").css("width", percent + "%");
-                    $("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+                    var playStatus = _this.secondsToMinutes(_this.audioPlayer.currentTime) + " / ";
+                    playStatus += _this.secondsToMinutes(_this.audioPlayer.duration);
+                    var percent = _this.calculatePercentage(_this.audioPlayercurrentTime, _this.audioPlayer.duration);
+                    var percent_buffered = _this.calculatePercentage(_this.audioPlayer.buffered.end(0) - _this.audioPlayer.currentTime, _this.audioPlayer.duration);
 
-                    var newPlaybackWidth = resizePlaybackBar();
-                    if ($("#playbackBar").css("width") !== newPlaybackWidth) {
-                        $("#playbackBar").css("width", newPlaybackWidth + "px");
-                    }
+                    _this.$("#playProgress a.brand").html(playStatus);
+                    _this.$("#playbackBar div.progress div.bar").css("width", percent + "%");
+                    _this.$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
                 }
             } catch (e) {
 
@@ -144,7 +150,7 @@ define(function(require) {
                         lastFrame = now;
                     }
                 }
-            }
+            };
             loop(lastFrame);
         }
     });
