@@ -1,10 +1,5 @@
-define(function(require) {
-	var Backbone = require('backbone'),
-		Handlebars = require('handlebars'),
-		$ = require('jquery'),
-		HeaderView = require('views/HeaderView'),
-		AudioPlayerView = require('views/AudioPlayerView'),
-		Template = require('text!views/templates/MainView.template');
+define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlayerView', 'text!views/templates/MainView.template'], 
+	function(Backbone, Handlebars, $, HeaderView, AudioPlayerView, Template) {
 	
 	return new (Backbone.View.extend({
 		el: $('body'),

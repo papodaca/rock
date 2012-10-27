@@ -1,11 +1,5 @@
-define([
-	'backbone', 
-	'handlebars', 
-	'notifier',
-	'text!views/templates/RegisterModal.template',
-	'jquery',
-    'jquery.bootstrap'], 
-function(Backbone, HandleBars, Notifier, Template, $, BS) {
+define(['backbone', 'handlebars', 'notifier', 'text!views/templates/RegisterModal.template', 'jquery', 'jquery.bootstrap'], 
+	function(Backbone, HandleBars, Notifier, Template, $, BS) {
 	return Backbone.View.extend({
 		template: Handlebars.compile(Template),
 		className: "modal hide fade",

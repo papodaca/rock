@@ -1,9 +1,5 @@
-define(function(require) {
-	var Backbone = require('backbone'),
-		Handlebars = require('handlebars'),
-		$ = require('jquery'),
-		RegisterModal = require('views/RegisterModal'),
-		Template = require('text!views/templates/HeaderView.template');
+define(['backbone', 'handlebars', 'jquery', 'views/RegisterModal', 'text!views/templates/HeaderView.template'], 
+	function(Backbone, Handlebars, $, RegisterModal, Template) {
 	
 	return Backbone.View.extend({
 		template: Handlebars.compile(Template),
