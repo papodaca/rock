@@ -27,6 +27,5 @@ require.config({
 });
 
 require(['views/MainView', 'jquery'], function (MainView, $) {
-	var mainView = new MainView();
-	$(document.body).html(mainView.el);
+	//nothing to do.
 });
