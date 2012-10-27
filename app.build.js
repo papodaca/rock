@@ -3,7 +3,7 @@
 	baseUrl: "js",
 	dir: "webroot.pkg",
 	modules: [{
-		name: "r"
+		name: "main"
 	}],
     shim: {
         'jquery.bootstrap': {
