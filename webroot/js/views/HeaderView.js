@@ -1,4 +1,4 @@
-define(['backbone', 'handlebars', 'jquery', 'views/RegisterModal', 'text!views/templates/HeaderView.template'], 
+define(['backbone', 'handlebars', 'jquery', 'views/RegisterModal', 'text!views/templates/HeaderView.hbs'], 
     function(Backbone, Handlebars, $, RegisterModal, Template) {
     
     return Backbone.View.extend({

@@ -1,4 +1,4 @@
-define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerView.template'], 
+define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerView.hbs'], 
     function(Backbone, Handlebars, $, Template) {
     
     return Backbone.View.extend({

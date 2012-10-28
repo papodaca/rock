@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/templates/RegisterModal.template', 'models/UserModel', 'jquery', 'jquery.bootstrap'], 
+define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/templates/RegisterModal.hbs', 'models/UserModel', 'jquery', 'jquery.bootstrap'], 
     function(Backbone, _, HandleBars, Notifier, Template, UserModel, $, BS) {
 
     return Backbone.View.extend({
