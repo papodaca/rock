@@ -46,6 +46,16 @@ define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/template
 
             this.$(".modal-footer button").removeClass("disabled loading");
         },
+        saveSuccess: function(model, msg) {
+            this.hide();
+            Notifier.success("Registration successful.");
+        },
+        saveError: function(model, msg) {
+            if (msg.status === 400 && msg.responseText.indexOf("Email in use.") != -1) {
+                this.$(".email .label").html("Email in use.").toggleClass("hidden");
+                this.$("modal-footer .button").removeClass("disabled loading");
+            }
+        },
         hide: function() {
             this.reset();
             this.$el.modal("hide");
@@ -67,7 +77,7 @@ define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/template
                 this.resetError();
 
                 this.$("button").addClass("disabled loading");
-                data = {
+                var data = {
                     "name": this.$(".name input").val(),
                     "email": this.$(".email input").val(),
                     "password": this.$(".password input").val(),
@@ -78,16 +88,8 @@ define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/template
 
                 if(this.user.isValid()) {
                     this.user.save({}, {
-                        success: _.bind(function (model, msg) {
-                            this.hide();
-                            Notifier.success("Registration successful.");
-                        }, this),
-                        error: _.bind(function (model, msg) {
-                            if (msg.status === 400 && msg.responseText.indexOf("Email in use.") != -1) {
-                                this.$(".email .label").html("Email in use.").toggleClass("hidden");
-                                this.$("modal-footer .button").removeClass("disabled loading");
-                            }
-                        }, this)
+                        success: _.bind(this.saveSuccess, this),
+                        error: _.bind(this.saveError, this)
                     });
                 }
             }
