@@ -4,10 +4,6 @@ require.config({
             deps: ['jquery'],
             exports: 'jquery'
         },
-        'backbone': {
-            deps: ['underscore', 'jquery'],
-            exports: 'Backbone'
-        },
         'notifier': {
             exports: 'Notifier'
         },

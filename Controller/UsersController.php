@@ -61,6 +61,7 @@ class UsersController extends AppController {
         $data['password_hs'] = hash('sha512', $data['password'] . $data['password_sl']);
 
         unset($data['password']);
+        unset($data['password2']);
 
         $role = $this->User->Role->find('first', array('conditions' => array('Role.name' => $this->defaultRole)));
 
