@@ -22,6 +22,6 @@ require.config({
     }
 });
 
-require(['views/MainView', 'jquery'], function (MainView, $) {
-    //nothing to do.
+require(['Router'], function (Router) {
+    Backbone.history.start({pushState: true});
 });

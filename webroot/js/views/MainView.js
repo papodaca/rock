@@ -1,12 +1,14 @@
 define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlayerView', 'text!views/templates/MainView.hbs'], 
     function(Backbone, Handlebars, $, HeaderView, AudioPlayerView, Template) {
     
-    return new (Backbone.View.extend({
-        el: $('body'),
+    return Backbone.View.extend({
+        //el: $('body'),
         template: Handlebars.compile(Template),
         header: new HeaderView(),
         audioPlayer: new AudioPlayerView(),
+        socket: null,
         initialize: function() {
+            this.socket = this.options.socket;
             this.render();
             $(window).bind("resize.app", _.bind(this.resize, this));
         },
@@ -23,6 +25,9 @@ define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlay
             $(window).unbind("resize.app");
 
             Backbone.View.prototype.remove.call(this);
+        },
+        setSocket: function() {
+            this.$("#socket").empty().append(this.socket.el)
         }
-    }))();
+    });
 });
