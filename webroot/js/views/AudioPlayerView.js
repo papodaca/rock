@@ -1,5 +1,5 @@
-define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerView.hbs'], 
-    function(Backbone, Handlebars, $, Template) {
+define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerView.hbs'], 
+    function(Backbone, _, Handlebars, $, Template) {
     
     return Backbone.View.extend({
         template: Handlebars.compile(Template),
@@ -15,7 +15,7 @@ define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerVie
         },
         initialize: function() {
             this.render();
-            this.animLoop(this.thisLoop, 250, this);
+            this.animLoop(_.bind(this.thisLoop, this), 250);
             this.audioPlayer = this.$("#audioPlayer").get(0);
         },
         render: function() {
@@ -95,43 +95,44 @@ define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerVie
                 this.audioPlayer.currentTime = this.audioPlayer.duration * (percent / 100);
             }
         },
-        resize: function(_this) {
-            if(_this.audioPlayer.src === "") {
-                _this.$("#playProgress").addClass("hidden");
-                _this.$("#playbackBar").addClass("hidden");
+        resize: function() {
+            if(this.audioPlayer.src === "") {
+                this.$("#playProgress").addClass("hidden");
+                this.$("#playbackBar").addClass("hidden");
             } else {
                 
-                var newPlaybackWidth = _this.$("#playProgress").offset().left - 15 - (_this.$("#plabackControls").offset().left + _this.$("#plabackControls").outerWidth(true));
-                var width = _this.$("#playbackBar").css("width");
+                var newPlaybackWidth = this.$("#playProgress").offset().left - 15 - (this.$("#plabackControls").offset().left + this.$("#plabackControls").outerWidth(true));
+                var width = this.$("#playbackBar").css("width");
                 var regex = /[^0-9]/g;
                 if (regex.exec(width)[0] !== newPlaybackWidth) {
-                    _this.$("#playbackBar").css("width", newPlaybackWidth + "px");
+                    this.$("#playbackBar").css("width", newPlaybackWidth + "px");
                 }
 
-                _this.$("#playProgress").removeClass("hidden");
-                _this.$("#playbackBar").removeClass("hidden");
+                this.$("#playProgress").removeClass("hidden");
+                this.$("#playbackBar").removeClass("hidden");
             }
         },
-        thisLoop: function (deltaT, _this) {
+        thisLoop: function (deltaT) {
             try {
                 if (!$("#bottomNavBar").hasClass("hidden")) {
-                    _this.resize(_this);
+                    this.resize();
                     
 
-                    var playStatus = _this.secondsToMinutes(_this.audioPlayer.currentTime) + " / ";
-                    playStatus += _this.secondsToMinutes(_this.audioPlayer.duration);
-                    var percent = _this.calculatePercentage(_this.audioPlayercurrentTime, _this.audioPlayer.duration);
-                    var percent_buffered = _this.calculatePercentage(_this.audioPlayer.buffered.end(0) - _this.audioPlayer.currentTime, _this.audioPlayer.duration);
+                    var playStatus = this.secondsToMinutes(this.audioPlayer.currentTime) + " / ";
+                    playStatus += this.secondsToMinutes(this.audioPlayer.duration);
+                    var percent = this.calculatePercentage(this.audioPlayercurrentTime, this.audioPlayer.duration);
+                    var percent_buffered = this.calculatePercentage(this.audioPlayer.buffered.end(0) - this.audioPlayer.currentTime, this.audioPlayer.duration);
 
-                    _this.$("#playProgress a.brand").html(playStatus);
-                    _this.$("#playbackBar div.progress div.bar").css("width", percent + "%");
-                    _this.$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+                    this.$("#playProgress a.brand").html(playStatus);
+                    this.$("#playbackBar div.progress div.bar").css("width", percent + "%");
+                    this.$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
                 }
             } catch (e) {
-
+                return true;
             }
+            return true;
         },
-        animLoop: function (render, time, _this) {
+        animLoop: function (render, time) {
             var running, lastFrame = +new Date,
                 raf = window.mozRequestAnimationFrame ||
                         window.webkitRequestAnimationFrame ||
@@ -143,7 +144,7 @@ define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerVie
                     raf(loop, null);
                     var deltaT = now - lastFrame;
                     if (deltaT > time) {
-                        running = render(deltaT, _this);
+                        running = render(deltaT);
                         lastFrame = now;
                     }
                 }
