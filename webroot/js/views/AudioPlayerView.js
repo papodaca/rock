@@ -114,18 +114,19 @@ define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/
         },
         thisLoop: function (deltaT) {
             try {
-                if (!$("#bottomNavBar").hasClass("hidden")) {
+                if(!$("#bottomNavBar").hasClass("hidden")) {
                     this.resize();
                     
+                    if(this.audioPlayer.src !== "") {
+                        var playStatus = this.secondsToMinutes(this.audioPlayer.currentTime) + " / ";
+                        playStatus += this.secondsToMinutes(this.audioPlayer.duration);
+                        var percent = this.calculatePercentage(this.audioPlayercurrentTime, this.audioPlayer.duration);
+                        var percent_buffered = this.calculatePercentage(this.audioPlayer.buffered.end(0) - this.audioPlayer.currentTime, this.audioPlayer.duration);
 
-                    var playStatus = this.secondsToMinutes(this.audioPlayer.currentTime) + " / ";
-                    playStatus += this.secondsToMinutes(this.audioPlayer.duration);
-                    var percent = this.calculatePercentage(this.audioPlayercurrentTime, this.audioPlayer.duration);
-                    var percent_buffered = this.calculatePercentage(this.audioPlayer.buffered.end(0) - this.audioPlayer.currentTime, this.audioPlayer.duration);
-
-                    this.$("#playProgress a.brand").html(playStatus);
-                    this.$("#playbackBar div.progress div.bar").css("width", percent + "%");
-                    this.$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+                        this.$("#playProgress a.brand").html(playStatus);
+                        this.$("#playbackBar div.progress div.bar").css("width", percent + "%");
+                        this.$("#playbackBar div.progress div.bar-info").css("width", percent_buffered + "%");
+                    }
                 }
             } catch (e) {
                 return true;
