@@ -1,5 +1,5 @@
-define(['backbone', 'handlebars', 'jquery', 'router', 'text!views/templates/AttractView.hbs'], 
-    function(Backbone, Handlebars, $, Router, Template) {
+define(['backbone', 'handlebars', 'jquery', 'text!views/templates/AttractView.hbs'], 
+    function(Backbone, Handlebars, $, Template) {
     
     return Backbone.View.extend({
         template: Handlebars.compile(Template),
