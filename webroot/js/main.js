@@ -22,6 +22,7 @@ require.config({
     }
 });
 
-require(['Router'], function (Router) {
-    Backbone.history.start({pushState: true});
+require(['router', 'backbone'], function (Router, Backbone) {
+    window.Router = Router;
+    Backbone.history.start();
 });

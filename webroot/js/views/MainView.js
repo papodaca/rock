@@ -8,7 +8,6 @@ define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlay
         audioPlayer: new AudioPlayerView(),
         socket: null,
         initialize: function() {
-            this.socket = this.options.socket;
             this.render();
             $(window).bind("resize.app", _.bind(this.resize, this));
         },
@@ -26,7 +25,8 @@ define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlay
 
             Backbone.View.prototype.remove.call(this);
         },
-        setSocket: function() {
+        setSocket: function(socket) {
+            this.socket = socket;
             this.$("#socket").empty().append(this.socket.el)
         }
     });
