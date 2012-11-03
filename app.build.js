@@ -2,6 +2,8 @@
 	appDir: "webroot",
 	baseUrl: "js",
 	dir: "webroot.pkg",
+    optimizeCss: "standard",
+    removeCombined: true,
 	modules: [{
 		name: "main"
 	}],
