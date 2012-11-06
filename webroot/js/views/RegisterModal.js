@@ -1,5 +1,14 @@
-define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/templates/RegisterModal.hbs', 'models/UserModel', 'jquery', 'jquery.bootstrap'], 
-    function(Backbone, _, HandleBars, Notifier, Template, UserModel, $, BS) {
+define([
+    'backbone',
+    'underscore',
+    'handlebars',
+    'notifier',
+    'text!views/templates/RegisterModal.hbs',
+    'models/UserModel',
+    'Util',
+    'jquery',
+    'jquery.bootstrap'],
+    function(Backbone, _, HandleBars, Notifier, Template, UserModel, Util, $, BS) {
 
     return Backbone.View.extend({
         template: Handlebars.compile(Template),
@@ -18,28 +27,28 @@ define(['backbone', 'underscore', 'handlebars', 'notifier', 'text!views/template
         initialize: function() {
             this.render();
 
-            this.user.on('error', this.onError, this)
+            this.user.on('error', this.onError, this);
         },
         onError: function(model, error) {
-            if(error.indexOf("passwordMismatch") !== -1) {
+            if(Util.contains(error, "passwordMismatch")) {
                 this.$(".password .label").html("Password mismatch").removeClass("hidden");
                 this.$(".password").addClass("error");
                 this.$(".password2").addClass("error");
             }
-            else if(error.indexOf("passwordNull") !== -1) {
+            else if(Util.contains(error, "passwordNull")) {
                 this.$(".password .label").html("Password required").removeClass("hidden");
                 this.$(".password").addClass("error");
                 this.$(".password2").addClass("error");
             }
-            if(error.indexOf("nameNull") !== -1) {
+            if(Util.contains(error, "nameNull")) {
                 this.$(".name .label").html("Name required").removeClass("hidden");
                 this.$(".name").addClass("error");
             }
-            if(error.indexOf("emailNull") !== -1) {
+            if(Util.contains(error, "emailNull")) {
                 this.$(".email .label").html("Email required").removeClass("hidden");
                 this.$(".email").addClass("error");
             }
-            else if(error.indexOf("emailInvalid") !== -1) {
+            else if(Util.contains(error, "emailInvalid")) {
                 this.$(".email .label").html("Email invalid").removeClass("hidden");
                 this.$(".email").addClass("error");
             }

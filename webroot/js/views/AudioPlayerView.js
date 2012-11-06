@@ -1,4 +1,9 @@
-define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/AudioPlayerView.hbs'], 
+define([
+    'backbone',
+    'underscore',
+    'handlebars',
+    'jquery',
+    'text!views/templates/AudioPlayerView.hbs'], 
     function(Backbone, _, Handlebars, $, Template) {
     
     return Backbone.View.extend({
@@ -27,7 +32,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/
         secondsToMinutes: function (seconds) {
             var minutes = Math.floor(seconds / 60);
             var hours = 0;
-            var result = ""
+            var result = "";
             if (minutes > 60) {
                 hours = Math.floor(minutes / 60);
                 minutes = Math.floor(minutes % 60);
@@ -36,7 +41,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/
                     result += "0";
                 }
             }
-            var seconds = Math.floor(seconds % 60);
+            seconds = Math.floor(seconds % 60);
             result += minutes + ":";
             if (seconds < 10) {
                 result += "0";
@@ -84,7 +89,7 @@ define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/
             this.$("#volumeSlider #echo").html(Math.ceil(percent) + "%");
         },
         volumeSliderMouseOut: function(event) {
-            var width = this.$("#volumeSlider #slider div.bar").css("width").replace("px", ""); ;
+            var width = this.$("#volumeSlider #slider div.bar").css("width").replace("px", "");
             var percent = this.calculatePercentage(width, event.currentTarget.clientWidth);
             this.$("#volumeSlider #echo").html(Math.ceil(percent) + "%");
         },
@@ -134,12 +139,13 @@ define(['backbone', 'underscore', 'handlebars', 'jquery', 'text!views/templates/
             return true;
         },
         animLoop: function (render, time) {
-            var running, lastFrame = +new Date,
-                raf = window.mozRequestAnimationFrame ||
+            var running;
+            var lastFrame = new Date();
+            var raf = window.mozRequestAnimationFrame ||
                         window.webkitRequestAnimationFrame ||
                         window.msRequestAnimationFrame ||
                         window.oRequestAnimationFrame;
-            function loop(now) {
+            var loop = function(now) {
                 // stop the loop if render returned false
                 if (running !== false) {
                     raf(loop, null);

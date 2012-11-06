@@ -1,4 +1,10 @@
-define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlayerView', 'text!views/templates/MainView.hbs'], 
+define([
+    'backbone',
+    'handlebars',
+    'jquery',
+    'views/HeaderView',
+    'views/AudioPlayerView',
+    'text!views/templates/MainView.hbs'],
     function(Backbone, Handlebars, $, HeaderView, AudioPlayerView, Template) {
     
     return Backbone.View.extend({
@@ -27,7 +33,7 @@ define(['backbone', 'handlebars', 'jquery', 'views/HeaderView', 'views/AudioPlay
         },
         setSocket: function(socket) {
             this.socket = socket;
-            this.$("#socket").empty().append(this.socket.el)
+            this.$("#socket").empty().append(this.socket.el);
         }
     });
 });
