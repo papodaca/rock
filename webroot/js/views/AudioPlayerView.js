@@ -3,7 +3,7 @@ define([
     'underscore',
     'handlebars',
     'jquery',
-    'text!views/templates/AudioPlayerView.hbs'], 
+    'text!views/templates/AudioPlayerView.hbs'],
     function(Backbone, _, Handlebars, $, Template) {
     
     return Backbone.View.extend({
@@ -25,6 +25,7 @@ define([
         },
         render: function() {
             this.$el.append(this.template({}));
+            this.volumePopoverLocation(true);
         },
         calculatePercentage: function (x, width) {
             return (x / width) * 100;
@@ -49,33 +50,54 @@ define([
             result += seconds;
             return result;
         },
+        volumePopoverVisible: false,
         volumeButtonClick: function(event) {
-                var p = $(event.currentTarget).offset();
-                p.left = p.left - (this.$("#volumePopover").width() / 2) + (this.$(event.currentTarget).outerWidth(false) / 2);
-                p.top = p.top - $("#volumePopover").outerHeight(true) + 10;
-                this.$("#volumePopover").offset(p);
-
-                this.$("#volumePopover").toggleClass("out");
-                this.$("#volumePopover").toggleClass("in");
+            this.volumePopoverLocation();
+            if(!this.volumePopoverVisible) {
+                this.$("#volumePopover").css("display", "block");
+                _.delay(function() {
+                    this.$("#volumePopover").removeClass("out");
+                    this.$("#volumePopover").addClass("in");
+                }, 5, this);
+                this.volumePopoverVisible = true;
+            } else {
+                this.$("#volumePopover").removeClass("in");
+                this.$("#volumePopover").addClass("out");
+                _.delay(function() {
+                    this.$("#volumePopover").css("display", "none");
+                }, 250, this);
+                this.volumePopoverVisible = false;
+            }
+        },
+        volumePopoverLocation: function(force) {
+            var button = this.$("#volumeButton");
+            var popover = this.$("#volumePopover .popover-content");
+            var p = button.offset();
+            if(this.$("#volumePopover").css("display") !== "none" || force) {
+                p.left = p.left - (popover.outerWidth(true) / 2) + (button.outerWidth() / 2);
+                p.top = p.top - (popover.outerHeight(true) / 2) - (button.outerHeight() / 2);
+                this.$("#volumePopover").css("top", p.top+"px");
+                this.$("#volumePopover").css("left", p.left-30+"px");
+            }
         },
         muteButtonClick: function(event) {
-                this.$(event.currentTarget).toggleClass("btn-danger");
-                if (this.audioPlayer.muted) {
-                    this.audioPlayer.muted = false;
-                } else {
-                    this.audioPlayer.muted = true;
-                }
+            this.$(event.currentTarget).toggleClass("btn-danger");
+            if (this.audioPlayer.muted) {
+                this.audioPlayer.muted = false;
+            } else {
+                this.audioPlayer.muted = true;
+            }
         },
         playPauseButtonClick: function(event) {
-                if(this.audioPlayer.src !== "") {
-                    if (this.audioPlayer.paused === false) {
-                        this.audioPlayerpause();
-                    } else {
-                        this.audioPlayer.play();
-                    }
-                    this.$("#playPauseButton i").toggleClass("icon-play");
-                    this.$("#playPauseButton i").toggleClass("icon-pause");
+            if(this.audioPlayer.src !== "") {
+                if (this.audioPlayer.paused === false) {
+                    this.audioPlayerpause();
+                } else {
+                    this.audioPlayer.play();
                 }
+                this.$("#playPauseButton i").toggleClass("icon-play");
+                this.$("#playPauseButton i").toggleClass("icon-pause");
+            }
         },
         volumeSliderClick: function(event) {
             var percent = this.calculatePercentage(event.offsetX, event.currentTarget.clientWidth);
@@ -101,6 +123,7 @@ define([
             }
         },
         resize: function() {
+            this.volumePopoverLocation();
             if(this.audioPlayer.src === "") {
                 this.$("#playProgress").addClass("hidden");
                 this.$("#playbackBar").addClass("hidden");

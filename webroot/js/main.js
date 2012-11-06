@@ -22,7 +22,7 @@ require.config({
     }
 });
 
-require(['router', 'backbone'], function (Router, Backbone) {
+require(['Router', 'backbone'], function (Router, Backbone) {
     window.Router = Router;
     Backbone.history.start();
 });
