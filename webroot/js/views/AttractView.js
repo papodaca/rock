@@ -1,18 +1,17 @@
 define([
     'backbone',
-    'handlebars',
     'jquery',
     'text!views/templates/AttractView.hbs'],
-    function(Backbone, Handlebars, $, Template) {
+    function(Backbone, $, Template) {
     
     return Backbone.View.extend({
-        template: Handlebars.compile(Template),
+        template:Template,
         className: "container-fluid",
         initialize: function() {
             this.render();
         },
         render: function() {
-            this.$el.append(this.template({}));
+            this.$el.append(this.template);
         }
     });
 });

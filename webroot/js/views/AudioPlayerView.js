@@ -1,13 +1,12 @@
 define([
     'backbone',
     'underscore',
-    'handlebars',
     'jquery',
     'text!views/templates/AudioPlayerView.hbs'],
-    function(Backbone, _, Handlebars, $, Template) {
+    function(Backbone, _, $, Template) {
     
     return Backbone.View.extend({
-        template: Handlebars.compile(Template),
+        template: Template,
         audioPlayer: null,
         events: {
             "click #volumeButton": "volumeButtonClick",
@@ -24,7 +23,7 @@ define([
             this.audioPlayer = this.$("#audioPlayer").get(0);
         },
         render: function() {
-            this.$el.append(this.template({}));
+            this.$el.append(this.template);
             this.volumePopoverLocation(true);
         },
         calculatePercentage: function (x, width) {

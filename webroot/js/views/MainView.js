@@ -1,15 +1,14 @@
 define([
     'backbone',
-    'handlebars',
     'jquery',
     'views/HeaderView',
     'views/AudioPlayerView',
     'text!views/templates/MainView.hbs'],
-    function(Backbone, Handlebars, $, HeaderView, AudioPlayerView, Template) {
+    function(Backbone, $, HeaderView, AudioPlayerView, Template) {
     
     return Backbone.View.extend({
         //el: $('body'),
-        template: Handlebars.compile(Template),
+        template: Template,
         header: new HeaderView(),
         audioPlayer: new AudioPlayerView(),
         socket: null,
@@ -19,7 +18,7 @@ define([
         },
         render: function() {
             this.$el.append(this.header.el);
-            this.$el.append(this.template({}));
+            this.$el.append(this.template);
             this.$el.append(this.audioPlayer.el);
             this.$el.append('<div id="notificationContainer"></div>');
         },

@@ -1,13 +1,12 @@
 define([
     'backbone',
-    'handlebars',
     'jquery',
     'views/RegisterModal',
     'text!views/templates/HeaderView.hbs'],
-    function(Backbone, Handlebars, $, RegisterModal, Template) {
+    function(Backbone, $, RegisterModal, Template) {
     
     return Backbone.View.extend({
-        template: Handlebars.compile(Template),
+        template: Template,
         registerModal: new RegisterModal(),
         events: {
             "click #registerButton": "showRegisterModal"
@@ -16,7 +15,7 @@ define([
             this.render();
         },
         render: function() {
-            this.$el.append(this.template({}));
+            this.$el.append(this.template);
             this.$el.append(this.registerModal.el);
         },
         showRegisterModal: function() {

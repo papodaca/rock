@@ -1,17 +1,16 @@
 define([
     'backbone',
     'underscore',
-    'handlebars',
     'notifier',
     'text!views/templates/RegisterModal.hbs',
     'models/UserModel',
     'Util',
     'jquery',
     'jquery.bootstrap'],
-    function(Backbone, _, HandleBars, Notifier, Template, UserModel, Util, $, BS) {
+    function(Backbone, _, Notifier, Template, UserModel, Util, $, BS) {
 
     return Backbone.View.extend({
-        template: Handlebars.compile(Template),
+        template: Template,
         className: "modal hide fade",
         id: "registerModal",
         user: new UserModel(),
@@ -74,7 +73,7 @@ define([
             this.$(".control-group").removeClass("error");
         },
         render: function() {
-            this.$el.append(this.template({}));
+            this.$el.append(this.template);
         },
         reset: function() {
             this.$("input").val("");
