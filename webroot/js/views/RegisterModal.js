@@ -59,7 +59,7 @@ define([
             Notifier.success("Registration successful.");
         },
         saveError: function(model, msg) {
-            if (msg.status === 400 && msg.responseText.indexOf("Email in use.") != -1) {
+            if (msg.status === 400 && Util.contains("Email in use.")) {
                 this.$(".email .label").html("Email in use.").toggleClass("hidden");
                 this.$("modal-footer .button").removeClass("disabled loading");
             }
