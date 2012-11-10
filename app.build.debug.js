@@ -1,12 +1,12 @@
 ({
-	appDir: "webroot.src",
-	baseUrl: "js",
-	dir: "webroot",
-    optimizeCss: "standard",
+    appDir: "webroot.src",
+    baseUrl: "js",
+    dir: "webroot",
     removeCombined: true,
-	modules: [{
-		name: "main"
-	}],
+    optimize: "none",
+    modules: [{
+        name: "main"
+    }],
     shim: {
         'jquery.bootstrap': {
             deps: ['jquery'],
