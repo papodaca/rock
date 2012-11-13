@@ -1,4 +1,5 @@
 #This build requires execSync and wrench get then this way:
+# npm install -g coffee-script
 # npm install exec-sync wrench rimraf
 # node asyncness makes this really diffucult
 exec = require 'exec-sync'
