@@ -77,6 +77,3 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
           @user.save {},
             success: _.bind(@saveSuccess, this)
             error: _.bind(@saveError, this)
-
-
-

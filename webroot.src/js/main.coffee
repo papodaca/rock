@@ -1,13 +1,13 @@
 require.config
-  shim:
+  'shim':
     'jquery.bootstrap':
-      deps: ['jquery']
-      exports: 'jquery'
-    notifier:
-      exports: 'Notifier'
-    handlebars:
-      exports: 'Handlebars'
-  paths:
+      'deps': ['jquery']
+      'exports': 'jquery'
+    'notifier':
+      'exports': 'Notifier'
+    'handlebars':
+      'exports': 'Handlebars'
+  'paths':
     'jquery': 'vendor/jquery',
     'jquery.bootstrap': 'vendor/bootstrap',
     'handlebars': 'vendor/handlebars',
@@ -18,10 +18,9 @@ require.config
     'i18nprecompile': 'vendor/i18nprecompile',
     'hbs': 'vendor/hbs'
   'hbs': 
-    'templateExtension': 'hbs',
+    ##'templateExtension': 'hbs',
     'disableI18n': true
 
 require ['Router', 'backbone'], (Router, Backbone) ->
   window.Router = Router
   Backbone.history.start()
-

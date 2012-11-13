@@ -26,5 +26,3 @@ define ["backbone", "jquery", "views/HeaderView", "views/AudioPlayerView", "hbs!
     setSocket: (socket) ->
       @socket = socket
       @$("#socket").empty().append @socket.el
-
-

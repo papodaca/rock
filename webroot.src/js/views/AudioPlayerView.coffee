@@ -147,5 +147,3 @@ define ["backbone", "underscore", "jquery", "hbs!template/AudioPlayerView"], (Ba
             lastFrame = now
 
       loop_ lastFrame
-
-

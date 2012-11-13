@@ -14,5 +14,3 @@ define ["backbone", "jquery", "views/RegisterModal", "hbs!template/HeaderView"],
 
     showRegisterModal: ->
       @registerModal.$el.modal "show"
-
-
