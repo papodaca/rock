@@ -1,21 +1,34 @@
 #This build requires execSync and wrench get then this way:
 # npm install -g coffee-script
-# npm install exec-sync wrench rimraf
+# npm install exec-sync wrench rimraf watch
 # node asyncness makes this really diffucult
+
 exec = require 'exec-sync'
 child_process = require 'child_process'
 rimraf = require 'rimraf'
 rm = rimraf.sync
 fs = require 'fs'
 wrench = require 'wrench'
+watch = require 'watch'
 
 bin = 'webroot'
 src = bin + '.src'
 tmp = bin + '.tmp'
-rootFiles = ['index.html', 'index.php', '.htaccess', '404.html', 'test.php']
-rootDirs = ['js/vendor', 'css', 'fonts', 'js/template']
+rootFiles = [
+  'index.html'
+  'index.php'
+  '.htaccess'
+  '404.html'
+  'test.php'
+]
+rootDirs = [
+  'js/vendor'
+  'css'
+  'fonts'
+  'js/template'
+]
 
-copy = copyFileSync = (srcFile, destFile) ->
+copy = (srcFile, destFile) ->
   BUF_LENGTH = 64*1024
   buff = new Buffer(BUF_LENGTH)
   fdr = fs.openSync(srcFile, 'r')
@@ -29,6 +42,24 @@ copy = copyFileSync = (srcFile, destFile) ->
   fs.closeSync(fdr)
   fs.closeSync(fdw)
 
+task 'watch:debug', 'Watch for file changes. Build on change', ->
+  watch.createMonitor 'webroot.src/', (monitor) ->
+    monitor.on 'changed', (f, curr, prev) ->
+      console.log '-----------------------------------------'
+      console.log f
+      console.log '-----------------------------------------'
+      result = exec 'cake build:debug'
+      console.log result
+
+task 'watch:release', 'Watch for file changes. Build on change', ->
+  watch.createMonitor 'webroot.src/', (monitor) ->
+    monitor.on 'changed', (f, curr, prev) ->
+      console.log '-----------------------------------------'
+      console.log f
+      console.log '-----------------------------------------'
+      result = exec 'cake build:release'
+      console.log result
+
 task 'build:release', 'Build a release of the web client', ->
   invoke 'clean'
   invoke 'coffee:compile'
@@ -36,7 +67,6 @@ task 'build:release', 'Build a release of the web client', ->
   invoke 'r'
   invoke 'cleanup:r'
   return 0
-
 
 task 'build:debug', 'Build a debug release of the web client', ->
   invoke 'clean'
