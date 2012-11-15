@@ -48,8 +48,7 @@ task 'watch:debug', 'Watch for file changes. Build on change', ->
       console.log '-----------------------------------------'
       console.log f
       console.log '-----------------------------------------'
-      result = exec 'cake build:debug'
-      console.log result
+      invoke 'build:debug'
 
 task 'watch:release', 'Watch for file changes. Build on change', ->
   watch.createMonitor 'webroot.src/', (monitor) ->
@@ -57,8 +56,7 @@ task 'watch:release', 'Watch for file changes. Build on change', ->
       console.log '-----------------------------------------'
       console.log f
       console.log '-----------------------------------------'
-      result = exec 'cake build:release'
-      console.log result
+      invoke 'build:release'
 
 task 'build:release', 'Build a release of the web client', ->
   invoke 'clean'
