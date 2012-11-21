@@ -14,7 +14,6 @@ define ["backbone", "jquery", "views/HeaderView", "views/AudioPlayerView", "hbs!
       @$el.append @header.el
       @$el.append @template()
       @$el.append @audioPlayer.el
-      @$el.append "<div id=\"notificationContainer\"></div>"
 
     resize: ->
       @audioPlayer.resize @audioPlayer

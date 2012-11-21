@@ -42,21 +42,21 @@ copy = (srcFile, destFile) ->
   fs.closeSync(fdr)
   fs.closeSync(fdw)
 
+handleChange = (f, task) ->
+  console.log '-----------------------------------------'
+  console.log f
+  console.log '-----------------------------------------'
+  invoke task
+
 task 'watch:debug', 'Watch for file changes. Build on change', ->
   watch.createMonitor 'webroot.src/', (monitor) ->
     monitor.on 'changed', (f, curr, prev) ->
-      console.log '-----------------------------------------'
-      console.log f
-      console.log '-----------------------------------------'
-      invoke 'build:debug'
+      handleChange f, 'build:debug'
 
 task 'watch:release', 'Watch for file changes. Build on change', ->
   watch.createMonitor 'webroot.src/', (monitor) ->
     monitor.on 'changed', (f, curr, prev) ->
-      console.log '-----------------------------------------'
-      console.log f
-      console.log '-----------------------------------------'
-      invoke 'build:release'
+      handleChange f, 'build:release'
 
 task 'build:release', 'Build a release of the web client', ->
   invoke 'clean'
@@ -64,6 +64,7 @@ task 'build:release', 'Build a release of the web client', ->
   invoke 'static'
   invoke 'r'
   invoke 'cleanup:r'
+  console.log 'DONE!'
   return 0
 
 task 'build:debug', 'Build a debug release of the web client', ->
@@ -72,6 +73,7 @@ task 'build:debug', 'Build a debug release of the web client', ->
   invoke 'static'
   invoke 'copy'
   invoke 'cleanup:tmp'
+  console.log 'DONE!'
   return 0
 
 
