@@ -11,27 +11,27 @@ Roles = Role.create([
 
 MediaType.delete_all
 MediaTypes = MediaType.create([
-  {type: 'audio/aiff', extension: 'aif'},
-  {type: 'audio/aiff', extension: 'aifc'},
-  {type: 'audio/aiff', extension: 'aiff'},
-  {type: 'audio/mpeg', extension: 'mp3'},
-  {type: 'audio/ogg', extension: 'ogg'},
-  {type: 'audio/wav', extension: 'wav'},
-  {type: 'audio/x-flac', extension: 'flac'},
-  {type: 'audio/aac', extension: 'm4a'},
-  {type: 'audio/aac', extension: 'aac'},
-  {type: 'audio/aac', extension: '3gp'},
-  {type: 'audio/basic', extension: 'au'},
-  {type: 'audio/x-ms-wma', extension: 'wma'},
-  {type: 'audio/x-monkeys-audio', extension: 'ape'},
-  {type: 'image/jpeg', extension: 'jpg'},
-  {type: 'image/jpeg', extension: 'jpeg'},
-  {type: 'image/png', extension: 'png'},
-  {type: 'image/gif', extension: 'gif'},
-  {type: 'application/rss+xml', extension: 'rss'},
-  {type: 'application/rss+xml', extension: 'xml'},
-  {type: 'application/atom+xml', extension: 'atom'},
-  {type: 'application/atom+xml', extension: 'xml'}
+  {mime_type: 'audio/aiff', extension: 'aif'},
+  {mime_type: 'audio/aiff', extension: 'aifc'},
+  {mime_type: 'audio/aiff', extension: 'aiff'},
+  {mime_type: 'audio/mpeg', extension: 'mp3'},
+  {mime_type: 'audio/ogg', extension: 'ogg'},
+  {mime_type: 'audio/wav', extension: 'wav'},
+  {mime_type: 'audio/x-flac', extension: 'flac'},
+  {mime_type: 'audio/aac', extension: 'm4a'},
+  {mime_type: 'audio/aac', extension: 'aac'},
+  {mime_type: 'audio/aac', extension: '3gp'},
+  {mime_type: 'audio/basic', extension: 'au'},
+  {mime_type: 'audio/x-ms-wma', extension: 'wma'},
+  {mime_type: 'audio/x-monkeys-audio', extension: 'ape'},
+  {mime_type: 'image/jpeg', extension: 'jpg'},
+  {mime_type: 'image/jpeg', extension: 'jpeg'},
+  {mime_type: 'image/png', extension: 'png'},
+  {mime_type: 'image/gif', extension: 'gif'},
+  {mime_type: 'application/rss+xml', extension: 'rss'},
+  {mime_type: 'application/rss+xml', extension: 'xml'},
+  {mime_type: 'application/atom+xml', extension: 'atom'},
+  {mime_type: 'application/atom+xml', extension: 'xml'}
 ])
 
 Genre.delete_all

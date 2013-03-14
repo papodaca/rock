@@ -37,7 +37,7 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
     create_table :media_types do |t|
-      t.string :type
+      t.string :mime_type
       t.string :extension
 
       t.timestamps
