@@ -84,7 +84,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.string :title
       t.integer :track
       t.integer :disk
-      t.integer :lenght
+      t.integer :length
 
       t.references :album
       t.references :genre

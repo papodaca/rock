@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.string   "title"
     t.integer  "track"
     t.integer  "disk"
-    t.integer  "lenght"
+    t.integer  "length"
     t.integer  "album_id"
     t.integer  "genre_id"
     t.integer  "artist_id"
