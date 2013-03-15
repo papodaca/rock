@@ -1,0 +1,80 @@
+/* Regular font */
+@font-face {
+    font-family: 'PT Sans';
+    src: url('../fonts/PTS55F-webfont.eot');
+    src: url('../fonts/PTS55F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS55F-webfont.woff') format('woff'),
+         url('../fonts/PTS55F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS55F-webfont.svg#PTSansRegular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PT Sans';
+    src: url('../fonts/PTS75F-webfont.eot');
+    src: url('../fonts/PTS75F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS75F-webfont.woff') format('woff'),
+         url('../fonts/PTS75F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS75F-webfont.svg#PTSansBold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PT Sans';
+    src: url('../fonts/PTS56F-webfont.eot');
+    src: url('../fonts/PTS56F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS56F-webfont.woff') format('woff'),
+         url('../fonts/PTS56F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS56F-webfont.svg#PTSansItalic') format('svg');
+    font-weight: 400;
+    font-style: italic;
+
+}
+@font-face {
+    font-family: 'PT Sans';
+    src: url('../fonts/PTS76F-webfont.eot');
+    src: url('../fonts/PTS76F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTS76F-webfont.woff') format('woff'),
+         url('../fonts/PTS76F-webfont.ttf') format('truetype'),
+         url('../fonts/PTS76F-webfont.svg#PTSansBoldItalic') format('svg');
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+/* Mono font */
+@font-face {
+    font-family: 'PT Mono';
+    src: url('../fonts/PTM55FT-webfont.eot');
+    src: url('../fonts/PTM55FT-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTM55FT-webfont.woff') format('woff'),
+         url('../fonts/PTM55FT-webfont.ttf') format('truetype'),
+         url('../fonts/PTM55FT-webfont.svg#PTMonoRegular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+/* Serif font */
+@font-face {
+    font-family: 'PT Serif';
+    src: url('../fonts/PTF55F-webfont.eot');
+    src: url('../fonts/PTF55F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTF55F-webfont.woff') format('woff'),
+         url('../fonts/PTF55F-webfont.ttf') format('truetype'),
+         url('../fonts/PTF55F-webfont.svg#PTSerifRegular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'PT Serif';
+    src: url('../fonts/PTF75F-webfont.eot');
+    src: url('../fonts/PTF75F-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/PTF75F-webfont.woff') format('woff'),
+         url('../fonts/PTF75F-webfont.ttf') format('truetype'),
+         url('../fonts/PTF75F-webfont.svg#PTSerifBold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}
