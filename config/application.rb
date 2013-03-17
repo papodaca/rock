@@ -55,6 +55,8 @@ module Rock
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.requirejs.logical_asset_filter += [/\.hbs$/]
+    config.assets.precompile = ['application.coffee', 'application.css']
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
