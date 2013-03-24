@@ -25,7 +25,9 @@ Rock::Application.routes.draw do
   #       get 'sold'
   #     end
   #   end
-
+resources :libraries
+match "/libraries/page/:page/count/:count" => "libraries#page"
+match "/libraries/page/:page" => "libraries#page"
   # Sample resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales

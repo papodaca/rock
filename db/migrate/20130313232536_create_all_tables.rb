@@ -36,6 +36,14 @@ class CreateAllTables < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :libraries do |t|
+      t.string :name
+
+      t.references :data_file
+
+      t.timestamps
+    end
+
     create_table :media_types do |t|
       t.string :mime_type
       t.string :extension
@@ -90,6 +98,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.references :genre
       t.references :artist
       t.references :data_file
+      t.references :library
 
       t.timestamps
     end

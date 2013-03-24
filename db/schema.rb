@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "libraries", :force => true do |t|
+    t.string   "name"
+    t.integer  "data_file_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "media_types", :force => true do |t|
     t.string   "mime_type"
     t.string   "extension"
@@ -98,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.integer  "genre_id"
     t.integer  "artist_id"
     t.integer  "data_file_id"
+    t.integer  "library_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
