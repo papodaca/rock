@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
   create_table "media_types", :force => true do |t|
     t.string   "mime_type"
     t.string   "extension"
+    t.boolean  "audio"
+    t.boolean  "image"
+    t.boolean  "feed"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

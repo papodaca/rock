@@ -1,20 +1,6 @@
 class LibrariesController < ApplicationController
 	def index
-		result = Library.all()
-		result.each do |lib|
-			lib[:data_file] = DataFile.find(lib[:data_file_id])
-		end
-		render :json => result
-	end
-
-	def page
-		count = params[:count] ? params[:count].to_i : 50
-		page = count * (params[:page].to_i - 1)
-		result = Library.limit(count).offset(page)
-		result.each do |lib|
-			lib[:data_file] = DataFile.find(lib[:data_file_id])
-		end
-		render :json => result
+		@libraries = Library.all
 	end
 
 	def create
@@ -24,14 +10,10 @@ class LibrariesController < ApplicationController
 	end
 
 	def show
-		
-	end
-
-	def update
-
+		@library = Library.find(params[:id])
 	end
 
 	def destroy
-
+		Library.find(param[:id]).destroy
 	end
 end

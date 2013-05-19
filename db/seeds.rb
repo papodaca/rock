@@ -11,27 +11,27 @@ Roles = Role.create([
 
 MediaType.delete_all
 MediaTypes = MediaType.create([
-  {mime_type: 'audio/aiff', extension: 'aif'},
-  {mime_type: 'audio/aiff', extension: 'aifc'},
-  {mime_type: 'audio/aiff', extension: 'aiff'},
-  {mime_type: 'audio/mpeg', extension: 'mp3'},
-  {mime_type: 'audio/ogg', extension: 'ogg'},
-  {mime_type: 'audio/wav', extension: 'wav'},
-  {mime_type: 'audio/x-flac', extension: 'flac'},
-  {mime_type: 'audio/aac', extension: 'm4a'},
-  {mime_type: 'audio/aac', extension: 'aac'},
-  {mime_type: 'audio/aac', extension: '3gp'},
-  {mime_type: 'audio/basic', extension: 'au'},
-  {mime_type: 'audio/x-ms-wma', extension: 'wma'},
-  {mime_type: 'audio/x-monkeys-audio', extension: 'ape'},
-  {mime_type: 'image/jpeg', extension: 'jpg'},
-  {mime_type: 'image/jpeg', extension: 'jpeg'},
-  {mime_type: 'image/png', extension: 'png'},
-  {mime_type: 'image/gif', extension: 'gif'},
-  {mime_type: 'application/rss+xml', extension: 'rss'},
-  {mime_type: 'application/rss+xml', extension: 'xml'},
-  {mime_type: 'application/atom+xml', extension: 'atom'},
-  {mime_type: 'application/atom+xml', extension: 'xml'}
+  {mime_type: 'audio/aiff', extension: 'aif', audio: true, image: false, feed: false},
+  {mime_type: 'audio/aiff', extension: 'aifc', audio: true, image: false, feed: false},
+  {mime_type: 'audio/aiff', extension: 'aiff', audio: true, image: false, feed: false},
+  {mime_type: 'audio/mpeg', extension: 'mp3', audio: true, image: false, feed: false},
+  {mime_type: 'audio/ogg', extension: 'ogg', audio: true, image: false, feed: false},
+  {mime_type: 'audio/wav', extension: 'wav', audio: true, image: false, feed: false},
+  {mime_type: 'audio/x-flac', extension: 'flac', audio: true, image: false, feed: false},
+  {mime_type: 'audio/aac', extension: 'm4a', audio: true, image: false, feed: false},
+  {mime_type: 'audio/aac', extension: 'aac', audio: true, image: false, feed: false},
+  {mime_type: 'audio/aac', extension: '3gp', audio: true, image: false, feed: false},
+  {mime_type: 'audio/basic', extension: 'au', audio: true, image: false, feed: false},
+  {mime_type: 'audio/x-ms-wma', extension: 'wma', audio: true, image: false, feed: false},
+  {mime_type: 'audio/x-monkeys-audio', extension: 'ape', audio: true, image: false, feed: false},
+  {mime_type: 'image/jpeg', extension: 'jpg', audio: false, image: true, feed: false},
+  {mime_type: 'image/jpeg', extension: 'jpeg', audio: false, image: true, feed: false},
+  {mime_type: 'image/png', extension: 'png', audio: false, image: true, feed: false},
+  {mime_type: 'image/gif', extension: 'gif', audio: false, image: true, feed: false},
+  {mime_type: 'application/rss+xml', extension: 'rss', audio: false, image: false, feed: true},
+  {mime_type: 'application/rss+xml', extension: 'xml', audio: false, image: false, feed: true},
+  {mime_type: 'application/atom+xml', extension: 'atom', audio: false, image: false, feed: true},
+  {mime_type: 'application/atom+xml', extension: 'xml', audio: false, image: false, feed: true}
 ])
 
 Genre.delete_all

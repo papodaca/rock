@@ -47,6 +47,9 @@ class CreateAllTables < ActiveRecord::Migration
     create_table :media_types do |t|
       t.string :mime_type
       t.string :extension
+      t.boolean :audio
+      t.boolean :image
+      t.boolean :feed
 
       t.timestamps
     end
@@ -126,7 +129,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.string :password_hash
       t.string :password_salt
       
-      t.references :role_id
+      t.references :role
 
       t.timestamps
     end
