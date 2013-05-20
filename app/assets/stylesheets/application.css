@@ -3,3 +3,10 @@
 *= require_tree .
 */
 
+.hidden {
+	display: none;
+}
+
+div#socket {
+	margin-top: 45px;
+}
