@@ -10,3 +10,7 @@
 div#socket {
 	margin-top: 45px;
 }
+
+body {
+	font-family: 'Droid Sans', sans-serif !important;
+}
