@@ -14,21 +14,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>Home</td>
-					<td>/home/usr1/data/Music</td>
-					<td>5405</td>
-					<td>
-						<button class="btn btn-mini btn-danger">Delete</button>
-						<button class="btn btn-mini btn-primary">Modify</button>
-					</td>
-					<td>
-						<div class="progress progress-striped active progress-short">
-							<div class="bar" style="width: 40%;"></div>
-						</div>
-					</td>
-				</tr>
+				{{#each objects}}
+					{{{el.outerHTML}}}
+				{{/each}}
 			</tbody>
 		</table>
+		<button class="btn btn-success">New Library</button>
 	</div>
 </div>

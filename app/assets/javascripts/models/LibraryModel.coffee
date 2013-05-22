@@ -1,6 +1,6 @@
 define ["backbone"], (Backbone) ->
   Backbone.Model.extend
-    url: "libraries"
+    urlRoot: "api/libraries"
     defaults:
       id: null
       name: null
