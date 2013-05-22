@@ -1,0 +1,21 @@
+/*
+*= require_self
+*= require_tree .
+*/
+
+.hidden {
+	display: none !important;
+}
+
+.progress-short {
+	margin-bottom: 0px !important;
+}
+
+div#socket {
+	margin-top: 45px;
+	margin-bottom: 45px;
+}
+
+body {
+	font-family: 'Droid Sans', sans-serif !important;
+}

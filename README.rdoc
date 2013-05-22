@@ -1,0 +1,3 @@
+== Welcome to Rock
+
+Rock is a web-application built using ruby on rails and backbonejs.
