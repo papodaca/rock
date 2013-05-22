@@ -1,3 +1,3 @@
 require ['Router', 'backbone'], (Router, Backbone) ->
   window.Router = Router
-  Backbone.history.start()
+  Backbone.history.start({pushState: true})

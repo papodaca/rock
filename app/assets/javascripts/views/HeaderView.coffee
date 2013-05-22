@@ -4,6 +4,8 @@ define ["backbone", "jquery", "views/RegisterModal", "hbs!template/HeaderView"],
     registerModal: new RegisterModal()
     events:
       "click #registerButton": "showRegisterModal"
+      "click #brandLink": "showHero"
+      "click #configureHeaderLink": "showSettings"
 
     initialize: ->
       @render()
@@ -14,3 +16,9 @@ define ["backbone", "jquery", "views/RegisterModal", "hbs!template/HeaderView"],
 
     showRegisterModal: ->
       @registerModal.$el.modal "show"
+
+    showSettings: ->
+      window.Router.nav "settings"
+
+    showHero: ->
+      window.Router.nav "/"
