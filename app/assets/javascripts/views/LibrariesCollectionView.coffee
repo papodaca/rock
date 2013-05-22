@@ -1,10 +1,12 @@
-define ["backbone", "jquery", "underscore", "models/LibraryCollectionModel", "views/LibraryView", "hbs!template/LibrariesCollectionView"], (Backbone, $, _, LibraryCollectionModel, LibraryView, Template) ->
+define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryCollectionModel", "views/LibraryView", "hbs!template/LibrariesCollectionView"], (Backbone, $, BS, _, LibraryCollectionModel, LibraryView, Template) ->
   Backbone.View.extend
     template: Template
     id: "libraries"
     className: "container"
     libraries: new LibraryCollectionModel()
     subViews : new Array()
+    events:
+      "click #newLibraryButton" : "newLibrary"
     initialize: ->
       @libraries.on 'reset', @render, this
       @libraries.on 'add', @render, this
@@ -17,3 +19,6 @@ define ["backbone", "jquery", "underscore", "models/LibraryCollectionModel", "vi
             model: library
       @$el.empty().append @template
         objects: @subViews
+
+    newLibrary: ->
+      @$("#newLibraryModal").modal "show"
