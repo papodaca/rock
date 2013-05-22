@@ -3,6 +3,9 @@ define ["backbone", "jquery", "hbs!template/LibraryView"], (Backbone, $, Templat
     tagName: 'tr'
     template: Template
     model: null
+    events:
+      "click #deleteButton": "deleteLibrary"
+      "click #modifyButton": "modifyLibrary"
     initialize: (options)->
       @model = options.model
       @render()
@@ -10,3 +13,9 @@ define ["backbone", "jquery", "hbs!template/LibraryView"], (Backbone, $, Templat
     render: ->
       @$el.empty()
       @$el.append @template @model.attributes
+
+    deleteLibrary: ->
+      model.destroy()
+      @$el.addClass "hidden"
+
+    modifyLibrary: ->

@@ -7,6 +7,7 @@ define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryC
     subViews : new Array()
     events:
       "click #newLibraryButton" : "newLibrary"
+      "click .modal-header button": "hideModal"
     initialize: ->
       @libraries.on 'reset', @render, this
       @libraries.on 'add', @render, this
@@ -22,3 +23,6 @@ define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryC
 
     newLibrary: ->
       @$("#newLibraryModal").modal "show"
+
+    hideModal: ->
+      @$("#newLibraryModal").modal "hide"
