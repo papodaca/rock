@@ -5,8 +5,7 @@ class LibrariesController < ApplicationController
 
 	def create
 		file = DataFile.create(:path => params[:path])
-		result = Library.create(:name => params[:name], :data_file_id => file.id)
-		render :json => result
+		@library = Library.create(:name => params[:name], :data_file_id => file.id)
 	end
 
 	def show
@@ -14,6 +13,6 @@ class LibrariesController < ApplicationController
 	end
 
 	def destroy
-		Library.find(param[:id]).destroy
+		Library.destroy(params[:id])
 	end
 end

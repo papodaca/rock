@@ -1,9 +1,11 @@
 define ["backbone", "jquery", "views/LibrariesCollectionView", "views/UserView", "hbs!template/SettingsView"], (Backbone, $, LibrariesCollectionView, UserView, Template) ->
   Backbone.View.extend
     id: "settings"
-    libraries: new LibrariesCollectionView()
-    user: new UserView()
+    libraries: null
+    user: null
     initialize: ->
+      @libraries = new LibrariesCollectionView()
+      @user = new UserView()
       @render()
 
     render: ->
