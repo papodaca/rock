@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.string   "email"
     t.string   "password_hash"
     t.string   "password_salt"
-    t.integer  "role_id_id"
+    t.integer  "role_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
