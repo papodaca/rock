@@ -1,13 +1,13 @@
 define ["backbone", "jquery", "views/RegisterModal", "hbs!template/HeaderView"], (Backbone, $, RegisterModal, Template) ->
   Backbone.View.extend
     template: Template
-    registerModal: new RegisterModal()
+    registerModal: null
     events:
-      "click #registerButton": "showRegisterModal"
-      "click #brandLink": "showHero"
-      "click #configureHeaderLink": "showSettings"
+        "click #registerButton": "showRegisterModal"
+        "click a.link": "showScreen"
 
     initialize: ->
+      @registerModal =  new RegisterModal()
       @render()
 
     render: ->
@@ -17,8 +17,5 @@ define ["backbone", "jquery", "views/RegisterModal", "hbs!template/HeaderView"],
     showRegisterModal: ->
       @registerModal.$el.modal "show"
 
-    showSettings: ->
-      window.Router.nav "settings"
-
-    showHero: ->
-      window.Router.nav "/"
+    showScreen: (event) ->
+      window.Router.nav $(event.target).data("target")
