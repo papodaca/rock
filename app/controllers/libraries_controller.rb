@@ -14,5 +14,6 @@ class LibrariesController < ApplicationController
 
 	def destroy
 		Library.destroy(params[:id])
+		render :text => "OK"
 	end
 end

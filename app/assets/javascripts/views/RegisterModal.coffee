@@ -35,7 +35,7 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
       else if Util.contains(error, "emailInvalid")
         @$(".email .label").html("Email invalid").removeClass "hidden"
         @$(".email").addClass "error"
-      @$(".modal-footer button").removeClass "disabled loading"
+      @$(".modal-footer button").removeClass "disabled"
 
     saveSuccess: (model, msg) ->
       @hide()
@@ -44,7 +44,7 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
     saveError: (model, msg) ->
       if msg.status is 400 and Util.contains("Email in use.")
         @$(".email .label").html("Email in use.").toggleClass "hidden"
-        @$("modal-footer .button").removeClass "disabled loading"
+        @$("modal-footer .button").removeClass "disabled"
 
     hide: ->
       @reset()
@@ -59,13 +59,13 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
 
     reset: ->
       @$("input").val ""
-      @$(".modal-footer button").removeClass "disabled loading"
+      @$(".modal-footer button").removeClass "disabled"
       @resetError()
 
     register: ->
       unless @$(".modal-footer button").hasClass("disabled")
         @resetError()
-        @$("button").addClass "disabled loading"
+        @$("button").addClass "disabled"
         data =
           name: @$(".name input").val()
           email: @$(".email input").val()
