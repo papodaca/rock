@@ -1,4 +1,4 @@
-define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryCollectionModel", "models/LibraryModel", "views/LibraryView", "hbs!template/LibrariesCollectionView"], (Backbone, $, BS, _, LibraryCollectionModel, LibraryModal, LibraryView, Template) ->
+define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryCollectionModel", "models/LibraryModel", "views/LibraryView", "views/LibraryModal", "Util", "hbs!template/LibrariesCollectionView"], (Backbone, $, BS, _, LibraryCollectionModel, LibraryModel, LibraryView, LibraryModal, Util,Template) ->
   Backbone.View.extend
     template: Template
     id: "libraries"
@@ -22,24 +22,6 @@ define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryC
       @$("table tbody").append libraryView.el
 
     newLibrary: ->
-      $("#newLibraryModal").modal "show"
-
-    hideModal: ->
-      $("#newLibraryModal").modal "hide"
-      @$(".modal input").val ""
-
-    saveSuccess: (model, msg) ->
-      @libraries.add model
-      @hideModal()
-
-    saveError: (model, error) ->
-      console.log error
-
-    submitNewLibrary: ->
-      model = new LibraryModal()
-      model.set
-        name: @$(".name input").val()
-        path: @$(".path input").val()
-      model.save {},
-        success: _.bind(@saveSuccess, this)
-        error: _.bind(@saveError, this)
+      modal = new LibraryModal
+        callback: _.bind @addLibrary, this
+      Util.presentModal modal

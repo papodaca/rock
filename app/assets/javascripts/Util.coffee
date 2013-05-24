@@ -1,7 +1,6 @@
-define [], ->
+define ["jquery", "jquery.bootstrap"], ($, BS)->
   contains: (s, subS) ->
-    if s.indexOf(subS) isnt -1
-      true
-    else
-      false
-      
+    s.indexOf(subS) isnt -1
+  presentModal: (modal) ->
+  	$("#modalSocket").empty().append modal.el
+  	modal.$el.modal "show"
