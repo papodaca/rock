@@ -1,4 +1,4 @@
-define ["backbone", "jquery", "hbs!template/LibraryView"], (Backbone, $, Template) ->
+define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "hbs!template/LibraryView"], (Backbone, $, _, Util, LibraryModal, Template) ->
   Backbone.View.extend
     tagName: 'tr'
     template: Template
@@ -20,3 +20,11 @@ define ["backbone", "jquery", "hbs!template/LibraryView"], (Backbone, $, Templat
       @remove()
 
     modifyLibrary: ->
+      modal = new LibraryModal
+        model: @model
+        callback: _.bind @updateLibrary, this
+      Util.presentModal modal
+
+    updateLibrary: (model) ->
+      @model = model
+      @render()

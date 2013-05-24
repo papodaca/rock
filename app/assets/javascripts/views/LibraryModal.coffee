@@ -53,10 +53,12 @@ define ["backbone", "underscore", "notifier", "hbs!template/LibraryModal", "mode
       @$(".modal-footer button").removeClass "disabled"
 
     saveSuccess: (model, msg) ->
-      @callback(model, null, msg)
+      @callback? model, null, msg
       @hide()
 
     saveError: (model, error) ->
+      @callback? model, error, error.statusText
+      @hide()
       console.log error
 
     hide: ->
