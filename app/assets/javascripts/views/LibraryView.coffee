@@ -1,4 +1,4 @@
-define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "hbs!template/LibraryView"], (Backbone, $, _, Util, LibraryModal, Template) ->
+define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views/ConfirmModal", "hbs!template/LibraryView"], (Backbone, $, _, Util, LibraryModal, ConfirmModal, Template) ->
   Backbone.View.extend
     tagName: 'tr'
     template: Template
@@ -16,14 +16,20 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "hbs!t
       @$el.append @template @model.attributes
 
     deleteLibrary: ->
-      @model.destroy()
-      @remove()
+      Util.presentModal new ConfirmModal
+        message: "Are you sure you want to delete this Library: " + @model.attributes.name
+        callback: _.bind @handleDelete, @
+
+
+    handleDelete: (answer) ->
+      if answer
+        @model.destroy()
+        @remove()
 
     modifyLibrary: ->
-      modal = new LibraryModal
+      Util.presentModal new LibraryModal
         model: @model
-        callback: _.bind @updateLibrary, this
-      Util.presentModal modal
+        callback: _.bind @updateLibrary, @
 
     updateLibrary: (model) ->
       @model = model
