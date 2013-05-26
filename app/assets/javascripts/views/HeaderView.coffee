@@ -1,21 +1,20 @@
-define ["backbone", "jquery", "views/RegisterModal", "hbs!template/HeaderView"], (Backbone, $, RegisterModal, Template) ->
+define ["backbone", "jquery", "views/RegisterModal", "Util", "hbs!template/HeaderView"], (Backbone, $, RegisterModal, Util, Template) ->
   Backbone.View.extend
     template: Template
-    registerModal: null
+    className: "navbar navbar-fixed-top"
     events:
         "click #registerButton": "showRegisterModal"
         "click a.link": "showScreen"
 
     initialize: ->
-      @registerModal =  new RegisterModal()
       @render()
 
     render: ->
       @$el.append @template()
-      @$el.append @registerModal.el
 
     showRegisterModal: ->
-      @registerModal.$el.modal "show"
+      modal = new RegisterModal()
+      Util.presentModal(modal)
 
     showScreen: (event) ->
       window.Router.nav $(event.target).data("target")
