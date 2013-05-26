@@ -10,29 +10,28 @@ define ["backbone", "underscore", "views/MainView", "views/AttractView", "views/
       $("body").append @view.el
       @base()
     nav: (fragment)->
-      @clean()
       @navigate fragment,
         trigger: true
 
-    clean: ->
-      @goAway @baseView
-      @goAway @settingsView
+    hideAll: ->
+      @hide @baseView
+      @hide @settingsView
 
     go: (aView)->
       aView.$el.removeClass "hidden" if aView?
 
-    goAway: (aView) ->
+    hide: (aView) ->
       aView.$el.addClass "hidden" if aView?
 
     base: ->
-      @clean()
+      @hideAll()
       unless @baseView?
         @baseView = new AttractView()
         @view.addSubView @baseView
       @go @baseView
 
     settings: ->
-      @clean()
+      @hideAll()
       unless @settingsView?
         @settingsView = new SettingsView()
         @view.addSubView @settingsView
