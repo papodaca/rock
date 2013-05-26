@@ -3,10 +3,11 @@ define ["backbone", "jquery", "views/HeaderView", "views/AudioPlayerView", "hbs!
     
     #el: $('body'),
     template: Template
-    header: new HeaderView()
-    audioPlayer: new AudioPlayerView()
-    socket: null
+    header: null
+    audioPlayer: null
     initialize: ->
+      @header = new HeaderView()
+      @audioPlayer = new AudioPlayerView()
       @render()
       $(window).bind "resize.app", _.bind(@resize, this)
 
@@ -22,6 +23,5 @@ define ["backbone", "jquery", "views/HeaderView", "views/AudioPlayerView", "hbs!
       $(window).unbind "resize.app"
       Backbone.View::remove.call this
 
-    setSocket: (socket) ->
-      @socket = socket
-      @$("#socket").empty().append @socket.el
+    addSubView: (aView) ->
+      @$("#socket").append aView.el

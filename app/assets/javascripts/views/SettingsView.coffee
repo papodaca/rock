@@ -12,3 +12,5 @@ define ["backbone", "jquery", "views/LibrariesCollectionView", "views/UserView",
       @$el.empty()
       @$el.append @libraries.el
       @$el.append @user.el
+      @libraries.delegateEvents()
+      @user.delegateEvents()

@@ -5,7 +5,11 @@ class LibrariesController < ApplicationController
 
 	def create
 		file = DataFile.create(:path => params[:path])
-		@library = Library.create(:name => params[:name], :data_file_id => file.id)
+		newLibrary = Library.create(:name => params[:name], :data_file_id => file.id)
+		worder_id = LibraryWorker.asynch_search(:library => newLibrary)
+		newLibrary.set(:workder_id => worder_id)
+		newLibrary.save
+		@library = newLibrary
 	end
 
 	def show
