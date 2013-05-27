@@ -1,4 +1,4 @@
-define ["backbone", "underscore", "views/MainView", "views/AttractView", "views/SettingsView"], (Backbone, _, MainView, AttractView, SettingsView) ->
+define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView"], (Backbone, $, _, MainView, AttractView, SettingsView) ->
   Backbone.Router.extend
     view: new MainView()
     settingsView: null
@@ -14,6 +14,7 @@ define ["backbone", "underscore", "views/MainView", "views/AttractView", "views/
         trigger: true
 
     hideAll: ->
+      $(".icon-cog").removeClass "icon-spin"
       @hide @baseView
       @hide @settingsView
 
@@ -32,6 +33,7 @@ define ["backbone", "underscore", "views/MainView", "views/AttractView", "views/
 
     settings: ->
       @hideAll()
+      $(".icon-cog").addClass "icon-spin"
       unless @settingsView?
         @settingsView = new SettingsView()
         @view.addSubView @settingsView
