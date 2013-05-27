@@ -5,10 +5,8 @@ class LibrariesController < ApplicationController
 
 	def create
 		file = DataFile.create(:path => params[:path])
-		newLibrary = Library.create(:name => params[:name], :data_file_id => file.id)
-		worder_id = LibraryWorker.asynch_search(:library => newLibrary)
-		newLibrary.set(:workder_id => worder_id)
-		newLibrary.save
+		newLibrary = Library.create(:name => params[:name], :data_file_id => file.id, :progress => 0)
+		LibraryWorker.new.scan(newLibrary.id)
 		@library = newLibrary
 	end
 
@@ -29,5 +27,17 @@ class LibrariesController < ApplicationController
 	def destroy
 		Library.destroy(params[:id])
 		render :text => "OK"
+	end
+
+
+	def scan(libraryId)
+		library = Library.find(libraryId)
+		for k in 1..100 do 
+			sleep(0.5)
+			library.progress = k
+			library.save
+		end
+		library.progress = nil
+		library.save
 	end
 end

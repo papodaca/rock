@@ -9,6 +9,7 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
     initialize: (options)->
       @model = options.model
       @render()
+      Util.animLoop _.bind(@thisLoop, this), 250 if @model.attributes.progress?
       @el
 
     render: ->
@@ -19,7 +20,6 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
       Util.presentModal new ConfirmModal
         message: "Are you sure you want to delete this Library: " + @model.attributes.name
         callback: _.bind @handleDelete, @
-
 
     handleDelete: (answer) ->
       if answer
@@ -34,3 +34,16 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
     updateLibrary: (model) ->
       @model = model
       @render()
+
+    thisLoop: (deltaT) ->
+      try
+        @model.fetch()
+        if @model.attributes.progress?
+          @$(".progress").removeClass "hidden"
+          @$(".progress .bar").css "width", @model.attributes.progress.toString() + "%"
+        else
+          @$(".progress").addClass "hidden"
+          return false
+      catch e
+        return true
+      true

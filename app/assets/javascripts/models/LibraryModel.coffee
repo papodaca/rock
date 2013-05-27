@@ -5,6 +5,7 @@ define ["backbone"], (Backbone) ->
       id: null
       name: null
       path: null
+      progress: null
       songs: null
 
     validate: (attr) ->

@@ -1,5 +1,5 @@
 object @library
-attributes :id, :name
+attributes :id, :name, :progress
 
 glue :data_file do
 	attributes :path
