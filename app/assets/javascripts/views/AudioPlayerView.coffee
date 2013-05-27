@@ -1,4 +1,4 @@
-define ["backbone", "underscore", "jquery", "hbs!template/AudioPlayerView"], (Backbone, _, $, Template) ->
+define ["backbone", "underscore", "jquery", "Util", "hbs!template/AudioPlayerView"], (Backbone, _, $, Util, Template) ->
   Backbone.View.extend
     template: Template
     audioPlayer: null
@@ -13,7 +13,7 @@ define ["backbone", "underscore", "jquery", "hbs!template/AudioPlayerView"], (Ba
 
     initialize: ->
       @render()
-      @animLoop _.bind(@thisLoop, this), 250
+      Util.animLoop _.bind(@thisLoop, this), 250
       @audioPlayer = @$("#audioPlayer").get(0)
 
     render: ->
@@ -131,19 +131,3 @@ define ["backbone", "underscore", "jquery", "hbs!template/AudioPlayerView"], (Ba
       catch e
         return true
       true
-
-    animLoop: (render, time) ->
-      running = undefined
-      lastFrame = new Date()
-      raf = window.mozRequestAnimationFrame or window.webkitRequestAnimationFrame or window.msRequestAnimationFrame or window.oRequestAnimationFrame
-      loop_ = (now) ->
-        
-        # stop the loop if render returned false
-        if running isnt false
-          raf loop_, null
-          deltaT = now - lastFrame
-          if deltaT > time
-            running = render(deltaT)
-            lastFrame = now
-
-      loop_ lastFrame
