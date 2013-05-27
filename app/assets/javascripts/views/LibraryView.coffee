@@ -35,15 +35,20 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
       @model = model
       @render()
 
+    updateProgress: (model) ->
+      if model.attributes.progress?
+        @$(".progress").removeClass "hidden"
+        @$(".progress .bar").css "width", model.attributes.progress.toString() + "%"
+
     thisLoop: (deltaT) ->
       try
-        @model.fetch()
-        if @model.attributes.progress?
-          @$(".progress").removeClass "hidden"
-          @$(".progress .bar").css "width", @model.attributes.progress.toString() + "%"
-        else
+
+        unless @model.attributes.progress?
           @$(".progress").addClass "hidden"
           return false
+        else
+          @model.fetch
+            success: _.bind @updateProgress, @
       catch e
         return true
       true
