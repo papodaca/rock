@@ -37,12 +37,12 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
 
     updateProgress: (model) ->
       if model.attributes.progress?
+        @$(".songCount").empty().append model.attributes.songs
         @$(".progress").removeClass "hidden"
         @$(".progress .bar").css "width", model.attributes.progress.toString() + "%"
 
     thisLoop: (deltaT) ->
       try
-
         unless @model.attributes.progress?
           @$(".progress").addClass "hidden"
           return false
