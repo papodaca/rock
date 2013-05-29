@@ -76,7 +76,7 @@ define ["backbone", "underscore", "jquery", "Util", "hbs!template/AudioPlayerVie
     playPauseButtonClick: (event) ->
       if @audioPlayer.src isnt ""
         if @audioPlayer.paused is false
-          @audioPlayerpause()
+          @audioPlayer.pause()
         else
           @audioPlayer.play()
         @$("#playPauseButton i").toggleClass "icon-play"
@@ -123,7 +123,7 @@ define ["backbone", "underscore", "jquery", "Util", "hbs!template/AudioPlayerVie
           if @audioPlayer.src isnt ""
             playStatus = @secondsToMinutes(@audioPlayer.currentTime) + " / "
             playStatus += @secondsToMinutes(@audioPlayer.duration)
-            percent = @calculatePercentage(@audioPlayercurrentTime, @audioPlayer.duration)
+            percent = @calculatePercentage(@audioPlayer.currentTime, @audioPlayer.duration)
             percent_buffered = @calculatePercentage(@audioPlayer.buffered.end(0) - @audioPlayer.currentTime, @audioPlayer.duration)
             @$("#playProgress a.brand").html playStatus
             @$("#playbackBar div.progress div.bar").css "width", percent + "%"
