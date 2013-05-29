@@ -95,7 +95,7 @@ class LibraryWorker
 		begin
 			art = images[images.index { |x| x['size'] == "large"}]['content']
 			dataArt = DataFile.create(:path => art)
-			dataArt.media_type_id = getMediaType(art, :image)
+			dataArt.media_type_id = getMediaType(art, :image).id
 			dataArt.save
 			art = Art.create(:data_file_id => dataArt.id)
 			return art.id
