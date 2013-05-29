@@ -18,6 +18,39 @@ test:
   pool: 5
   timeout: 5000
 
+## Example database config:
+# sqlite works, however it is recommended that you use either
+# mysql, mariadb, or postgres. Performance is much better.
+#production:
+#  adapter: mysql2
+#  encoding: utf8
+#  database: rock
+#  username: rock
+#  password: rock
+#  socket: /var/run/mysqld/mysqld.sock
+#  pool: 5
+#  timeout: 5000
+
+#production:
+#  adapter: mysql2
+#  encoding: utf8
+#  database: rock
+#  username: rock
+#  password: rock
+#  host: mysql.example.com
+#  port: 3306
+#  pool: 5
+#  timeout: 5000
+
+#production:
+#  adapter: postgresql
+#  encoding: unicode
+#  database: rock
+#  username: rock
+#  password: rock
+#  pool: 5
+#  timeout: 5000
+
 production:
   adapter: sqlite3
   database: db/production.sqlite3
