@@ -30,6 +30,6 @@ class SongsController < ApplicationController
 		filePath = song.data_file.path
 		mimeType = song.data_file.media_type.mime_type
 
-		send_file filePath, :type => mimeType
+		send_file filePath, :type => mimeType, :disposition => 'inline'
 	end
 end
