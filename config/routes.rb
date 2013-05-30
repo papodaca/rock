@@ -26,13 +26,18 @@ Rock::Application.routes.draw do
   #     end
   #   end
 scope "api" do
-  match "songs(/page/:page(/count/:count))" => "songs#index"
-  match "songs/pageCount(/count/:count)" => "songs#pageCount"
-  match "songs/:id/stream" => "songs#stream", :constraints => { :id => /\d.+/ }
-  match "songs/:id" => "songs#show", :constraints => { :id => /\d.+/ }
+  match "albums(/page/:page(/count/:count))" => "albums#index", :via => :get
+  match "albums/pageCount(/count/:count)" => "albums#pageCount", :via => :get
+  match "albums/:id" => "albums#show", :via => :get
+
+  match "songs(/page/:page(/count/:count))" => "songs#index", :via => :get
+  match "songs/pageCount(/count/:count)" => "songs#pageCount", :via => :get
+
+  match "songs/:id/stream" => "songs#stream", :via => :get
+  match "songs/:id" => "songs#show", :via => :get
+
   match "libraries/:id/scan" => "libraries#scan", :via => :post
   resources :libraries
-
 end
 match "*path" => "main#index"
 # match "/libraries/page/:page/count/:count" => "libraries#page"
