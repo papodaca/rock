@@ -39,7 +39,7 @@ scope "api" do
   match "libraries/:id/scan" => "libraries#scan", :via => :post
   resources :libraries
 end
-match "*path" => "main#index"
+match "*path" => "main#index", :via => :get
 # match "/libraries/page/:page/count/:count" => "libraries#page"
 # match "/libraries/page/:page" => "libraries#page"
   # Sample resource route with sub-resources:
