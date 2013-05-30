@@ -22,7 +22,7 @@ class SongsController < ApplicationController
 	end
 
 	def show
-		@songs = Song.find(params[:id])
+		@song = Song.find(params[:id])
 	end
 
 	def stream
