@@ -18,3 +18,11 @@ define ["backbone"], (Backbone) ->
         valid = false
         result += " pathNull "
       result  unless valid
+
+    scan: (opts) ->
+      url = @.url() + "/scan"
+      options =
+        url: url
+        type: "POST"
+      _.extend(options, opts)
+      (this.sync || Backbone.sync).call(this, null, this, options);

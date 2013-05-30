@@ -10,6 +10,14 @@ class LibrariesController < ApplicationController
 		@library = newLibrary
 	end
 
+	def scan
+		library = Library.find(params[:id])
+		library.progress = 0
+		library.save
+		LibraryWorker.new.scan(library.id)
+		@library = library
+	end
+
 	def show
 		@library = Library.find(params[:id])
 	end

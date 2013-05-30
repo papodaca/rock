@@ -4,13 +4,18 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
     template: Template
     model: null
     events:
-      "click .btn-danger": "deleteLibrary"
-      "click .btn-primary": "modifyLibrary"
+      "click .buttonDelete": "deleteLibrary"
+      "click .buttonModify": "modifyLibrary"
+      "click .buttonScan": "scanLibrary"
     initialize: (options)->
       @model = options.model
       @render()
-      Util.animLoop _.bind(@thisLoop, this), 250 if @model.attributes.progress?
+      @startScanPolling()
       @el
+
+    startScanPolling: (model) ->
+      @model.attributes.progress = model.progress if model?
+      Util.animLoop _.bind(@thisLoop, this), 250 if @model.attributes.progress?
 
     render: ->
       @$el.empty()
@@ -30,6 +35,10 @@ define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views
       Util.presentModal new LibraryModal
         model: @model
         callback: _.bind @updateLibrary, @
+
+    scanLibrary: ->
+      @model.scan
+        success: _.bind @startScanPolling, @
 
     updateLibrary: (model) ->
       @model = model
