@@ -4,18 +4,18 @@
 */
 
 .hidden {
-	display: none !important;
+  display: none !important;
 }
 
 .progress-short {
-	margin-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 div#socket {
-	margin-top: 45px;
-	margin-bottom: 45px;
+  margin-top: 45px;
+  margin-bottom: 45px;
 }
 
 body {
-	font-family: 'Droid Sans', sans-serif !important;
+  font-family: 'Droid Sans', sans-serif !important;
 }
