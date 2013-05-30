@@ -1,10 +1,10 @@
 class SongsController < ApplicationController
 	def index
 		@songs = []
-		if params[:page]
+		if params[:page].present?
 			page = Integer(params[:page])
 			count = Integer(50)
-			if params[:count]
+			if params[:count].present?
 				count = Integer(params[:count])
 			end
 			@songs = Song.order(:title).limit(count).offset(page * count)
@@ -15,7 +15,7 @@ class SongsController < ApplicationController
 
 	def pageCount
 		count = Integer(50)
-		if params[:count]
+		if params[:count].present?
 			count = Integer(params[:count])
 		end
 		render :text => (Float(Song.all.count) / Float(count)).ceil
