@@ -17,6 +17,7 @@ class LibraryWorker
 			next if File.directory?(path)
 			mediaType = getMediaType(path, :audio)
 			next if mediaType == nil
+			next if songExists?(path)
 
 			data = {}
 
@@ -102,5 +103,9 @@ class LibraryWorker
 		rescue Lastfm::ApiError
 			return nil
 		end
+	end
+	def songExists?(path)
+		return true if DataFile.where(:path => path).count > 0
+		return false
 	end
 end
