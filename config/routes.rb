@@ -26,10 +26,12 @@ Rock::Application.routes.draw do
   #     end
   #   end
 scope "api" do
+  match "songs(/page/:page(/count/:count))" => "songs#index"
   match "songs/pageCount(/count/:count)" => "songs#pageCount"
+  match "songs/:id" => "songs#show"
   match "songs/:id/stream" => "songs#stream"
-  match "songs/page/:page(/count/:count)" => "songs#index"
-  resources :libraries, :songs
+  match "libraries/:id/refresh"
+  resources :libraries
 
 end
 match "*path" => "main#index"
