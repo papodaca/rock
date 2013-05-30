@@ -3,7 +3,7 @@ class SongsController < ApplicationController
 		@songs = []
 		if params[:page].present?
 			page = Integer(params[:page])
-			count = Integer(50)
+			count = Integer(APP_CONFIG['default_page_size'])
 			if params[:count].present?
 				count = Integer(params[:count])
 			end
@@ -14,7 +14,7 @@ class SongsController < ApplicationController
 	end
 
 	def pageCount
-		count = Integer(50)
+		count = Integer(APP_CONFIG['default_page_size'])
 		if params[:count].present?
 			count = Integer(params[:count])
 		end
