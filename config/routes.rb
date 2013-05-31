@@ -26,20 +26,14 @@ Rock::Application.routes.draw do
   #     end
   #   end
 scope "api" do
-  match "albums(/page/:page(/count/:count))" => "albums#index", :via => :get
-  match "albums/pageCount(/count/:count)" => "albums#pageCount", :via => :get
-  match "albums/:id" => "albums#show", :via => :get
-
-  match "songs(/page/:page(/count/:count))" => "songs#index", :via => :get
-  match "songs/pageCount(/count/:count)" => "songs#pageCount", :via => :get
-
   match "songs/:id/stream" => "songs#stream", :via => :get
-  match "songs/:id" => "songs#show", :via => :get
 
   match "libraries/:id/scan" => "libraries#scan", :via => :post
   resources :libraries
+  resources :songs, :only => [:index, :show]
+  resources :albums, :only => [:index, :show]
 end
-match "*path" => "main#index", :via => :get
+#match "*path" => "main#index", :via => :get
 # match "/libraries/page/:page/count/:count" => "libraries#page"
 # match "/libraries/page/:page" => "libraries#page"
   # Sample resource route with sub-resources:

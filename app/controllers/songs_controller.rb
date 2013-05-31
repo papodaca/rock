@@ -1,24 +1,10 @@
 class SongsController < ApplicationController
   def index
-    @songs = []
-    if params[:page].present?
-      page = Integer(params[:page]) - 1
-      count = Integer(APP_CONFIG['default_page_size'])
-      if params[:count].present?
-        count = Integer(params[:count])
-      end
-      @songs = Song.order(:title).limit(count).offset(page * count)
-    else
-      @songs = Song.find(:all)
-    end
-  end
+    page = params[:page].present? ? Integer(params[:page]) : 1
+    count = params[:per_page].present? ? Integer(params[:per_page]) : Integer(APP_CONFIG['default_page_size'])
+    @songs = Song.page(page).per_page(count)
 
-  def pageCount
-    count = Integer(APP_CONFIG['default_page_size'])
-    if params[:count].present?
-      count = Integer(params[:count])
-    end
-    render :text => (Float(Song.all.count) / Float(count)).ceil
+    render :json => formPagenationResponce(@songs, 'songs/index')
   end
 
   def show

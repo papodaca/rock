@@ -1,24 +1,10 @@
 class AlbumsController < ApplicationController
   def index
-    @albums = []
-    if params[:page].present?
-      page = Integer(params[:page]) - 1
-      count = Integer(APP_CONFIG['default_page_size'])
-      if params[:count].present?
-        count = Integer(params[:count])
-      end
-      @albums = Album.order(:title).limit(count).offset(page * count)
-    else
-      @albums = Album.find(:all)
-    end
-  end
+    page = params[:page].present? ? Integer(params[:page]) : 1
+    count = params[:per_page].present? ? Integer(params[:per_page]) : Integer(APP_CONFIG['default_page_size'])
+    @albums = Album.page(page).per_page(count)
 
-  def pageCount
-    count = Integer(APP_CONFIG['default_page_size'])
-    if params[:count].present?
-      count = Integer(params[:count])
-    end
-    render :text => (Float(Album.all.count) / Float(count)).ceil
+    render :json => formPagenationResponce(@albums, 'albums/index')
   end
 
   def show
