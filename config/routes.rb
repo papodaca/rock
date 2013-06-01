@@ -32,6 +32,8 @@ scope "api" do
   resources :libraries
   resources :songs, :only => [:index, :show]
   resources :albums, :only => [:index, :show]
+  resources :genres, :only => [:index, :show]
+  resources :playlists, :only => [:index, :show]
 end
 #match "*path" => "main#index", :via => :get
 # match "/libraries/page/:page/count/:count" => "libraries#page"
