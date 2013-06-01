@@ -5,8 +5,7 @@ class Album < ActiveRecord::Base
   belongs_to :artist
   has_many :songs
 
-
   def length
-    Song.where(:album_id => self.id).sum(:length)
+    self.songs.sum(:length)
   end
 end
