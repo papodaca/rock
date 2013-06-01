@@ -8,3 +8,7 @@ end
 glue :album do
   attributes :name => :album
 end
+
+glue :genre do
+  attributes :name => :genre
+end
