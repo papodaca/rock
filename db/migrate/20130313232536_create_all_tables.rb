@@ -58,7 +58,7 @@ class CreateAllTables < ActiveRecord::Migration
     create_table :playlist_elements do |t|
       t.integer :order
 
-      t.references :playlis
+      t.references :playlist
       t.references :song
 
       t.timestamps
