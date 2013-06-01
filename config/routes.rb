@@ -26,14 +26,18 @@ Rock::Application.routes.draw do
   #     end
   #   end
 scope "api" do
-  match "songs/:id/stream" => "songs#stream", :via => :get
-
-  match "libraries/:id/scan" => "libraries#scan", :via => :post
-  resources :libraries
-  resources :songs, :only => [:index, :show]
+  resources :libraries, :only => [:index, :show, :update, :destroy] do
+    post 'scan'
+  end
+  resources :songs, :only => [:index, :show] do
+    get 'stream'
+  end
   resources :albums, :only => [:index, :show]
-  resources :genres, :only => [:index, :show]
+  resources :genres, :only => [:index] do
+    resources :songs, :only => [:index]
+  end
   resources :playlists, :only => [:index, :show]
+  resources :artists, :only => [:index, :show]
 end
 #match "*path" => "main#index", :via => :get
 # match "/libraries/page/:page/count/:count" => "libraries#page"
