@@ -135,6 +135,8 @@ class CreateAllTables < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index :users, :email, :unique => true
+
     create_table :delayed_jobs, :force => true do |table|
       table.integer  :priority, :default => 0      # Allows some jobs to jump to the front of the queue
       table.integer  :attempts, :default => 0      # Provides for retries, but still fail eventually.

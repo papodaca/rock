@@ -83,10 +83,10 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
 
   create_table "playlist_elements", :force => true do |t|
     t.integer  "order"
-    t.integer  "playlis_id"
+    t.integer  "playlist_id"
     t.integer  "song_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "playlists", :force => true do |t|
@@ -155,5 +155,7 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end
