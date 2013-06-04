@@ -116,6 +116,15 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_key"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "sessions", ["session_key"], :name => "index_sessions_on_session_key"
+
   create_table "songs", :force => true do |t|
     t.string   "title"
     t.integer  "track"

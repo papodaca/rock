@@ -92,6 +92,16 @@ class CreateAllTables < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :sessions do |t|
+      t.string :session_key
+
+      t.references :user
+
+      t.timestamps
+    end
+
+    add_index :sessions, :session_key
+
     create_table :songs do |t|
       t.string :title
       t.integer :track
