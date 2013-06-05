@@ -1,6 +1,6 @@
 define ["backbone"], (Backbone) ->
   Backbone.Model.extend
-    url: "users.json"
+    url: "api/users"
     defaults:
       id: null
       email: null

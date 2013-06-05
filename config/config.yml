@@ -1,3 +1,4 @@
 default_page_size: 50
+registration_password: abc123
 lastfm_api_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 lastfm_api_secret: XXXXXXXXXXXXXXXXXXXXXXX

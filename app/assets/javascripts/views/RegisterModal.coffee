@@ -15,7 +15,7 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
 
     initialize: ->
       @render()
-      @user.on "error", @onError, this
+      @user.on "invalid", @onError, this
 
     onError: (model, error) ->
       if Util.contains(error, "passwordMismatch")
@@ -23,14 +23,14 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
         @$(".password").addClass "error"
         @$(".password2").addClass "error"
       else if Util.contains(error, "passwordNull")
-        @$(".password .label").html("Password required").removeClass "hidden"
+        @$(".password .label").html("Required").removeClass "hidden"
         @$(".password").addClass "error"
         @$(".password2").addClass "error"
       if Util.contains(error, "nameNull")
-        @$(".name .label").html("Name required").removeClass "hidden"
+        @$(".name .label").html("Required").removeClass "hidden"
         @$(".name").addClass "error"
       if Util.contains(error, "emailNull")
-        @$(".email .label").html("Email required").removeClass "hidden"
+        @$(".email .label").html("Required").removeClass "hidden"
         @$(".email").addClass "error"
       else if Util.contains(error, "emailInvalid")
         @$(".email .label").html("Email invalid").removeClass "hidden"
@@ -42,9 +42,13 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
       Notifier.success "Registration successful."
 
     saveError: (model, msg) ->
-      if msg.status is 400 and Util.contains("Email in use.")
-        @$(".email .label").html("Email in use.").toggleClass "hidden"
-        @$("modal-footer .button").removeClass "disabled"
+      if msg.status is 400 and Util.contains msg.responseText, "Email in use."
+        @$(".email").addClass "error"
+        @$(".email .label").html("Email in use").toggleClass "hidden"
+      else if msg.status is 401 and Util.contains msg.responseText, "unauthorized"
+        @$(".registrationPassword").addClass "error"
+        @$(".registrationPassword .label").html("Invalid").toggleClass "hidden"
+      @$(".modal-footer button").removeClass "disabled"
 
     hide: ->
       @reset()
@@ -60,20 +64,25 @@ define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "mod
     reset: ->
       @$("input").val ""
       @$(".modal-footer button").removeClass "disabled"
+      @user = new UserModel()
       @resetError()
 
     register: ->
       unless @$(".modal-footer button").hasClass("disabled")
         @resetError()
         @$("button").addClass "disabled"
+        registrationPassword = @$(".registrationPassword input").val()
         data =
           name: @$(".name input").val()
           email: @$(".email input").val()
           password: @$(".password input").val()
           password2: @$(".password2 input").val()
 
-        @user.set data
+        @user.set data,
+          validate: true
         if @user.isValid()
-          @user.save {},
+          @user.save
+            registration_password: registrationPassword
+          ,
             success: _.bind(@saveSuccess, this)
             error: _.bind(@saveError, this)

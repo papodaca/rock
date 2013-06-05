@@ -2,6 +2,8 @@ Rock::Application.routes.draw do
   root to: "main#index"
 
   scope "api" do
+    resources :users, :only => [:create]
+    resources :sessions, :only => [:create]
     resources :libraries, :only => [:index, :show, :update, :destroy] do
       post 'scan'
     end

@@ -1,9 +1,20 @@
 define ["jquery", "jquery.bootstrap"], ($, BS)->
+  sessionKey: "session_key"
   contains: (s, subS) ->
     s.indexOf(subS) isnt -1
   presentModal: (modal) ->
     $("#modalSocket").empty().append modal.el
     modal.$el.modal "show"
+  setSession: (value) ->
+    @setPerminateCookie @sessionKey, value
+  destroySession: ->
+    @removeCookie @sessionKey
+  setPerminateCookie: (key, value) ->
+    date = new Date()
+    date.setFullYear date.getFullYear() + 20
+    document.cookie = key + "=" + value + ";expires=" + date.toGMTString() + ";path=/"
+  removeCookie: (key) ->
+    document.cookie = key + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
   animLoop: (render, time) ->
     running = undefined
     lastFrame = new Date()
