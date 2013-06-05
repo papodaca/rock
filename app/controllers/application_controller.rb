@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     if request.headers['session_key'].present?
-      s = Session.where(:session_key => request.header['session_key']).first
+      s = Session.where(:session_key => request.headers['session_key']).first
       session[:user_id] = s.user_id
     elsif params[:session_key].present?
       s = Session.where(:session_key => params[:session_key]).first
