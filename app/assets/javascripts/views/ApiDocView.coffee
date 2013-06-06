@@ -14,7 +14,7 @@ define ["backbone", "jquery", "underscore", "Util", "hbs!template/ApiDocView"], 
           @$('iframe').css "height", "100%"
           @$('iframe').parent().css "height", "#{windowHeight}px"
         else
-          @$('iframe').css "height", "#{height + 2}px"
+          @$('iframe').css "height", "#{height + 20}px"
           @$('iframe').parent().css "height", "#{height}px"
 
     render: ->
