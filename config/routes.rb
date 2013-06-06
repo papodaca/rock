@@ -19,6 +19,17 @@ Rock::Application.routes.draw do
       resources :songs, :only => [:index]
       resources :albums, :only => [:index]
     end
+    resources :doc, :only => [:index]
+    scope "doc" do
+      match 'sessions' => 'doc#sessions'
+      match 'users' => 'doc#users'
+      match 'libraries' => 'doc#libraries'
+      match 'songs' => 'doc#songs'
+      match 'albums' => 'doc#albums'
+      match 'genres' => 'doc#genres'
+      match 'playlists' => 'doc#playlists'
+      match 'artists' => 'doc#artists'
+    end
   end
 
   match "*path" => "main#index", :via => :get

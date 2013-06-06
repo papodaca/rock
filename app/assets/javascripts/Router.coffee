@@ -1,11 +1,13 @@
-define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView"], (Backbone, $, _, MainView, AttractView, SettingsView) ->
+define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView", "views/ApiDocView"], (Backbone, $, _, MainView, AttractView, SettingsView, ApiDocView) ->
   Backbone.Router.extend
     view: new MainView()
     settingsView: null
     baseView: null
+    apiDocView: null
     routes:
       "": "base"
       "settings": "settings"
+      "api": "api"
     initialize: ->
       $("body").append @view.el
       @base()
@@ -17,6 +19,7 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
       $(".icon-cog").removeClass "icon-spin"
       @hide @baseView
       @hide @settingsView
+      @hide @apiDocView
 
     go: (aView)->
       aView.$el.removeClass "hidden" if aView?
@@ -38,3 +41,11 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
         @settingsView = new SettingsView()
         @view.addSubView @settingsView
       @go @settingsView
+
+    api: ->
+      @hideAll()
+      unless @apiDocView?
+        @apiDocView = new ApiDocView()
+        @view.addSubView @apiDocView
+      @go @apiDocView
+
