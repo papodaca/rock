@@ -4,7 +4,7 @@ Rock::Application.routes.draw do
   scope "api" do
     resources :users, :only => [:create]
     resources :sessions, :only => [:create]
-    resources :libraries, :only => [:index, :show, :update, :destroy] do
+    resources :libraries, :only => [:index, :create, :show, :update, :destroy] do
       post 'scan'
     end
     resources :songs, :only => [:index, :show] do
