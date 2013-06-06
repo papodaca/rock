@@ -36,7 +36,7 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
 
     settings: ->
       @hideAll()
-      $(".icon-cog").addClass "icon-spin"
+      $(".icon-cog.headerLink").addClass "icon-spin"
       unless @settingsView?
         @settingsView = new SettingsView()
         @view.addSubView @settingsView
