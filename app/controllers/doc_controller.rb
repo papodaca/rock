@@ -753,7 +753,82 @@ class DocController < ApplicationController
     apiSpec = getApiSpec
     apiSpec[:resourcePath] = "/artists"
     apiSpec[:apis] = [
+      {
+        :path => "/artists",
+        :description => "a list artists",
+        :operations => [
+          {
+            :httpMethod => "get",
+            :summary => "a list artists",
+            :responseClass => "PaginatedArtists",
+            :nickname => "listArtists",
+            :parameters => [ getSessionParameter ],
+            :errorResponses => [ getInvalidSession ]
+          }
+        ]
+      },
+      {
+        :path => "/artists/{id}/albums",
+        :description => "a paginated list of artists' albmus",
+        :operations => [
+          {
+            :httpMethod => "get",
+            :summary => "a paginated list of artists' albmus",
+            :responseClass => "PaginatedAlbums",
+            :nickname => "artistAlbums",
+            :parameters => [ getSessionParameter, getIdParameter('artists') ],
+            :errorResponses => [ getInvalidSession, getNotFound('artists') ]
+          }
+        ]
+      },
+      {
+        :path => "/artists/{id}/songs",
+        :description => "a paginated list of artists' songs",
+        :operations => [
+          {
+            :httpMethod => "get",
+            :summary => "a paginated list of artists' songs",
+            :responseClass => "PaginatedSongs",
+            :nickname => "artistSongs",
+            :parameters => [ getSessionParameter, getIdParameter('artists') ],
+            :errorResponses => [ getInvalidSession, getNotFound('artists') ]
+          }
+        ]
+      }
     ]
+    apiSpec[:models] = {
+      :Artist => {
+        :id => "Artist",
+        :properties => {
+          :id => {
+            :type => "integer",
+            :required => true
+          },
+          :name => {
+            :type => "string",
+            :required => true
+          },
+          :songs => {
+            :type => "integer",
+            :required => true
+          },
+          :albums => {
+            :type => "integer",
+            :required => true
+          },
+          :art => {
+            :type => "string",
+            :required => true
+          }
+        }
+      },
+      :Album => getAlbumModel,
+      :Song => getSongModel,
+      :PaginationObject => getPaginationModel,
+      :PaginatedAlbums => getPaginatedArray('Album'),
+      :PaginatedSongs => getPaginatedArray('Song'),
+      :PaginatedArtists => getPaginatedArray('Artist')
+    }
     render :json => apiSpec
   end
 end
