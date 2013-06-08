@@ -184,6 +184,28 @@ class DocController < ApplicationController
     r
   end
 
+  def getPlaylistModel(key, value)
+    r = {
+      :id => "Playlist",
+      :properties => {
+        :id => {
+          :type => "integer",
+          :required => true
+        },
+        :name => {
+          :type => "string",
+          :required => true
+        },
+        :length => {
+          :type => "integer",
+          :required => true
+        }
+      }
+    }
+    r[:properties][key] = value
+    r
+  end
+
   def index
     apiSpec = getApiSpec()
     apiSpec[:apis] = [
@@ -634,16 +656,16 @@ class DocController < ApplicationController
       },
       {
         :path => "/genres/{id}/songs",
-        :description => "a list of genres",
+        :description => "a list of songs in a genre",
         :operations => [
           {
             :httpMethod => "get",
-            :summary => "a list of genres",
-            :responseClass => "PaginatedGenre",
+            :summary => "a list of songs in a genre",
+            :responseClass => "PaginatedSongs",
             :notes => "The actual results will varry slightly from what is shown here, try this out to see what it looks like!",
             :nickname => "listGenres",
             :parameters => [ getSessionParameter, getIdParameter('genre') ],
-            :errorResponses => [ getInvalidSession ]
+            :errorResponses => [ getInvalidSession, getNotFound('genre') ]
           }
         ]
       }
@@ -668,7 +690,7 @@ class DocController < ApplicationController
       },
       :Song => getSongModel,
       :PaginationObject => getPaginationModel,
-      :PaginatedGenre => getPaginatedArray('Genre')
+      :PaginatedSongs => getPaginatedArray('Song')
     }
     render :json => apiSpec
   end
@@ -677,7 +699,53 @@ class DocController < ApplicationController
     apiSpec = getApiSpec
     apiSpec[:resourcePath] = "/playlists"
     apiSpec[:apis] = [
+      {
+        :path => "/playlists",
+        :description => "a list playlists",
+        :operations => [
+          {
+            :httpMethod => "get",
+            :summary => "a list playlists",
+            :responseClass => "List[Playlist]",
+            :nickname => "listPlaylists",
+            :parameters => [ getSessionParameter ],
+            :errorResponses => [ getInvalidSession ]
+          }
+        ]
+      },
+      {
+        :path => "/playlists/{id}",
+        :description => "a detailed playlist",
+        :operations => [
+          {
+            :httpMethod => "get",
+            :summary => "a detailed playlist",
+            :responseClass => "PlaylistDetail",
+            :nickname => "playlistDetail",
+            :parameters => [ getSessionParameter, getIdParameter('playlist') ],
+            :errorResponses => [ getInvalidSession, getNotFound('playlist') ]
+          }
+        ]
+      }
     ]
+    apiSpec[:models] = {
+      :Playlist => getPlaylistModel(
+        :songs, {
+          :type => "integer",
+          :required => true
+        }
+      ),
+      :PlaylistDetail => getPlaylistModel(
+        :songs, {
+          :type => "Array",
+          :required => true,
+          :items => {
+            "$ref" => "Song"
+          }
+        }
+      ),
+      :Song => getSongModel
+    }
     render :json => apiSpec
   end
 
