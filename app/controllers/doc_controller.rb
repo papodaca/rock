@@ -1,5 +1,6 @@
 class DocController < ApplicationController
   skip_before_filter :require_login
+  @tab = "&nbsp;&nbsp;"
 
   def getApiSpec
     {
@@ -60,7 +61,7 @@ class DocController < ApplicationController
     {
       :name => "per_page",
       :description => "count per page",
-      :paramType => "header",
+      :paramType => "query",
       :required => false,
       :allowMultiple => false,
       :dataType => "integer"
@@ -204,6 +205,20 @@ class DocController < ApplicationController
     }
     r[:properties][key] = value
     r
+  end
+
+  def getPaginationExplination
+    "The actual results will be slightly different from what is shown here, try this out to see what it looks like! eg:</br>" +
+    "<div class='model-signature'>" +
+      "<div class='description'>" +
+        "<span class='strong'>PaginatedItems [</span>" +
+        "<div>" +
+          "<span class='propType'>PaginationObject</span>,</br>" +
+          "[<span class='propType'>Items</span>]" +
+        "</div>" +
+        "<span class='strong'>]</span>" +
+      "</div>" +
+    "</div>"
   end
 
   def index
@@ -539,7 +554,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "paginated list of songs",
             :responseClass => "PaginatedSongs",
-            :notes => "The actual results will varry slightly from what is shown here, try this out to see what it looks like!",
+            :notes => getPaginationExplination,
             :nickname => "listSongs",
             :parameters => [ getSessionParameter, getPageParameter, getPerPageParameter ],
             :errorResponses => [ getInvalidSession ]
@@ -596,7 +611,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "paginated list of albums",
             :responseClass => "PaginatedAlbums",
-            :notes => "The actual results will varry slightly from what is shown here, try this out to see what it looks like!",
+            :notes => getPaginationExplination,
             :nickname => "listSongs",
             :parameters => [ getSessionParameter, getPageParameter, getPerPageParameter ],
             :errorResponses => [ getInvalidSession ]
@@ -662,7 +677,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a list of songs in a genre",
             :responseClass => "PaginatedSongs",
-            :notes => "The actual results will varry slightly from what is shown here, try this out to see what it looks like!",
+            :notes => getPaginationExplination,
             :nickname => "listGenres",
             :parameters => [ getSessionParameter, getIdParameter('genre') ],
             :errorResponses => [ getInvalidSession, getNotFound('genre') ]
@@ -761,6 +776,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a list artists",
             :responseClass => "PaginatedArtists",
+            :notes => getPaginationExplination,
             :nickname => "listArtists",
             :parameters => [ getSessionParameter ],
             :errorResponses => [ getInvalidSession ]
@@ -775,6 +791,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a paginated list of artists' albmus",
             :responseClass => "PaginatedAlbums",
+            :notes => getPaginationExplination,
             :nickname => "artistAlbums",
             :parameters => [ getSessionParameter, getIdParameter('artists') ],
             :errorResponses => [ getInvalidSession, getNotFound('artists') ]
@@ -789,6 +806,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a paginated list of artists' songs",
             :responseClass => "PaginatedSongs",
+            :notes => getPaginationExplination,
             :nickname => "artistSongs",
             :parameters => [ getSessionParameter, getIdParameter('artists') ],
             :errorResponses => [ getInvalidSession, getNotFound('artists') ]
