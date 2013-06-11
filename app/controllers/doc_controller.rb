@@ -209,16 +209,10 @@ class DocController < ApplicationController
 
   def getPaginationExplination
     "The actual results will be slightly different from what is shown here, try this out to see what it looks like! eg:</br>" +
-    "<div class='model-signature'>" +
-      "<div class='description'>" +
-        "<span class='strong'>PaginatedItems [</span>" +
-        "<div>" +
-          "<span class='propType'>PaginationObject</span>,</br>" +
-          "[<span class='propType'>Items</span>]" +
-        "</div>" +
-        "<span class='strong'>]</span>" +
-      "</div>" +
-    "</div>"
+    "<span style='font-weight: bold;font-size: .9em;vertical-align: baseline;'>PaginatedItems [</span></br>" +
+    "<span style='margin-left: 1em;color: #5555aa;vertical-align: baseline;'>PaginationObject</span>,</br>" +
+    "<span style='margin-left: 1em;'>[<span style='color: #5555aa;vertical-align: baseline;'>Items</span>]</span></br>" +
+    "<span style='font-weight: bold;font-size: .9em;vertical-align: baseline;'>]</span>"
   end
 
   def index
