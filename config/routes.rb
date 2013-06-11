@@ -15,7 +15,7 @@ Rock::Application.routes.draw do
       resources :songs, :only => [:index]
     end
     resources :playlists, :only => [:index, :show]
-    resources :artists, :only => [:index, :show] do
+    resources :artists, :only => [:index] do
       member do
         resources :songs, :only => [:index]
         resources :albums, :only => [:index]
