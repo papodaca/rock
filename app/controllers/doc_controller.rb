@@ -207,11 +207,11 @@ class DocController < ApplicationController
     r
   end
 
-  def getPaginationExplination
+  def getPaginationExplination(model)
     "The actual results will be slightly different from what is shown here, try this out to see what it looks like! eg:</br>" +
-    "<span style='font-weight: bold;font-size: .9em;vertical-align: baseline;'>PaginatedItems [</span></br>" +
+    "<span style='font-weight: bold;font-size: .9em;vertical-align: baseline;'>Paginated#{model} [</span></br>" +
     "<span style='margin-left: 1em;color: #5555aa;vertical-align: baseline;'>PaginationObject</span>,</br>" +
-    "<span style='margin-left: 1em;'>[<span style='color: #5555aa;vertical-align: baseline;'>Items</span>]</span></br>" +
+    "<span style='margin-left: 1em;'>[<span style='color: #5555aa;vertical-align: baseline;'>#{model}</span>]</span></br>" +
     "<span style='font-weight: bold;font-size: .9em;vertical-align: baseline;'>]</span>"
   end
 
@@ -548,7 +548,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "paginated list of songs",
             :responseClass => "PaginatedSongs",
-            :notes => getPaginationExplination,
+            :notes => getPaginationExplination('Songs'),
             :nickname => "listSongs",
             :parameters => [ getSessionParameter, getPageParameter, getPerPageParameter ],
             :errorResponses => [ getInvalidSession ]
@@ -605,7 +605,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "paginated list of albums",
             :responseClass => "PaginatedAlbums",
-            :notes => getPaginationExplination,
+            :notes => getPaginationExplination('Albums'),
             :nickname => "listSongs",
             :parameters => [ getSessionParameter, getPageParameter, getPerPageParameter ],
             :errorResponses => [ getInvalidSession ]
@@ -671,7 +671,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a list of songs in a genre",
             :responseClass => "PaginatedSongs",
-            :notes => getPaginationExplination,
+            :notes => getPaginationExplination('Songs'),
             :nickname => "listGenres",
             :parameters => [ getSessionParameter, getIdParameter('genre') ],
             :errorResponses => [ getInvalidSession, getNotFound('genre') ]
@@ -770,7 +770,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a list artists",
             :responseClass => "PaginatedArtists",
-            :notes => getPaginationExplination,
+            :notes => getPaginationExplination('Artists'),
             :nickname => "listArtists",
             :parameters => [ getSessionParameter ],
             :errorResponses => [ getInvalidSession ]
@@ -785,7 +785,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a paginated list of artists' albmus",
             :responseClass => "PaginatedAlbums",
-            :notes => getPaginationExplination,
+            :notes => getPaginationExplination('Albums'),
             :nickname => "artistAlbums",
             :parameters => [ getSessionParameter, getIdParameter('artists') ],
             :errorResponses => [ getInvalidSession, getNotFound('artists') ]
@@ -800,7 +800,7 @@ class DocController < ApplicationController
             :httpMethod => "get",
             :summary => "a paginated list of artists' songs",
             :responseClass => "PaginatedSongs",
-            :notes => getPaginationExplination,
+            :notes => getPaginationExplination('Songs'),
             :nickname => "artistSongs",
             :parameters => [ getSessionParameter, getIdParameter('artists') ],
             :errorResponses => [ getInvalidSession, getNotFound('artists') ]
