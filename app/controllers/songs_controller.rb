@@ -4,10 +4,8 @@ class SongsController < ApplicationController
     songs = Song.page(page).per_page(count)
     if params[:genre_id].present?
       songs = songs.where(:genre_id => params[:genre_id])
-    else
-      if params[:artist_id].present?
+    elsif params[:artist_id].present?
         songs = songs.where(:artist_id => params[:artist_id])
-      end
     end
 
     render :json => formPagenationResponce(songs, 'songs/index')
