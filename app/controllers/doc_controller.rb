@@ -1,6 +1,5 @@
 class DocController < ApplicationController
   skip_before_filter :require_login
-  @tab = "&nbsp;&nbsp;"
 
   def getApiSpec
     {
