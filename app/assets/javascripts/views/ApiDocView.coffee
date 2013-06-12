@@ -4,7 +4,7 @@ define ["backbone", "jquery", "underscore", "Util", "hbs!template/ApiDocView"], 
     id: "api"
     initialize: ->
       @render()
-      Util.animLoop(_.bind(@resize,@), 250)
+      Util.animLoop(_.bind(@resize,@), 1)
 
     resize : ->
       unless this.$el.hasClass("hidden")
