@@ -11,6 +11,11 @@ class SongsController < ApplicationController
     render :json => formPagenationResponce(songs, 'songs/index')
   end
 
+  def url
+    path = Song.find(params[:id]).data_file.path
+    
+  end
+
   def show
     @song = Song.find(params[:id])
   end
