@@ -20,7 +20,7 @@ class SongsController < ApplicationController
     filePath = song.data_file.path
 
     if isS3Bucket?(filePath)
-      redirect_to getS3Url(filePath)
+      redirect_to getS3Url(song)
     else
       mimeType = song.data_file.media_type.mime_type
 
@@ -32,16 +32,18 @@ class SongsController < ApplicationController
     /[s,S]3:\/\/.+$/.match(path) != nil
   end
 
-  def getS3Url(path)
-    matches = /[s,S]3:\/\/([^\/]+)\/(.+)$/.match(path).captures
+  def getS3Url(song)
+    matches = /[s,S]3:\/\/([^\/]+)\/(.+)$/.match(song.data_file.path).captures
     bucket = matches[0]
     file = matches[1]
 
+    captures = /[S,s]3:\/\/([^\s]+)\/([^\s]+)\ ([^\s]+)\ ([^\s]+)$/.match(song.library.data_file.path).captures
+
     connection = Fog::Storage.new(
-      :provider => 'AWS', 
-      :aws_access_key_id => APP_CONFIG['s3_key'], 
-      :aws_secret_access_key => APP_CONFIG['s3_secret'], 
-      :region => 'us-west-2')
+      :provider => 'AWS',
+      :aws_access_key_id => captures[2],
+      :aws_secret_access_key => captures[3],
+      :region => captures[0])
 
     connection.directories.get(bucket).files.get_https_url(file, Time.new.utc.to_i() + 60 * 60)
   end
