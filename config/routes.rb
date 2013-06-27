@@ -8,10 +8,7 @@ Rock::Application.routes.draw do
       post 'scan', :on => :member
     end
     resources :songs, :only => [:index, :show] do
-      member do
-        get 'stream'
-        get 'url'
-      end
+      get 'stream', :on => :member
     end
     resources :albums, :only => [:index, :show]
     resources :genres, :only => [:index] do
