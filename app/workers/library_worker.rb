@@ -58,7 +58,7 @@ class LibraryWorker
 		totalFilesFound = connection.directories.get(bucket).files.count { |f| f.content_length>0 }
 		totalFilesProcessed = 0
 
-		connection.directories.get("ea-rock-music-demo").files.each do |file|
+		connection.directories.get(bucket).files.each do |file|
 			next if file.content_length <= 0
 			puts "file: " + file.key
 			mediaType = getMediaType(file.key, :audio)
