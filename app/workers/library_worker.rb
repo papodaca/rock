@@ -65,11 +65,11 @@ class LibraryWorker
 			puts "file: " + file.key
 			mediaType = getMediaType(file.key, :audio)
 			next if mediaType == nil
-			path = "S3://" + bucket + "/" + file.key
+			path = "S3://#{bucket}/#{file.key}"
 			next if songExists?(path)
 			tmpFile = TMP_FILE_LOCATION + "." + mediaType.extension
 			
-			puts "downloading: " + file.key + " > " + tmpFile	
+			puts "downloading: #{file.key} > #{tmpFile}"
 			localFile = File.open(tmpFile, "wb")
 			localFile.write(file.body)
 			localFile.close
@@ -100,7 +100,7 @@ class LibraryWorker
 			artist.art_id = artId
 			artist.save
 		end
-		puts "have artist: " + artist.id.to_s()
+		puts "have artist: #{artist.id.to_s()}"
 
 		#get or create album
 		album = Album.where(:name => data[:album], :artist_id => artist.id).first
@@ -112,7 +112,7 @@ class LibraryWorker
 			album.art_id = artId
 			album.save
 		end
-		puts "have album: " + album.id.to_s()
+		puts "have album: #{album.id.to_s()}"
 
 		#get or create genre
 		genre = Genre.where(:name => data[:genre]).first
