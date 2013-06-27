@@ -45,13 +45,15 @@ class LibraryWorker
 	end
 
 	def scanS3Bucket(rootPath, library)
-		connection = Fog::Storage.new(
-			:provider => 'AWS', 
-			:aws_access_key_id => APP_CONFIG['s3_key'], 
-			:aws_secret_access_key => APP_CONFIG['s3_secret'], 
-			:region => 'us-west-2')
+		captures = /[S,s]3:\/\/([^\s]+)\/([^\s]+)\ ([^\s]+)\ ([^\s]+)$/.match(rootPath).captures.first
 
-		bucket = /[S,s]3:\/\/(.+)/.match(rootPath).captures.first
+		connection = Fog::Storage.new(
+			:provider => 'AWS',
+			:aws_access_key_id => captures[2],
+			:aws_secret_access_key => captures[3],
+			:region => captures[0])
+
+		bucket = captures[1]
 
 		puts "processing bucket: " + bucket
 
