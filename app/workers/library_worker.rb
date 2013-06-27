@@ -45,7 +45,7 @@ class LibraryWorker
 	end
 
 	def scanS3Bucket(rootPath, library)
-		captures = /[S,s]3:\/\/([^\s]+)\/([^\s]+)\ ([^\s]+)\ ([^\s]+)$/.match(rootPath).captures.first
+		captures = /[S,s]3:\/\/([^\s]+)\/([^\s]+)\ ([^\s]+)\ ([^\s]+)$/.match(rootPath).captures
 
 		connection = Fog::Storage.new(
 			:provider => 'AWS',
