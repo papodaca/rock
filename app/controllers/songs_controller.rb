@@ -1,4 +1,6 @@
 class SongsController < ApplicationController
+  include AwsHelper
+
   def index
     page, count = getPageValues()
     songs = Song.page(page).per_page(count)
@@ -20,31 +22,11 @@ class SongsController < ApplicationController
     filePath = song.data_file.path
 
     if isS3Bucket?(filePath)
-      redirect_to getS3Url(song)
+      redirect_to getS3Url(song.data_file.path, song.library.data_file.path)
     else
       mimeType = song.data_file.media_type.mime_type
 
       send_file filePath, :type => mimeType, :disposition => 'inline'
     end
-  end
-
-  def isS3Bucket?(path)
-    /[s,S]3:\/\/.+$/.match(path) != nil
-  end
-
-  def getS3Url(song)
-    matches = /[s,S]3:\/\/([^\/]+)\/(.+)$/.match(song.data_file.path).captures
-    bucket = matches[0]
-    file = matches[1]
-
-    captures = /[S,s]3:\/\/([^\s]+)\/([^\s]+)\ ([^\s]+)\ ([^\s]+)$/.match(song.library.data_file.path).captures
-
-    connection = Fog::Storage.new(
-      :provider => 'AWS',
-      :aws_access_key_id => captures[2],
-      :aws_secret_access_key => captures[3],
-      :region => captures[0])
-
-    connection.directories.get(bucket).files.get_https_url(file, Time.new.utc.to_i() + 60 * 60)
   end
 end

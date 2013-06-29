@@ -6,6 +6,8 @@ require 'fog'
 TMP_FILE_LOCATION = APP_CONFIG["temp_dir"] + "/rockTempAudio"
 
 class LibraryWorker
+	include AwsHelper
+
 	def scan(libraryId)
 		library = Library.find(libraryId)
 		rootPath = library.data_file.path
@@ -45,27 +47,19 @@ class LibraryWorker
 	end
 
 	def scanS3Bucket(rootPath, library)
-		captures = /[S,s]3:\/\/([^\s]+)\/([^\s]+)\ ([^\s]+)\ ([^\s]+)$/.match(rootPath).captures
+		bucket = getS3bucket(rootPath)
 
-		connection = Fog::Storage.new(
-			:provider => 'AWS',
-			:aws_access_key_id => captures[2],
-			:aws_secret_access_key => captures[3],
-			:region => captures[0])
+		puts "processing bucket: #{bucket.key}"
 
-		bucket = captures[1]
-
-		puts "processing bucket: " + bucket
-
-		totalFilesFound = connection.directories.get(bucket).files.count { |f| f.content_length>0 }
+		totalFilesFound = bucket.files.count { |f| f.content_length>0 }
 		totalFilesProcessed = 0
 
-		connection.directories.get(bucket).files.each do |file|
+		bucket.files.each do |file|
 			next if file.content_length <= 0
 			puts "file: " + file.key
 			mediaType = getMediaType(file.key, :audio)
 			next if mediaType == nil
-			path = "S3://#{bucket}/#{file.key}"
+			path = "S3://#{bucket.key}/#{file.key}"
 			next if songExists?(path)
 			tmpFile = TMP_FILE_LOCATION + "." + mediaType.extension
 			
