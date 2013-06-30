@@ -6,13 +6,11 @@ require 'fog'
 TMP_FILE_LOCATION = $APP_CONFIG["temp_dir"] + "/rockTempAudio"
 
 class LibraryWorker
-	include AwsHelper
-
 	def scan(libraryId)
 		library = Library.find(libraryId)
 		rootPath = library.data_file.path
 
-		if isS3Bucket?(rootPath)
+		if AwsHelper.isS3Bucket?(rootPath)
 			puts "scan S3 bucket"
 			scanS3Bucket(rootPath, library)
 		elsif File.directory?(rootPath)
@@ -26,7 +24,7 @@ class LibraryWorker
 		library.progress = nil
 		library.save
 	end
-	handle_asynchronously :scan
+	##handle_asynchronously :scan
 
 	def scanLocalDir(rootPath, library)
 		totalFilesFound = Dir[File.join(rootPath, '**', '*')].count { |f| File.file?(f) }
@@ -47,7 +45,7 @@ class LibraryWorker
 	end
 
 	def scanS3Bucket(rootPath, library)
-		bucket = getS3bucket(rootPath)
+		bucket = AwsHelper.getS3Bucket(rootPath)
 
 		puts "processing bucket: #{bucket.key}"
 
