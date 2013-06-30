@@ -3,7 +3,7 @@ require 'find'
 require 'lastfm'
 require 'fog'
 
-TMP_FILE_LOCATION = APP_CONFIG["temp_dir"] + "/rockTempAudio"
+TMP_FILE_LOCATION = $APP_CONFIG["temp_dir"] + "/rockTempAudio"
 
 class LibraryWorker
 	include AwsHelper
@@ -83,7 +83,7 @@ class LibraryWorker
 	end
 
 	def saveSong(data, path, mediaTypeId, libraryId)
-		lfm = Lastfm.new(APP_CONFIG['lastfm_api_key'], APP_CONFIG['lastfm_api_secret'])
+		lfm = Lastfm.new($APP_CONFIG['lastfm_api_key'], $APP_CONFIG['lastfm_api_secret'])
 
 		#get or create artist
 		artist = Artist.where(:name => data[:artist]).first

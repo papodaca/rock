@@ -1,6 +1,7 @@
 define ["backbone", "jquery", "underscore", "Util", "hbs!template/ApiDocView"], (Backbone, $, _, Util, Template) ->
   Backbone.View.extend
     template: Template
+    basePath: "<%= $APP_CONFIG['base_path'] %>"
     id: "api"
     initialize: ->
       @render()
@@ -18,4 +19,5 @@ define ["backbone", "jquery", "underscore", "Util", "hbs!template/ApiDocView"], 
           @$('iframe').parent().css "height", "#{height}px"
 
     render: ->
-      @$el.append @template()
+      @$el.append @template
+        basePath: @basePath

@@ -2,6 +2,7 @@ define ["backbone", "jquery", "notifier", "json2", "views/RegisterModal", "Util"
   Backbone.View.extend
     template: Template
     className: "navbar navbar-fixed-top"
+    basePath: "<%= $APP_CONFIG['base_path'] %>"
     events:
         "click #registerButton": "showRegisterModal"
         "click #loginButton": "doLogin"
@@ -11,7 +12,8 @@ define ["backbone", "jquery", "notifier", "json2", "views/RegisterModal", "Util"
       @render()
 
     render: ->
-      @$el.append @template()
+      @$el.append @template
+        basePath: @basePath
 
     showRegisterModal: ->
       modal = new RegisterModal()
@@ -19,7 +21,7 @@ define ["backbone", "jquery", "notifier", "json2", "views/RegisterModal", "Util"
 
     doLogin: ->
       $.ajax
-        url: "api/sessions"
+        url: "#{@basePath}api/sessions"
         contentType: "application/json"
         data: JSON.stringify
           email: @$("#loginEmailTextBox").val()
@@ -32,4 +34,5 @@ define ["backbone", "jquery", "notifier", "json2", "views/RegisterModal", "Util"
 
 
     showScreen: (event) ->
+      event.preventDefault()
       window.Router.nav $(event.target).data("target")

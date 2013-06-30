@@ -1,7 +1,7 @@
 module PaginateHelper
   def getPageValues
     page = params[:page].present? ? Integer(params[:page]) : 1
-    count = params[:per_page].present? ? Integer(params[:per_page]) : Integer(APP_CONFIG['default_page_size'])
+    count = params[:per_page].present? ? Integer(params[:per_page]) : Integer($APP_CONFIG['default_page_size'])
     return page, count
   end
 

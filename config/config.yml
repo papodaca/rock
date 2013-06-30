@@ -3,3 +3,4 @@ registration_password: abc123
 lastfm_api_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 lastfm_api_secret: XXXXXXXXXXXXXXXXXXXXXXX
 temp_dir: /dev/shm
+base_path: /

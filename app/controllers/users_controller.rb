@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, :only => [:create]
   def create
-    if params[:registration_password] != APP_CONFIG['registration_password']
+    if params[:registration_password] != $APP_CONFIG['registration_password']
       render :text => "unauthorized", :status => 401
     elsif User.where(:email => params[:email]).present? == true
       render :text => "Email in use.", :status => 400
