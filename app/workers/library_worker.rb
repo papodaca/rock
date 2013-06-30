@@ -16,7 +16,7 @@ class LibraryWorker
 			puts "scan S3 bucket"
 			scanS3Bucket(rootPath, library)
 		elsif File.directory?(rootPath)
-			pust "scan local dir"
+			puts "scan local dir"
 			scanLocalDir(rootPath, library)
 		else
 			return false
@@ -26,7 +26,7 @@ class LibraryWorker
 		library.progress = nil
 		library.save
 	end
-	##handle_asynchronously :scan
+	handle_asynchronously :scan
 
 	def scanLocalDir(rootPath, library)
 		totalFilesFound = Dir[File.join(rootPath, '**', '*')].count { |f| File.file?(f) }
@@ -39,7 +39,7 @@ class LibraryWorker
 			next if songExists?(path)
 
 			data = getFileData(path)
-			saveSong(path, mediaType.id, library.id)
+			saveSong(data, path, mediaType.id, library.id)
 
 			totalFilesProcessed += 1
 			updateLibrary(library, totalFilesProcessed, totalFilesFound)
