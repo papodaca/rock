@@ -45,5 +45,6 @@ define ["backbone", "jquery", "Util", "hbs!template/SongCollectionView", "views/
         window.Router.nav "songs/page/" + page
 
     navigatePage: (page) ->
-      @$("table tbody").empty()
-      @songs.getPage parseInt page
+      unless @songs.state.currentPage == parseInt page
+        @$("table tbody").empty()
+        @songs.getPage parseInt page
