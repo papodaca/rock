@@ -1,4 +1,6 @@
 class SongsController < ApplicationController
+  include AwsHelper
+
   def index
     page, count = getPageValues()
     songs = Song.page(page).per_page(count)
@@ -19,8 +21,8 @@ class SongsController < ApplicationController
     song = Song.find(params[:id])
     filePath = song.data_file.path
 
-    if AwsHelper.isS3Bucket?(filePath)
-      redirect_to AwsHelper.getS3Url(song.data_file.path, song.library.data_file.path)
+    if isS3Bucket?(filePath)
+      redirect_to getS3Url(song.data_file.path, song.library.data_file.path)
     else
       mimeType = song.data_file.media_type.mime_type
 
