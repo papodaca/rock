@@ -4,11 +4,15 @@ paths:
     handlebars: "vendor/handlebars"
     notifier: "vendor/notifier"
     backbone: "vendor/backbone"
+    "backbone.pageable": "vendor/backbone.pageable"
     underscore: "vendor/underscore"
     json2: "vendor/json2"
     hbs: "vendor/hbs"
     text: "vendor/text"
 shim:
+    "backbone.pageable":
+        deps: [ "jquery", "underscore", "backbone" ]
+        exports: "Backbone"
     "jquery.bootstrap":
         deps: ["jquery"]
         exports: "jquery"
