@@ -9,7 +9,7 @@ define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryC
       "click .modal-header button": "hideModal"
       "click .modal-footer button.btn-primary": "submitNewLibrary"
     initialize: ->
-      @libraries.on 'add', @addLibrary, this
+      @libraries.on 'add', @addLibrary, @
       @render()
       @libraries.fetch()
 
@@ -23,5 +23,5 @@ define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryC
 
     newLibrary: ->
       modal = new LibraryModal
-        callback: _.bind @addLibrary, this
+        callback: _.bind @addLibrary, @
       Util.presentModal modal
