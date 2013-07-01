@@ -6,7 +6,7 @@ node do |a|
 end
 
 node do |a|
-  { :art => a.art.data_file.path }
+  { :art => a.art == nil ? "#{$APP_CONFIG['base_path']}images/default.jpg" : a.art.data_file.path }
 end
 
 node do |a|
