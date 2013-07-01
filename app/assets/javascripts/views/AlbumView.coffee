@@ -1,8 +1,8 @@
-define ["backbone", "jquery", "Util", "hbs!template/SongView"], (Backbone, $, Util, Template) ->
+define ["backbone", "jquery", "Util", "hbs!template/AlbumView"], (Backbone, $, Util, Template) ->
   Backbone.View.extend
     template: Template
-    tagName: "tr"
-    className: ""
+    tagName: "div"
+    className: "pin"
     model: null
     events:
       "click a.play": "enQueue"
@@ -15,4 +15,4 @@ define ["backbone", "jquery", "Util", "hbs!template/SongView"], (Backbone, $, Ut
       @$el.append @template @model.attributes
 
     enQueue: ->
-      console.log "enQueue: #{@model.attributes.title}"
+      console.log "enQueue: #{@model.attributes.name}"

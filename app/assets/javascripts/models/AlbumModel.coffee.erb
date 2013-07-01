@@ -1,0 +1,10 @@
+define ["backbone"], (Backbone) ->
+  Backbone.Model.extend
+    urlRoot: "<%= $APP_CONFIG['base_path'] %>api/albums"
+    defaults:
+      id: null
+      name: null
+      tracks: null
+      length: null
+      artist: null
+      art: null

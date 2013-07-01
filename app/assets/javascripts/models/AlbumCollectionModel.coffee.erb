@@ -1,0 +1,4 @@
+define ["backbone.pageable", "models/AlbumModel"], (PageableCollection, Album) ->
+  PageableCollection.extend
+    url: "<%= $APP_CONFIG['base_path'] %>api/albums"
+    model: Album

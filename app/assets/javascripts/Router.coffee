@@ -1,15 +1,17 @@
-define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView", "views/ApiDocView", "views/SongCollectionView"], (Backbone, $, _, MainView, AttractView, SettingsView, ApiDocView, SongsView) ->
+define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView", "views/ApiDocView", "views/SongCollectionView", "views/AlbumCollectionView"], (Backbone, $, _, MainView, AttractView, SettingsView, ApiDocView, SongsView, AlbumsView) ->
   Backbone.Router.extend
     view: new MainView()
     settingsView: null
     baseView: null
     apiDocView: null
     songsView: null
+    albumsView: null
     routes:
       "": "base"
       "settings": "settings"
       "api": "api"
       "songs(/page/:page)": "songs"
+      "albums(/page/:page)": "albums"
     initialize: ->
       $("body").append @view.el
       @base()
@@ -23,6 +25,7 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
       @hide @settingsView
       @hide @apiDocView
       @hide @songsView
+      @hide @albumsView
 
     go: (aView)->
       aView.$el.removeClass "hidden" if aView?
@@ -69,3 +72,19 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
           @songsView.navigatePage 1
       @go @songsView
 
+    albums: (page)->
+      @hideAll()
+      unless @albumsView
+        if page?
+          @albumsView = new AlbumsView
+            page: parseInt page
+        else
+          @albumsView = new AlbumsView
+            page: 1
+        @view.addSubView @albumsView
+      else
+        if page?
+          @albumsView.navigatePage parseInt page
+        else
+          @albumsView.navigatePage 1
+      @go @albumsView
