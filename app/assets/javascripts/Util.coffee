@@ -15,6 +15,20 @@ define ["jquery", "jquery.bootstrap"], ($, BS)->
     document.cookie = key + "=" + value + ";expires=" + date.toGMTString() + ";path=/"
   removeCookie: (key) ->
     document.cookie = key + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  secondsToMinutes: (seconds) ->
+    minutes = Math.floor(seconds / 60)
+    hours = 0
+    result = ""
+    if minutes > 60
+      hours = Math.floor(minutes / 60)
+      minutes = Math.floor(minutes % 60)
+      result += hours + ":"
+      result += "0"  if minutes < 10
+    seconds = Math.floor(seconds % 60)
+    result += minutes + ":"
+    result += "0"  if seconds < 10
+    result += seconds
+    result
   animLoop: (render, time) ->
     running = undefined
     lastFrame = new Date()

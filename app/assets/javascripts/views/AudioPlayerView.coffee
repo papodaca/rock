@@ -23,21 +23,6 @@ define ["backbone", "underscore", "jquery", "Util", "hbs!template/AudioPlayerVie
     calculatePercentage: (x, width) ->
       (x / width) * 100
 
-    secondsToMinutes: (seconds) ->
-      minutes = Math.floor(seconds / 60)
-      hours = 0
-      result = ""
-      if minutes > 60
-        hours = Math.floor(minutes / 60)
-        minutes = Math.floor(minutes % 60)
-        result += hours + ":"
-        result += "0"  if minutes < 10
-      seconds = Math.floor(seconds % 60)
-      result += minutes + ":"
-      result += "0"  if seconds < 10
-      result += seconds
-      result
-
     volumePopoverVisible: false
     volumeButtonClick: (event) ->
       @volumePopoverLocation()
@@ -121,8 +106,8 @@ define ["backbone", "underscore", "jquery", "Util", "hbs!template/AudioPlayerVie
         unless $("#bottomNavBar").hasClass("hidden")
           @resize()
           if @audioPlayer.src isnt ""
-            playStatus = @secondsToMinutes(@audioPlayer.currentTime) + " / "
-            playStatus += @secondsToMinutes(@audioPlayer.duration)
+            playStatus = Util.secondsToMinutes(@audioPlayer.currentTime) + " / "
+            playStatus += Util.secondsToMinutes(@audioPlayer.duration)
             percent = @calculatePercentage(@audioPlayer.currentTime, @audioPlayer.duration)
             percent_buffered = @calculatePercentage(@audioPlayer.buffered.end(0) - @audioPlayer.currentTime, @audioPlayer.duration)
             @$("#playProgress a.brand").html playStatus
