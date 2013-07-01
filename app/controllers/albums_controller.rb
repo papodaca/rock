@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
   def index
     page, count = getPageValues()
-    albums = Album.page(page).per_page(count)
+    albums = Album.page(page).per_page(count).order("name ASC")
     if params[:artist_id].present?
       albums = albums.where(:artist_id => params[:artist_id])
     end

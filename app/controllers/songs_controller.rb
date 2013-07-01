@@ -3,7 +3,7 @@ class SongsController < ApplicationController
 
   def index
     page, count = getPageValues()
-    songs = Song.page(page).per_page(count)
+    songs = Song.page(page).per_page(count).order("title ASC")
     if params[:genre_id].present?
       songs = songs.where(:genre_id => params[:genre_id])
     elsif params[:artist_id].present?
