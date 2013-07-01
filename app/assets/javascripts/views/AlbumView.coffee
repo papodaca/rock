@@ -5,7 +5,9 @@ define ["backbone", "jquery", "Util", "hbs!template/AlbumView"], (Backbone, $, U
     className: "pin"
     model: null
     events:
-      "click a.play": "enQueue"
+      "click .btn-success": "enQueue"
+      "click .btn-info": "enQueue"
+      "click a": "detail"
 
     initialize: (options) ->
       @model = options.model
@@ -16,3 +18,7 @@ define ["backbone", "jquery", "Util", "hbs!template/AlbumView"], (Backbone, $, U
 
     enQueue: ->
       console.log "enQueue: #{@model.attributes.name}"
+
+    detail: (event) ->
+      event.preventDefault()
+      console.log "detail: #{@model.attributes.name}"
