@@ -14,5 +14,6 @@ define ["backbone", "jquery", "Util", "hbs!template/SongView"], (Backbone, $, Ut
     render: ->
       @$el.append @template @model.attributes
 
-    enQueue: ->
+    enQueue: (event) ->
+      event.preventDefault()
       console.log "enQueue: #{@model.attributes.title}"
