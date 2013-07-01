@@ -38,10 +38,10 @@ define ["backbone", "jquery", "Util", "hbs!template/SongCollectionView", "views/
     getPageEl: (pageData, page, state) ->
       "<li class=\"#{state}\"><a data-page=\"#{pageData}\" href=\"<%= $APP_CONFIG['base_path'] %>songs/page/#{pageData}\">#{page}</a></li>"
 
-    handlePagination: (sender) ->
-      sender.preventDefault()
-      unless $(sender.target).parent().hasClass("active")
-        page = $(sender.target).data "page"
+    handlePagination: (event) ->
+      event.preventDefault()
+      unless $(event.target).parent().hasClass("active")
+        page = $(event.target).data "page"
         window.Router.nav "songs/page/" + page
 
     navigatePage: (page) ->
