@@ -58,3 +58,11 @@ body {
   padding-bottom: 15px;
   margin-bottom: 5px;
 }
+
+.pin .caption .description {
+  max-width:142px;
+}
+
+.center {
+  text-align:center;
+}
