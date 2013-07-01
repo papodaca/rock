@@ -11,6 +11,7 @@ define ["backbone", "jquery", "Util", "hbs!template/AlbumView"], (Backbone, $, U
 
     initialize: (options) ->
       @model = options.model
+      @model.attributes.length = Util.secondsToMinutes(@model.attributes.length)
       @render()
 
     render: ->

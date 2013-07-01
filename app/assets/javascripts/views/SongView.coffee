@@ -9,6 +9,7 @@ define ["backbone", "jquery", "Util", "hbs!template/SongView"], (Backbone, $, Ut
 
     initialize: (options) ->
       @model = options.model
+      @model.attributes.length = Util.secondsToMinutes(@model.attributes.length)
       @render()
 
     render: ->
