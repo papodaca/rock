@@ -20,6 +20,8 @@ body {
   font-family: 'Droid Sans', sans-serif !important;
 }
 
+/* collumns based on http://cssdeck.com/labs/css-only-pinterest-style-columns-layout */
+
 #columns {
   -webkit-column-count: 5;
   -webkit-column-gap: 10px;
