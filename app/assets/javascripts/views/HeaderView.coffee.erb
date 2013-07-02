@@ -1,4 +1,20 @@
-define ["backbone", "jquery", "notifier", "json2", "views/RegisterModal", "Util", "hbs!template/HeaderView"], (Backbone, $, Notifier, JSON, RegisterModal, Util, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "notifier",
+  "json2",
+  "views/RegisterModal",
+  "Util",
+  "hbs!template/HeaderView"
+], (
+  Backbone,
+  $,
+  Notifier,
+  JSON,
+  RegisterModal,
+  Util,
+  Template
+) ->
   Backbone.View.extend
     template: Template
     className: "navbar navbar-fixed-top"

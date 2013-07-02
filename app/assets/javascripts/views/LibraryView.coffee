@@ -1,4 +1,20 @@
-define ["backbone", "jquery", "underscore", "Util", "views/LibraryModal", "views/ConfirmModal", "hbs!template/LibraryView"], (Backbone, $, _, Util, LibraryModal, ConfirmModal, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "underscore",
+  "Util",
+  "views/LibraryModal",
+  "views/ConfirmModal",
+  "hbs!template/LibraryView"
+], (
+  Backbone,
+  $,
+  _,
+  Util,
+  LibraryModal,
+  ConfirmModal,
+  Template
+) ->
   Backbone.View.extend
     tagName: 'tr'
     template: Template

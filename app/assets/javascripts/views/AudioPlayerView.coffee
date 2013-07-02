@@ -1,4 +1,16 @@
-define ["backbone", "underscore", "jquery", "Util", "hbs!template/AudioPlayerView"], (Backbone, _, $, Util, Template) ->
+define [
+  "backbone",
+  "underscore",
+  "jquery",
+  "Util",
+  "hbs!template/AudioPlayerView"
+], (
+  Backbone,
+  _,
+  $,
+  Util,
+  Template
+) ->
   Backbone.View.extend
     template: Template
     audioPlayer: null

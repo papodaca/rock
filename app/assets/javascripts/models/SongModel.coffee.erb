@@ -1,4 +1,8 @@
-define ["backbone"], (Backbone) ->
+define [
+  "backbone"
+], (
+  Backbone
+) ->
   Backbone.Model.extend
     urlRoot: "<%= $APP_CONFIG['base_path'] %>api/songs"
     defaults:

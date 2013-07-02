@@ -1,4 +1,18 @@
-define ["backbone", "jquery", "Util", "hbs!template/SongCollectionView", "views/SongView", "models/SongCollectionModel"], (Backbone, $, Util, Template, SongView, SongsCollectionModel) ->
+define [
+  "backbone",
+  "jquery",
+  "Util",
+  "hbs!template/SongCollectionView",
+  "views/SongView",
+  "models/SongCollectionModel"
+], (
+  Backbone,
+  $,
+  Util,
+  Template,
+  SongView,
+  SongsCollectionModel
+) ->
   Backbone.View.extend
     template: Template
     id: "songs"

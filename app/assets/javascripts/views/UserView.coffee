@@ -1,4 +1,12 @@
-define ["backbone", "jquery", "hbs!template/UserView"], (Backbone, $, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "hbs!template/UserView"
+], (
+  Backbone,
+  $,
+  Template
+) ->
   Backbone.View.extend
     template: Template
     className: "container"

@@ -1,4 +1,24 @@
-define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView", "views/ApiDocView", "views/SongCollectionView", "views/AlbumCollectionView"], (Backbone, $, _, MainView, AttractView, SettingsView, ApiDocView, SongsView, AlbumsView) ->
+define [
+  "backbone",
+  "jquery",
+  "underscore",
+  "views/MainView",
+  "views/AttractView",
+  "views/SettingsView",
+  "views/ApiDocView",
+  "views/SongCollectionView",
+  "views/AlbumCollectionView"
+], (
+  Backbone,
+  $,
+  _,
+  MainView,
+  AttractView,
+  SettingsView,
+  ApiDocView,
+  SongsView,
+  AlbumsView
+) ->
   Backbone.Router.extend
     view: new MainView()
     views: {}

@@ -1,4 +1,26 @@
-define ["backbone", "jquery", "jquery.bootstrap", "underscore", "models/LibraryCollectionModel", "models/LibraryModel", "views/LibraryView", "views/LibraryModal", "Util", "hbs!template/LibrariesCollectionView"], (Backbone, $, BS, _, LibraryCollectionModel, LibraryModel, LibraryView, LibraryModal, Util,Template) ->
+define [
+  "backbone",
+  "jquery",
+  "jquery.bootstrap",
+  "underscore",
+  "models/LibraryCollectionModel",
+  "models/LibraryModel",
+  "views/LibraryView",
+  "views/LibraryModal",
+  "Util",
+  "hbs!template/LibrariesCollectionView"
+], (
+  Backbone,
+  $,
+  BS,
+  _,
+  LibraryCollectionModel,
+  LibraryModel,
+  LibraryView,
+  LibraryModal,
+  Util,
+  Template
+) ->
   Backbone.View.extend
     template: Template
     id: "libraries"

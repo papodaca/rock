@@ -1,4 +1,16 @@
-define ["backbone", "jquery", "views/HeaderView", "views/AudioPlayerView", "hbs!template/MainView"], (Backbone, $, HeaderView, AudioPlayerView, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "views/HeaderView",
+  "views/AudioPlayerView",
+  "hbs!template/MainView"
+], (
+  Backbone,
+  $,
+  HeaderView,
+  AudioPlayerView,
+  Template
+) ->
   Backbone.View.extend
     
     #el: $('body'),

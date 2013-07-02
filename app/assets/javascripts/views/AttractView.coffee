@@ -1,4 +1,12 @@
-define ["backbone", "jquery", "hbs!template/AttractView"], (Backbone, $, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "hbs!template/AttractView"
+], (
+  Backbone,
+  $,
+  Template
+) ->
   Backbone.View.extend
     template: Template
     className: "container-fluid"

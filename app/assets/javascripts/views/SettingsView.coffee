@@ -1,4 +1,16 @@
-define ["backbone", "jquery", "views/LibrariesCollectionView", "views/UserView", "hbs!template/SettingsView"], (Backbone, $, LibrariesCollectionView, UserView, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "views/LibrariesCollectionView",
+  "views/UserView",
+  "hbs!template/SettingsView"
+], (
+  Backbone,
+  $,
+  LibrariesCollectionView,
+  UserView,
+  Template
+) ->
   Backbone.View.extend
     id: "settings"
     libraries: null

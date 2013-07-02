@@ -1,4 +1,10 @@
-define ["jquery", "jquery.bootstrap"], ($, BS)->
+define [
+  "jquery",
+  "jquery.bootstrap"
+], (
+  $,
+  BS
+)->
   sessionKey: "session_key"
   contains: (s, subS) ->
     s.indexOf(subS) isnt -1

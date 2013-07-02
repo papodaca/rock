@@ -1,4 +1,22 @@
-define ["backbone", "underscore", "notifier", "hbs!template/RegisterModal", "models/UserModel", "Util", "jquery", "jquery.bootstrap"], (Backbone, _, Notifier, Template, UserModel, Util, $, BS) ->
+define [
+  "backbone",
+  "underscore",
+  "notifier",
+  "hbs!template/RegisterModal",
+  "models/UserModel",
+  "Util",
+  "jquery",
+  "jquery.bootstrap"
+], (
+  Backbone,
+  _,
+  Notifier,
+  Template,
+  UserModel,
+  Util,
+  $,
+  BS
+) ->
   Backbone.View.extend
     template: Template
     className: "modal hide fade"

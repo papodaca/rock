@@ -1,4 +1,10 @@
-define ["backbone", "models/LibraryModel"], (Backbone, Library) ->
+define [
+  "backbone",
+  "models/LibraryModel"
+], (
+  Backbone,
+  Library
+) ->
   Backbone.Collection.extend
     url: "<%= $APP_CONFIG['base_path'] %>api/libraries"
     model: Library

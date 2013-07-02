@@ -1,4 +1,16 @@
-define ["backbone", "jquery", "underscore", "Util", "hbs!template/ApiDocView"], (Backbone, $, _, Util, Template) ->
+define [
+  "backbone",
+  "jquery",
+  "underscore",
+  "Util",
+  "hbs!template/ApiDocView"
+], (
+  Backbone,
+  $,
+  _,
+  Util,
+  Template
+) ->
   Backbone.View.extend
     template: Template
     basePath: "<%= $APP_CONFIG['base_path'] %>"
