@@ -1,7 +1,7 @@
 define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView", "views/SettingsView", "views/ApiDocView", "views/SongCollectionView", "views/AlbumCollectionView"], (Backbone, $, _, MainView, AttractView, SettingsView, ApiDocView, SongsView, AlbumsView) ->
   Backbone.Router.extend
     view: new MainView()
-    views: new Array()
+    views: {}
     routes:
       "": "base"
       "settings": "settings"
@@ -24,7 +24,7 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
 
     hideAll: ->
       $(".icon-cog").removeClass "icon-spin"
-      for view in @views
+      for name, view of @views
         @hide view
 
     go: (aViewName)->
