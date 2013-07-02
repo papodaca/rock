@@ -13,7 +13,7 @@ define [
 ) ->
   Backbone.View.extend
     template: Template
-    basePath: "<%= $APP_CONFIG['base_path'] %>"
+    basePath: Util.basePath
     id: "api"
     initialize: ->
       @render()

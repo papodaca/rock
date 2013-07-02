@@ -15,6 +15,7 @@ define [
 ) ->
   Backbone.View.extend
     template: Template
+    basePath: Util.basePath
     id: "songs"
     className: "container row"
     songs: null
@@ -50,7 +51,7 @@ define [
       element.append @getPageEl @songs.state.currentPage+1, "Next", "" unless @songs.state.currentPage == @songs.state.lastPage
 
     getPageEl: (pageData, page, state) ->
-      "<li class=\"#{state}\"><a data-page=\"#{pageData}\" href=\"<%= $APP_CONFIG['base_path'] %>songs/page/#{pageData}\">#{page}</a></li>"
+      "<li class=\"#{state}\"><a data-page=\"#{pageData}\" href=\"#{@basePath}songs/page/#{pageData}\">#{page}</a></li>"
 
     handlePagination: (event) ->
       event.preventDefault()

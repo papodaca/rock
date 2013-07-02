@@ -40,3 +40,7 @@ define [
 
     navigate: (name) ->
       @header?.navigate name
+
+    loginState: ->
+      @header.loginState()
+      @audioPlayer.loginState()

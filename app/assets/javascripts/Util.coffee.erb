@@ -6,11 +6,21 @@ define [
   BS
 )->
   sessionKey: "session_key"
+  basePath: "<%= $APP_CONFIG['base_path'] %>"
   contains: (s, subS) ->
     s.indexOf(subS) isnt -1
   presentModal: (modal) ->
     $("#modalSocket").empty().append modal.el
     modal.$el.modal "show"
+  testSession: (callback) ->
+    $.ajax
+      url: "#{@basePath}api/sessions/test"
+      contentType: "application/json"
+      type: "GET"
+      success: (msg) =>
+        callback msg == "OK"
+      error: (msg) ->
+        callback false
   setSession: (value) ->
     @setPerminateCookie @sessionKey, value
   destroySession: ->

@@ -11,6 +11,7 @@ define [
 ) ->
   Backbone.View.extend
     template: Template
+    basePath: Util.basePath
     tagName: "div"
     className: "pin"
     model: null
@@ -25,6 +26,7 @@ define [
       @render()
 
     render: ->
+      @model.attributes.basePath = @basePath
       @$el.append @template @model.attributes
 
     enQueue: ->

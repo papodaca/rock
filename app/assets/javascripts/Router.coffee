@@ -2,6 +2,7 @@ define [
   "backbone",
   "jquery",
   "underscore",
+  "Util",
   "views/MainView",
   "views/AttractView",
   "views/SettingsView",
@@ -12,6 +13,7 @@ define [
   Backbone,
   $,
   _,
+  Util,
   MainView,
   AttractView,
   SettingsView,
@@ -31,9 +33,13 @@ define [
     initialize: ->
       $("body").append @view.el
       @base()
+      Util.testSession (state) =>
+        @loginState() if state
     nav: (fragment)->
       @navigate fragment,
         trigger: true
+    loginState: ->
+      @view.loginState()
 
     addView: (name, view) ->
       @views[name] =  view

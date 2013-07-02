@@ -1,10 +1,12 @@
 define [
-  "backbone"
+  "backbone",
+  "Util"
 ], (
-  Backbone
+  Backbone,
+  Util
 ) ->
   Backbone.Model.extend
-    urlRoot: "<%= $APP_CONFIG['base_path'] %>api/albums"
+    urlRoot: "#{Util.basePath}api/albums"
     defaults:
       id: null
       name: null

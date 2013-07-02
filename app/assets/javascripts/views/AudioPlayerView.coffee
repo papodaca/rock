@@ -113,6 +113,9 @@ define [
         @$("#playProgress").removeClass "hidden"
         @$("#playbackBar").removeClass "hidden"
 
+    loginState: ->
+      @$("#bottomNavBar").removeClass "hidden"
+
     thisLoop: (deltaT) ->
       try
         unless $("#bottomNavBar").hasClass("hidden")

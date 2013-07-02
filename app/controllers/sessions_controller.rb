@@ -10,4 +10,8 @@ class SessionsController < ApplicationController
       render :json => { :session_key => session.session_key }
     end
   end
+
+  def test
+    render :text => "OK"
+  end
 end

@@ -1,10 +1,12 @@
 define [
   "backbone.pageable",
-  "models/SongModel"
+  "models/SongModel",
+  "Util"
 ], (
   PageableCollection,
-  Song
+  Song,
+  Util
 ) ->
   PageableCollection.extend
-    url: "<%= $APP_CONFIG['base_path'] %>api/songs"
+    url: "#{Util.basePath}api/songs"
     model: Song

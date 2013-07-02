@@ -18,7 +18,7 @@ define [
   Backbone.View.extend
     template: Template
     className: "navbar navbar-fixed-top"
-    basePath: "<%= $APP_CONFIG['base_path'] %>"
+    basePath: Util.basePath
     events:
         "click #registerButton": "showRegisterModal"
         "click #loginButton": "doLogin"
@@ -43,7 +43,8 @@ define [
           email: @$("#loginEmailTextBox").val()
           password: @$("#loginPasswordTextBox").val()
         type: "POST"
-        success: (msg) ->
+        success: (msg) =>
+          window.Router.loginState()
           Util.setSession msg.session_key
         error: (msg) ->
           Notifier.error("Authentication failed.")
@@ -56,3 +57,8 @@ define [
     navigate: (name) ->
       @$("#nav-list .active").removeClass "active"
       @$("#nav-list [data-target=#{name}]").parent().addClass "active"
+
+    loginState: ->
+      @$("#navBarLeft").removeClass "hidden"
+      @$("#navBarLogin").addClass "hidden"
+      @$("#navBarSearch").removeClass "hidden"

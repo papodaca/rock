@@ -1,10 +1,12 @@
 define [
-  "backbone"
+  "backbone",
+  "Util"
 ], (
-  Backbone
+  Backbone,
+  Util
 ) ->
   Backbone.Model.extend
-    url: "<%= $APP_CONFIG['base_path'] %>api/users"
+    url: "#{Util.basePath}api/users"
     defaults:
       id: null
       email: null
