@@ -46,13 +46,14 @@ define [
         success: (msg) =>
           window.Router.loginState()
           Util.setSession msg.session_key
+          Notifier.success "Login Successful."
         error: (msg) ->
-          Notifier.error("Authentication failed.")
+          Notifier.error "Authentication failed."
 
     showScreen: (event) ->
       unless $(event.target).hasClass "active"
         event.preventDefault()
-        window.Router.nav $(event.target).data("target")
+        window.Router.nav $(event.target).data "target"
 
     navigate: (name) ->
       @$("#nav-list .active").removeClass "active"
