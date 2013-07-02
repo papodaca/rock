@@ -28,6 +28,7 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
         @hide view
 
     go: (aViewName)->
+      @view.navigate(aViewName)
       @getView(aViewName).$el.removeClass "hidden" if @getView(aViewName)?
 
     hide: (aView) ->
@@ -35,53 +36,53 @@ define ["backbone", "jquery", "underscore", "views/MainView", "views/AttractView
 
     base: ->
       @hideAll()
-      unless @getView("BaseView")?
-        @addView "BaseView", new AttractView()
-      @go "BaseView"
+      unless @getView("base")?
+        @addView "base", new AttractView()
+      @go "base"
 
     settings: ->
       @hideAll()
       $(".icon-cog.headerLink").addClass "icon-spin"
-      unless @getView("SettingsView")?
-        @addView "SettingsView", new SettingsView()
-      @go "SettingsView"
+      unless @getView("settings")?
+        @addView "settings", new SettingsView()
+      @go "settings"
 
     api: ->
       @hideAll()
-      unless @getView("ApiDocView")?
-        @addView "ApiDocView", new ApiDocView()
-      @go "ApiDocView"
+      unless @getView("api")?
+        @addView "api", new ApiDocView()
+      @go "api"
 
     songs: (page)->
       @hideAll()
-      unless @getView("SongsView")?
+      unless @getView("songs")?
         if page?
           page= parseInt page
         else
           page= 1
-        @addView "SongsView", new SongsView
+        @addView "songs", new SongsView
           page: page
       else
         if page?
           page = parseInt page
         else
           page = 1
-        @getView("SongsView").navigatePage page
-      @go "SongsView"
+        @getView("songs").navigatePage page
+      @go "songs"
 
     albums: (page)->
       @hideAll()
-      unless @getView("AlbumsView")
+      unless @getView("albums")
         if page?
           page = parseInt page
         else
           page= 1
-        @addView "AlbumsView", new AlbumsView
+        @addView "albums", new AlbumsView
           page: page
       else
         if page?
           page = parseInt page
         else
           page = 1
-        @getView("AlbumsView").navigatePage page
-      @go "AlbumsView"
+        @getView("albums").navigatePage page
+      @go "albums"

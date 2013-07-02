@@ -25,3 +25,6 @@ define ["backbone", "jquery", "views/HeaderView", "views/AudioPlayerView", "hbs!
 
     addSubView: (aView) ->
       @$("#socket").append aView.el
+
+    navigate: (name) ->
+      @header?.navigate name

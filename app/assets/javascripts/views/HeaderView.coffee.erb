@@ -32,7 +32,11 @@ define ["backbone", "jquery", "notifier", "json2", "views/RegisterModal", "Util"
         error: (msg) ->
           Notifier.error("Authentication failed.")
 
-
     showScreen: (event) ->
-      event.preventDefault()
-      window.Router.nav $(event.target).data("target")
+      unless $(event.target).hasClass "active"
+        event.preventDefault()
+        window.Router.nav $(event.target).data("target")
+
+    navigate: (name) ->
+      @$("#nav-list .active").removeClass "active"
+      @$("#nav-list [data-target=#{name}]").parent().addClass "active"
