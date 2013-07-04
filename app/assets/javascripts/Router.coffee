@@ -8,7 +8,8 @@ define [
   "views/SettingsView",
   "views/ApiDocView",
   "views/SongCollectionView",
-  "views/AlbumCollectionView"
+  "views/AlbumCollectionView",
+  "views/AlbumDetailView"
 ], (
   Backbone,
   $,
@@ -19,7 +20,8 @@ define [
   SettingsView,
   ApiDocView,
   SongsView,
-  AlbumsView
+  AlbumsView,
+  AlbumDetailView
 ) ->
   Backbone.Router.extend
     view: new MainView()
@@ -29,7 +31,7 @@ define [
       "settings": "settings"
       "api": "api"
       "songs(/page/:page)": "songs"
-      "albums(/page/:page)": "albums"
+      "albums(/page/:page)(/:album_id)": "albums"
     initialize: ->
       $("body").append @view.el
       @base()
@@ -96,19 +98,25 @@ define [
         @getView("songs").navigatePage page
       @go "songs"
 
-    albums: (page)->
+    albums: (page, album_id)->
       @hideAll()
-      unless @getView("albums")
-        if page?
-          page = parseInt page
-        else
-          page= 1
-        @addView "albums", new AlbumsView
-          page: page
+      if album_id?
+        unless @getView("almun")
+          @addView "album", new AlbumDetailView()
+        @getView("album").naviageAlbum album_id
+        @go "album"
       else
-        if page?
-          page = parseInt page
+        unless @getView("albums")
+          if page?
+            page = parseInt page
+          else
+            page= 1
+          @addView "albums", new AlbumsView
+            page: page
         else
-          page = 1
-        @getView("albums").navigatePage page
-      @go "albums"
+          if page?
+            page = parseInt page
+          else
+            page = 1
+          @getView("albums").navigatePage page
+        @go "albums"

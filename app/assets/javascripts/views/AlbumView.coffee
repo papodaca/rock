@@ -34,4 +34,4 @@ define [
 
     detail: (event) ->
       event.preventDefault()
-      console.log "detail: #{@model.attributes.name}"
+      window.Router.nav "#{@basePath}albums/#{@model.attributes.id}"
