@@ -8,7 +8,7 @@ TMP_FILE_LOCATION = $APP_CONFIG["temp_dir"] + "/rockTempAudio"
 class LibraryWorker
 	include AwsHelper
 
-	def scan(libraryId)
+	def self.scan(libraryId)
 		library = Library.find(libraryId)
 		rootPath = library.data_file.path
 
@@ -28,15 +28,20 @@ class LibraryWorker
 	end
 	##handle_asynchronously :scan
 
-	def scanLocalDir(rootPath, library)
+	def self.scanLocalDir(rootPath, library)
 		totalFilesFound = Dir[File.join(rootPath, '**', '*')].count { |f| File.file?(f) }
 		totalFilesProcessed = 0
+		puts "found #{totalFilesFound} files."
 
 		Find.find(rootPath) do |path|
 			next if File.directory?(path)
+			puts "not a directory"
 			mediaType = getMediaType(path, :audio)
 			next if mediaType == nil
+			puts "mediatype found #{mediaType.extension}"
 			next if songExists?(path)
+
+			puts "scanning #{path}"
 
 			data = getFileData(path)
 			saveSong(data, path, mediaType.id, library.id)
@@ -46,7 +51,7 @@ class LibraryWorker
 		end
 	end
 
-	def scanS3Bucket(rootPath, library)
+	def self.scanS3Bucket(rootPath, library)
 		bucket = getS3Bucket(rootPath)
 
 		puts "processing bucket: #{bucket.key}"
@@ -77,12 +82,13 @@ class LibraryWorker
 		end
 	end
 
-	def updateLibrary(library, totalFilesProcessed, totalFilesFound)
+	def self.updateLibrary(library, totalFilesProcessed, totalFilesFound)
 			library.progress = ((Float(totalFilesProcessed) / Float(totalFilesFound)) * 100).floor
 			library.save
+			puts "scanned #{library.progress}%"
 	end
 
-	def saveSong(data, path, mediaTypeId, libraryId)
+	def self.saveSong(data, path, mediaTypeId, libraryId)
 		lfm = Lastfm.new($APP_CONFIG['lastfm_api_key'], $APP_CONFIG['lastfm_api_secret'])
 
 		#get or create artist
@@ -130,7 +136,7 @@ class LibraryWorker
 		song.save
 	end
 
-	def getFileData(path)
+	def self.getFileData(path)
 		data = {}
 		TagLib::FileRef.open(path) do |file|
 			t = file.tag
@@ -148,20 +154,20 @@ class LibraryWorker
 		return data
 	end
 
-	def isS3Bucket?(path)
+	def self.isS3Bucket?(path)
 		/[s,S]3:\/\/.+$/.match(path) != nil
 	end
-	def getMediaType(path, selector)
+	def self.getMediaType(path, selector)
 		ext = getExtension(path)
 		return nil if ext == nil or ext == ""
 		return MediaType.where(selector => true, :extension => ext).first
 	end
-	def getExtension(path)
+	def self.getExtension(path)
 		matches = /\.([0-9a-zA-Z]+)$/.match(path)
 		return matches.captures.first if matches != nil
 		return nil
 	end
-	def getArt(images)
+	def self.getArt(images)
 		begin
 			art = images[images.index { |x| x['size'] == "large"}]['content']
 			dataArt = DataFile.create(:path => art)
@@ -179,7 +185,7 @@ class LibraryWorker
 			return nil
 		end
 	end
-	def songExists?(path)
+	def self.songExists?(path)
 		return true if DataFile.where(:path => path).count > 0
 		return false
 	end
