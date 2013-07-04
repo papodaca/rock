@@ -5,6 +5,7 @@ Rock::Application.routes.draw do
     resources :users, :only => [:create]
     resources :sessions, :only => [:create] do
       get 'test', :on => :collection
+      delete 'logout', :on => :collection
     end
     resources :libraries, :only => [:index, :create, :show, :update, :destroy] do
       post 'scan', :on => :member

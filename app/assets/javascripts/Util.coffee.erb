@@ -5,32 +5,69 @@ define [
   $,
   BS
 )->
-  sessionKey: "session_key"
+  sessionKey: "_Rock_session_key"
   basePath: "<%= $APP_CONFIG['base_path'] %>"
   contains: (s, subS) ->
     s.indexOf(subS) isnt -1
   presentModal: (modal) ->
     $("#modalSocket").empty().append modal.el
     modal.$el.modal "show"
+  login: (username, password, callback) ->
+    $.ajax
+      url: "#{@basePath}api/sessions"
+      contentType: "application/json"
+      data: JSON.stringify
+        email: username
+        password: password
+      type: "POST"
+      success: (msg) =>
+        @setSession msg.session_key
+        callback true
+      error: (msg) ->
+        callback false
   testSession: (callback) ->
     $.ajax
       url: "#{@basePath}api/sessions/test"
       contentType: "application/json"
       type: "GET"
-      success: (msg) =>
+      success: (msg) ->
         callback msg == "OK"
       error: (msg) ->
         callback false
-  setSession: (value) ->
-    @setPerminateCookie @sessionKey, value
+  setSession: (key) ->
+    @setPerminateCookie @sessionKey, key
   destroySession: ->
-    @removeCookie @sessionKey
+    $.ajax
+      url: "#{@basePath}api/sessions/logout"
+      contentType: "application/json"
+      data: JSON.stringify
+        session_key: @getCookie @session_key
+      type: "DELETE"
+    #@removeCookie @sessionKey
   setPerminateCookie: (key, value) ->
     date = new Date()
     date.setFullYear date.getFullYear() + 20
     document.cookie = key + "=" + value + ";expires=" + date.toGMTString() + ";path=/"
+  getCookie: (name) ->
+    allCookies = document.cookie.split(";")
+    cookieFound = false # set boolean t/f default f
+    i = 0
+    while i < allCookies.length
+      thisCookie = allCookies[i].split "="
+
+      thisCookieName = thisCookie[0].replace /^\s+|\s+$/g, ""
+      
+      if thisCookieName is name
+        cookieFound = true
+        
+        thisCookieValue = unescape thisCookie[1].replace /^\s+|\s+$/g, "" if thisCookie.length > 1
+        
+        return thisCookieValue
+      thisCookieName = ""
+      i++
+    null unless cookieFound
   removeCookie: (key) ->
-    document.cookie = key + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    document.cookie = key + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;"
   secondsToMinutes: (seconds) ->
     minutes = Math.floor(seconds / 60)
     hours = 0

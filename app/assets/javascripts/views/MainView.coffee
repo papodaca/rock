@@ -41,6 +41,6 @@ define [
     navigate: (name) ->
       @header?.navigate name
 
-    loginState: ->
-      @header.loginState()
-      @audioPlayer.loginState()
+    loginState: (state) ->
+      @header.loginState(state)
+      @audioPlayer.loginState(state)

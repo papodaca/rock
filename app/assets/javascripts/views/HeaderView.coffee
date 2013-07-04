@@ -23,6 +23,8 @@ define [
         "click #registerButton": "showRegisterModal"
         "click #loginButton": "doLogin"
         "click a.link": "showScreen"
+        "click #navBarSearch a": "doLogout"
+        "keypress input#loginPasswordTextBox": "dologinKey"
 
     initialize: ->
       @render()
@@ -35,20 +37,25 @@ define [
       modal = new RegisterModal()
       Util.presentModal(modal)
 
+    dologinKey: (event) ->
+      if event.keyCode == 13
+        @doLogin()
     doLogin: ->
-      $.ajax
-        url: "#{@basePath}api/sessions"
-        contentType: "application/json"
-        data: JSON.stringify
-          email: @$("#loginEmailTextBox").val()
-          password: @$("#loginPasswordTextBox").val()
-        type: "POST"
-        success: (msg) =>
-          window.Router.loginState()
-          Util.setSession msg.session_key
+      Util.login @$("#loginEmailTextBox").val(), @$("#loginPasswordTextBox").val(), (state) ->
+        if state
           Notifier.success "Login Successful."
-        error: (msg) ->
+          @$("#loginEmailTextBox").val("")
+          @$("#loginPasswordTextBox").val("")
+        else
           Notifier.error "Authentication failed."
+          @$("#loginPasswordTextBox").val("")
+        window.Router.loginState state
+
+    doLogout: (event) ->
+      event.preventDefault()
+      Util.destroySession()
+      window.Router.loginState false
+      window.Router.nav "/"
 
     showScreen: (event) ->
       unless $(event.target).hasClass "active"
@@ -59,7 +66,12 @@ define [
       @$("#nav-list .active").removeClass "active"
       @$("#nav-list [data-target=#{name}]").parent().addClass "active"
 
-    loginState: ->
-      @$("#navBarLeft").removeClass "hidden"
-      @$("#navBarLogin").addClass "hidden"
-      @$("#navBarSearch").removeClass "hidden"
+    loginState: (state) ->
+      if state
+        @$("#navBarLeft").removeClass "hidden"
+        @$("#navBarLogin").addClass "hidden"
+        @$("#navBarSearch").removeClass "hidden"
+      else
+        @$("#navBarLeft").addClass "hidden"
+        @$("#navBarLogin").removeClass "hidden"
+        @$("#navBarSearch").addClass "hidden"

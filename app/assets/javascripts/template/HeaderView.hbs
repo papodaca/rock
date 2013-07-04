@@ -4,7 +4,7 @@
     <i class="icon-reorder"></i>
   </button>
   <a href="{{basePath}}" data-target="/" class="brand link">Rock</a>
-  <div id="navBarLeft" class="nav-collapse collapse in pull-left hidden">
+  <div id="navBarLeft" class="nav-collapse collapse hidden">
     <ul id="nav-list" class="nav">
     <li><a href="{{basePath}}albums" data-target="albums" class="pointer link"><i class="icon-th-large"></i> Albums</a></li>
     <li><a href="{{basePath}}artists" data-target="artists" class="pointer link"><i class="icon-user"></i> Artists</a></li>
@@ -30,14 +30,17 @@
     </div>
   </div>
   <div id="navBarSearch" class="nav-collapse collapse in pull-right hidden">
-    <div class="form-inline navbar-form control-group">
-      <div class="controls">
-      <div class="input-prepend">
-        <span class="add-on"><i class="icon-search"></i></span>
-        <input class="span3" id="glocalSearch" type="text" data-provide="typeahead">
-      </div>
-      </div>
-    </div>
-  </div>
+    <ul class="nav">
+      <li>
+        <div class="form-inline navbar-form control-group">
+          <div class="input-prepend">
+            <span class="add-on"><i class="icon-search"></i></span>
+            <input class="span3" id="glocalSearch" type="text" data-provide="typeahead">
+          </div>
+        </div>
+      </li>
+      <li><a href="{{basePath}}logout" class="pointer link"><i class="icon-signout"/> Logout</a></li>
+    </ul>
+
   </div>
 </div>

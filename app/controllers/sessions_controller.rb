@@ -7,8 +7,19 @@ class SessionsController < ApplicationController
     else
       session = Session.create(:user_id => user.id)
       session.setKey()
-      render :json => { :session_key => session.session_key }
+      render :json => { :id => session.id, :session_key => session.session_key }
     end
+  end
+
+  def logout
+    if cookies["_Rock_session_key"].present?
+      cookies["_Rock_session_key"] = nil
+    end
+    @currentSession.destroy
+    if session[:user_id].present?
+      session[:user_id] = nil
+    end
+    render :text => "OK"
   end
 
   def test

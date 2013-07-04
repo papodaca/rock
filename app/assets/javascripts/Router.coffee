@@ -34,12 +34,12 @@ define [
       $("body").append @view.el
       @base()
       Util.testSession (state) =>
-        @loginState() if state
+        @loginState(state)
     nav: (fragment)->
       @navigate fragment,
         trigger: true
-    loginState: ->
-      @view.loginState()
+    loginState: (state) ->
+      @view.loginState(state)
 
     addView: (name, view) ->
       @views[name] =  view
