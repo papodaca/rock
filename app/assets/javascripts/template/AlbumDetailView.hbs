@@ -1,8 +1,10 @@
+<div class="page-header">
+  <h1>{{name}}</h1>
+</div>
 <div class="span3">
   <div class="pin">
     <img src="{{art}}"></img>
     <div class="caption">
-      <p class="description">{{name}}</p>
       <p class="description"><i class="icon-user"/> {{artist}}</p>
       <p class="description">Tracks: {{tracks}} - {{length}}</p>
       <div class="center">
@@ -17,6 +19,7 @@
     <thead>
       <tr>
         <th style="width: 1px;"></th>
+        <th style="width: 1px;">#</th>
         <th class="span3">Title</th>
         <th class="span1">Length</th>
         <th class="span2">Genre</th>
@@ -26,6 +29,7 @@
       {{#each songs}}
       <tr>
         <td><a class="link pointer play"><i class="icon-play-circle"></i></a></td>
+        <td>{{track}}</td>
         <td>{{title}}</td>
         <td>{{length}}</td>
         <td>{{genre}}</td>
