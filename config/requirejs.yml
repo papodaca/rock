@@ -3,18 +3,23 @@ paths:
     "jquery.bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap"
     handlebars: "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars"
     notifier: "https://raw.github.com/papodaca/Notifier.js/master/Notifier"
-    backbone: "https://raw.github.com/amdjs/backbone/master/backbone"
+    backbone: "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone"
     "backbone.pageable": "https://raw.github.com/wyuenho/backbone-pageable/master/lib/backbone-pageable"
-    underscore: "https://raw.github.com/amdjs/underscore/master/underscore"
+    underscore: "https://raw.github.com/jashkenas/underscore/1.5.0/underscore"
     json2: "https://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2"
     hbs: "https://raw.github.com/epeli/requirejs-hbs/master/hbs"
     text: "https://cdnjs.cloudflare.com/ajax/libs/require-text/2.0.5/text"
 shim:
+    backbone:
+        deps: [ "underscore" ]
+        exports: "Backbone"
+    underscore:
+        exports: "_"
     "backbone.pageable":
         deps: [ "jquery", "underscore", "backbone" ]
         exports: "Backbone"
     "jquery.bootstrap":
         deps: ["jquery"]
-        exports: "jquery"
-    "handlebars":
+        exports: "jQuery"
+    handlebars:
         exports: "Handlebars"
