@@ -5,7 +5,7 @@ paths:
     notifier: "https://raw.github.com/papodaca/Notifier.js/master/Notifier"
     backbone: "https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone"
     "backbone.pageable": "https://raw.github.com/wyuenho/backbone-pageable/master/lib/backbone-pageable"
-    underscore: "https://raw.github.com/jashkenas/underscore/1.5.0/underscore"
+    underscore: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.0/underscore"
     json2: "https://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2"
     hbs: "https://raw.github.com/epeli/requirejs-hbs/master/hbs"
     text: "https://cdnjs.cloudflare.com/ajax/libs/require-text/2.0.5/text"
