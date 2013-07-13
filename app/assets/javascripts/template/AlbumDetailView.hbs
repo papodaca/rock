@@ -20,19 +20,20 @@
       <tr>
         <th style="width: 1px;"></th>
         <th style="width: 1px;">#</th>
-        <th class="span3">Title</th>
+        <th class="span4">Title</th>
         <th class="span1">Length</th>
-        <th class="span2">Genre</th>
       </tr>
     </thead>
     <tbody>
       {{#each songs}}
       <tr>
-        <td><a class="link pointer play"><i class="icon-play-circle"></i></a></td>
+        <td>
+          <a class="link pointer play"><i class="icon-play-circle"></i></a>
+          <a class="link pointer add"><i class="icon-plus-sign"></i></a>
+        </td>
         <td>{{track}}</td>
         <td>{{title}}</td>
         <td>{{length}}</td>
-        <td>{{genre}}</td>
       </tr>
       {{/each}}
     </tbody>
