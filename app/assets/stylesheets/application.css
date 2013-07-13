@@ -55,10 +55,12 @@ body {
 }
 
 .pin img {
-  width: 100%;
-  border-bottom: 1px solid #ccc;
+  width: 142px;
+  height: 142px;
+  /*border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 5px;*/
+  padding-bottom: 10px;
 }
 
 .pin .caption .description {
