@@ -1,12 +1,14 @@
 define [
   "jquery",
-  "jquery.bootstrap"
+  "jquery.bootstrap",
+  "BasePath"
 ], (
   $,
-  BS
+  BS,
+  BasePath
 )->
   sessionKey: "_Rock_session_key"
-  basePath: "<%= $APP_CONFIG['base_path'] %>"
+  basePath: BasePath
   contains: (s, subS) ->
     s.indexOf(subS) isnt -1
   presentModal: (modal) ->
