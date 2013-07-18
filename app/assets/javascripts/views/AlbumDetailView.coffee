@@ -50,14 +50,14 @@ define [
       if $(event.target).parent().hasClass("play") or $(event.target).hasClass("play")
         window.audioPlayer.emptyQueue()
 
-      albumId = $(event.target).parents("tr").data("track")
-      album = null
+      songId = $(event.target).parents("tr").data("track")
+      song = null
       i=0
 
-      while album isnt null
-        if @model.attributes.songs[i].id == albumId
-          album = @model.attributes.songs[i]
+      while song is null
+        if @model.attributes.songs[i].id == songId
+          song = @model.attributes.songs[i]
         i += 1
-
-      console.log "enQueue: #{album.title}"
-      window.audioPlayer.enqueue album
+      if song?
+        console.log "enQueue: #{song.title}"
+        window.audioPlayer.enqueue song
