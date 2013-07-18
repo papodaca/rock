@@ -40,7 +40,7 @@ define [
 
     enQueue: (event) ->
       event.preventDefault()
-      console.log "enQueue: #{@model.attributes.title}"
+      console.log "enQueue: #{@model.attributes.name}"
       if $(event.target).parent().hasClass("play") or $(event.target).hasClass("play")
         window.audioPlayer.emptyQueue()
       window.audioPlayer.enqueue @model.attributes.songs
@@ -54,7 +54,7 @@ define [
       album = null
       i=0
 
-      while album != null
+      while album isnt null
         if @model.attributes.songs[i].id == albumId
           album = @model.attributes.songs[i]
         i += 1
