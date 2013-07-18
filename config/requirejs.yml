@@ -11,12 +11,12 @@ paths:
     text: "https://cdnjs.cloudflare.com/ajax/libs/require-text/2.0.5/text"
 shim:
     backbone:
-        deps: [ "underscore" ]
+        deps: [ "jquery", "underscore" ]
         exports: "Backbone"
     underscore:
         exports: "_"
     "backbone.pageable":
-        deps: [ "jquery", "underscore", "backbone" ]
+        deps: [ "backbone" ]
         exports: "Backbone"
     "jquery.bootstrap":
         deps: ["jquery"]
