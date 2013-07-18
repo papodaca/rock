@@ -2,22 +2,23 @@ define [
   "backbone",
   "jquery",
   "Util",
+  "models/AlbumModel"
   "hbs!template/AlbumView"
 ], (
   Backbone,
   $,
   Util,
+  AlbumModel,
   Template
 ) ->
   Backbone.View.extend
     template: Template
-    basePath: Util.basePath
     tagName: "div"
     className: "pin"
     model: null
     events:
-      "click .btn-success": "enQueue"
-      "click .btn-info": "enQueue"
+      "click button.play": "enQueue"
+      "click button.add": "enQueue"
       "click a": "detail"
 
     initialize: (options) ->
@@ -28,9 +29,17 @@ define [
       @model.attributes.basePath = @basePath
       @$el.append @template @model.attributes
 
-    enQueue: ->
+    enQueue: (event) ->
+      event.preventDefault()
       console.log "enQueue: #{@model.attributes.name}"
+      if $(event.target).parent().hasClass("play") or $(event.target).hasClass("play")
+        window.audioPlayer.emptyQueue()
+      @model = new AlbumModel
+        id: @model.attributes.id
+      @model.fetch
+        success: (msg) =>
+          window.audioPlayer.enqueue @model.attributes.songs
 
     detail: (event) ->
       event.preventDefault()
-      window.Router.nav "#{@basePath}albums/#{@model.attributes.id}"
+      window.Router.nav "#{Util.basePath}albums/#{@model.attributes.id}"

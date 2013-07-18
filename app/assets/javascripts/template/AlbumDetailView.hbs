@@ -8,8 +8,8 @@
       <p class="description"><i class="icon-user"/> {{artist}}</p>
       <p class="description">Tracks: {{tracks}} - {{secondsToMinutes length}}</p>
       <div class="center">
-        <button class="btn btn-small btn-success"><i class="icon-play-circle"></i> Play</button>
-        <button class="btn btn-small btn-info"><i class="icon-plus-sign"></i> Add</button>
+        <button class="btn btn-small btn-success play"><i class="icon-play-circle"></i> Play</button>
+        <button class="btn btn-small btn-info add"><i class="icon-plus-sign"></i> Add</button>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
     </thead>
     <tbody>
       {{#each songs}}
-      <tr>
+      <tr data-track="{{id}}">
         <td>
           <a class="link pointer play"><i class="icon-play-circle"></i></a>
           <a class="link pointer add"><i class="icon-plus-sign"></i></a>

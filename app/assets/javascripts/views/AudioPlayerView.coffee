@@ -2,18 +2,21 @@ define [
   "backbone",
   "underscore",
   "jquery",
+  "lib/Queue",
   "Util",
   "hbs!template/AudioPlayerView"
 ], (
   Backbone,
   _,
   $,
+  Queue,
   Util,
   Template
 ) ->
   Backbone.View.extend
     template: Template
     audioPlayer: null
+    queue: new Queue()
     events:
       "click #volumeButton": "volumeButtonClick"
       "click #muteButton": "muteButtonClick"
@@ -27,6 +30,16 @@ define [
       @render()
       Util.animLoop _.bind(@thisLoop, this), 250
       @audioPlayer = @$("#audioPlayer").get(0)
+
+    enqueue: (value) ->
+      if value.push? #this is an array
+        _.each value, (song) =>
+          @queue.enqueue song
+      else
+        @queue.enqueue value
+
+    emptyQueue: () ->
+      @queue.empty()
 
     render: ->
       @$el.append @template()

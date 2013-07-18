@@ -20,6 +20,7 @@ define [
     initialize: ->
       @header = new HeaderView()
       @audioPlayer = new AudioPlayerView()
+      window.audioPlayer = @audioPlayer
       @render()
       $(window).bind "resize.app", _.bind(@resize, this)
 
