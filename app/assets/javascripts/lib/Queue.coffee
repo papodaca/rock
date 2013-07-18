@@ -4,36 +4,44 @@ define [
   class Queue
     head: null
     tail: null
+    current: null
     length: 0
     class Node
       value: null
       next: null
-      constructor: (@value, @next) ->
+      previous: null
+      constructor: (@value, @next, @previous) ->
 
     enqueue: (value) ->
       unless @head?
-        @head = new Node value, null
+        @head = new Node value, null, null
         @tail = @head
+        @current = @head
       else
         oldTail = @tail
-        @tail = new Node value, null
+        @tail = new Node value, null, oldTail
         oldTail.next = @tail
       @length += 1
       null
 
-    dequeue: () ->
-      if @head?
-        @length -= 1
-        result = @head.value
-        @head = @head.next
-        result
-      else
-        null
+    next: () ->
+      if @current.next?
+        @current = @current.next
+        @current.value
+
+    previous: () ->
+      if @current.previous?
+        @current = @current.previous
+        @current.value
+
+    middle: () ->
+      @current isnt @head
 
     empty: () ->
       length = 0
       @head = null
       @tail = null
+      @current = null
 
     toArray: () ->
       if @head?
