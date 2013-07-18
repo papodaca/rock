@@ -2,7 +2,6 @@ define [
   "backbone",
   "jquery",
   "notifier",
-  "json2",
   "views/RegisterModal",
   "Util",
   "hbs!template/HeaderView"
@@ -10,7 +9,6 @@ define [
   Backbone,
   $,
   Notifier,
-  JSON,
   RegisterModal,
   Util,
   Template
