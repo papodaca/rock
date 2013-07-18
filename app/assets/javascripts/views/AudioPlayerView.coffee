@@ -16,7 +16,9 @@ define [
   Backbone.View.extend
     template: Template
     audioPlayer: null
+    playing: false
     queue: new Queue()
+    currentSong: null
     events:
       "click #volumeButton": "volumeButtonClick"
       "click #muteButton": "muteButtonClick"
@@ -25,6 +27,8 @@ define [
       "mousemove #volumeSlider #slider": "volumeSliderMouseMove"
       "mouseout #volumeSlider #slider": "volumeSliderMouseOut"
       "click #playbackBar div.progress": "playbackBarClick"
+      "click #forwardButton": "nextSong"
+      "click #backButton": "previousSong"
 
     initialize: ->
       @render()
@@ -39,6 +43,12 @@ define [
         @queue.enqueue value
 
     emptyQueue: () ->
+      @playing = false
+      @audioPlayer.src = ""
+      @currentSong = null
+      @$("#playProgress a.brand").html ""
+      @$("#playbackBar div.progress div.bar").css "width", 0 + "%"
+      @$("#playbackBar div.progress div.bar-info").css "width", 0 + "%"
       @queue.empty()
 
     render: ->
@@ -132,10 +142,39 @@ define [
       else
         @$("#bottomNavBar").addClass "hidden"
 
+    nextSong: () ->
+      @currentSong = @queue.next()
+      @play()
+      @setPlaying()
+
+    previousSong: () ->
+      if @queue.middle()
+        @currentSong = @queue.previous()
+        @play()
+        @setPlaying()
+
+    play: () ->
+      @audioPlayer.src = "#{Util.basePath}api/songs/#{@currentSong.id}/stream"
+      console.log "Playing: #{@currentSong.title}"
+      @audioPlayer.play()
+
+    setPlaying: () ->
+      if @$("#playPauseButton i").hasClass "icon-play"
+        @$("#playPauseButton i").removeClass "icon-play"
+        @$("#playPauseButton i").addClass "icon-pause"
+
     thisLoop: (deltaT) ->
       try
         unless $("#bottomNavBar").hasClass("hidden")
-          @resize()
+          if @playing is false and @queue.length > 0
+            @playing = true
+            unless @currentSong?
+              @currentSong = @queue.current.value
+            @play()
+            @setPlaying()
+            @audioPlayer.play()
+          if @calculatePercentage(@audioPlayer.currentTime, @audioPlayer.duration) is 100
+            @nextSong()
           if @audioPlayer.src isnt ""
             playStatus = Util.secondsToMinutes(@audioPlayer.currentTime) + " / "
             playStatus += Util.secondsToMinutes(@audioPlayer.duration)
@@ -144,6 +183,7 @@ define [
             @$("#playProgress a.brand").html playStatus
             @$("#playbackBar div.progress div.bar").css "width", percent + "%"
             @$("#playbackBar div.progress div.bar-info").css "width", percent_buffered + "%"
+          @resize()
       catch e
         return true
       true
