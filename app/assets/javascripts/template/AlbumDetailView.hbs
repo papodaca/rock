@@ -6,7 +6,7 @@
     <img src="{{art}}"></img>
     <div class="caption">
       <p class="description"><i class="icon-user"/> {{artist}}</p>
-      <p class="description">Tracks: {{tracks}} - {{length}}</p>
+      <p class="description">Tracks: {{tracks}} - {{secondsToMinutes length}}</p>
       <div class="center">
         <button class="btn btn-small btn-success"><i class="icon-play-circle"></i> Play</button>
         <button class="btn btn-small btn-info"><i class="icon-plus-sign"></i> Add</button>
@@ -33,7 +33,7 @@
         </td>
         <td>{{track}}</td>
         <td>{{title}}</td>
-        <td>{{length}}</td>
+        <td>{{secondsToMinutes length}}</td>
       </tr>
       {{/each}}
     </tbody>

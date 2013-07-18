@@ -33,6 +33,4 @@ define [
       @model.fetch
         success: (model) =>
           @model = model
-          song.length = Util.secondsToMinutes song.length for song in @model.attributes.songs
-          @model.attributes.length = Util.secondsToMinutes @model.attributes.length
           @render()
