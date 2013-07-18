@@ -19,7 +19,6 @@ define [
 
     initialize: (options) ->
       @model = options.model
-      @model.attributes.length = Util.secondsToMinutes(@model.attributes.length)
       @render()
 
     render: ->
