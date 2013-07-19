@@ -143,12 +143,15 @@ define [
         @$("#bottomNavBar").addClass "hidden"
 
     nextSong: () ->
-      @currentSong = @queue.next()
-      @play()
-      @setPlaying()
+      next = @queue.next()
+      if next isnt @currentSong
+        @currentSong = @queue.next()
+        @play()
+        @setPlaying()
 
     previousSong: () ->
-      if @queue.middle()
+      previous = @queue.previous()
+      if @queue.middle() and previous isnt @currentSong
         @currentSong = @queue.previous()
         @play()
         @setPlaying()
