@@ -1,53 +1,35 @@
 define ->
   class Queue
-    head: null
-    tail: null
-    current: null
-    length: 0
-    class Node
-      value: null
-      next: null
-      previous: null
-      constructor: (@value, @next, @previous) ->
+    constructor: ->
+      @array = new Array()
+      @ptr = 0
+      @length = 0
 
     enqueue: (value) ->
-      unless @head?
-        @head = new Node value, null, null
-        @tail = @head
-        @current = @head
-      else
-        oldTail = @tail
-        @tail = new Node value, null, oldTail
-        oldTail.next = @tail
-      @length += 1
+      @array.push value
+      @length = @array.length
       null
 
     next: ->
-      if @current.next?
-        @current = @current.next
-        @current.value
+      if @array.length > @ptr+1
+        @ptr += 1
+      @array[@ptr]
 
     previous: ->
-      if @current.previous?
-        @current = @current.previous
-        @current.value
+      if @ptr > 0
+        @ptr -= 1
+      @array[@ptr]
+
+    current: ->
+      @array[@ptr]
 
     middle: ->
-      @current isnt @head
+      @ptr > 0
 
     empty: ->
       @length = 0
-      @head = null
-      @tail = null
-      @current = null
+      @array = new Array()
+      @ptr = 0
 
     toArray: ->
-      if @head?
-        result = new Array()
-        ptr = @head
-        while ptr?
-          result.push ptr.value
-          ptr = ptr.next
-        result
-      else
-        null
+      @array

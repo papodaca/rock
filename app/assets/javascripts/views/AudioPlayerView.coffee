@@ -170,7 +170,7 @@ define [
           if @playing is false and @queue.length > 0
             @playing = true
             unless @currentSong?
-              @currentSong = @queue.current.value
+              @currentSong = @queue.current()
             @play()
             @setPlaying()
             @audioPlayer.play()
