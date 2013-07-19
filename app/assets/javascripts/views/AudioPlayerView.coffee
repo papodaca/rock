@@ -32,7 +32,7 @@ define [
 
     initialize: ->
       @render()
-      Util.animLoop _.bind(@thisLoop, this), 250
+      window.setTimeout _.bind(@thisLoop, @), 250
       @audioPlayer = @$("#audioPlayer").get(0)
 
     enqueue: (value) ->
@@ -164,6 +164,7 @@ define [
         @$("#playPauseButton i").addClass "icon-pause"
 
     thisLoop: (deltaT) ->
+      window.setTimeout _.bind(@thisLoop, @), 250
       try
         unless $("#bottomNavBar").hasClass("hidden")
           if @playing is false and @queue.length > 0
@@ -184,6 +185,4 @@ define [
             @$("#playbackBar div.progress div.bar").css "width", percent + "%"
             @$("#playbackBar div.progress div.bar-info").css "width", percent_buffered + "%"
           @resize()
-      catch e
-        return true
-      true
+      catch
