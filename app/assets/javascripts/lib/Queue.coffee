@@ -1,6 +1,4 @@
-define [
-], (
-) ->
+define ->
   class Queue
     head: null
     tail: null
@@ -24,26 +22,26 @@ define [
       @length += 1
       null
 
-    next: () ->
+    next: ->
       if @current.next?
         @current = @current.next
         @current.value
 
-    previous: () ->
+    previous: ->
       if @current.previous?
         @current = @current.previous
         @current.value
 
-    middle: () ->
+    middle: ->
       @current isnt @head
 
-    empty: () ->
+    empty: ->
       @length = 0
       @head = null
       @tail = null
       @current = null
 
-    toArray: () ->
+    toArray: ->
       if @head?
         result = new Array()
         ptr = @head
