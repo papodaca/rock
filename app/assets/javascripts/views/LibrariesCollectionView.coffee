@@ -7,7 +7,7 @@ define [
   "models/LibraryModel",
   "views/LibraryView",
   "views/LibraryModal",
-  "Util",
+  "lib/Util",
   "hbs!template/LibrariesCollectionView"
 ], (
   Backbone,

@@ -4,7 +4,7 @@ define [
   "notifier",
   "hbs!template/RegisterModal",
   "models/UserModel",
-  "Util",
+  "lib/Util",
   "jquery",
   "jquery.bootstrap"
 ], (

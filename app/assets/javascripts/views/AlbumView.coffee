@@ -1,7 +1,7 @@
 define [
   "backbone",
   "jquery",
-  "Util",
+  "lib/Util",
   "models/AlbumModel"
   "hbs!template/AlbumView"
 ], (

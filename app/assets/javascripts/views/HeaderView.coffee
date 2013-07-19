@@ -3,7 +3,7 @@ define [
   "jquery",
   "notifier",
   "views/RegisterModal",
-  "Util",
+  "lib/Util",
   "hbs!template/HeaderView"
 ], (
   Backbone,

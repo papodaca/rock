@@ -1,7 +1,7 @@
 define [
   "backbone",
   "jquery",
-  "Util",
+  "lib/Util",
   "hbs!template/SongView"
 ], (
   Backbone,

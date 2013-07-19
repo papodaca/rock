@@ -4,7 +4,7 @@ define [
   "notifier",
   "hbs!template/LibraryModal",
   "models/LibraryModel",
-  "Util",
+  "lib/Util",
   "jquery",
   "jquery.bootstrap"
 ], (

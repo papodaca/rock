@@ -2,7 +2,7 @@ define [
   "backbone",
   "jquery",
   "underscore",
-  "Util",
+  "lib/Util",
   "hbs!template/ApiDocView"
 ], (
   Backbone,

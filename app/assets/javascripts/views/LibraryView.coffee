@@ -2,7 +2,7 @@ define [
   "backbone",
   "jquery",
   "underscore",
-  "Util",
+  "lib/Util",
   "views/LibraryModal",
   "views/ConfirmModal",
   "hbs!template/LibraryView"

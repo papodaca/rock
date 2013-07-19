@@ -3,7 +3,7 @@ define [
   "underscore",
   "jquery",
   "lib/Queue",
-  "Util",
+  "lib/Util",
   "hbs!template/AudioPlayerView"
 ], (
   Backbone,
