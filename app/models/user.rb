@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password_salt, :password_hash
   validates :email, :name, :presence => true
   belongs_to :role
   has_many :user_podcast_episodes
