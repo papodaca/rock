@@ -1,7 +1,7 @@
 define [
   "backbone",
   "models/LibraryModel",
-  "Util"
+  "lib/Util"
 ], (
   Backbone,
   Library,

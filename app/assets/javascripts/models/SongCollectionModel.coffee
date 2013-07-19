@@ -1,7 +1,7 @@
 define [
   "backbone.pageable",
   "models/SongModel",
-  "Util"
+  "lib/Util"
 ], (
   PageableCollection,
   Song,

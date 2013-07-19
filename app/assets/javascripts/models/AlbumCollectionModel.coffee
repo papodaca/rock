@@ -1,7 +1,7 @@
 define [
   "backbone.pageable",
   "models/AlbumModel",
-  "Util"
+  "lib/Util"
 ], (
   PageableCollection,
   Album,

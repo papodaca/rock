@@ -1,6 +1,6 @@
 define [
   "backbone",
-  "Util"
+  "lib/Util"
 ], (
   Backbone,
   Util
