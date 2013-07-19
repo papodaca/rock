@@ -38,7 +38,7 @@ define [
       @current isnt @head
 
     empty: () ->
-      length = 0
+      @length = 0
       @head = null
       @tail = null
       @current = null
