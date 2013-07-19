@@ -167,8 +167,8 @@ define [
         @$("#playPauseButton i").addClass "icon-pause"
 
     thisLoop: (deltaT) ->
-      window.setTimeout _.bind(@thisLoop, @), 250
       try
+        window.setTimeout _.bind(@thisLoop, @), 250
         unless $("#bottomNavBar").hasClass("hidden")
           if @playing is false and @queue.length > 0
             @playing = true
@@ -188,4 +188,3 @@ define [
             @$("#playbackBar div.progress div.bar").css "width", percent + "%"
             @$("#playbackBar div.progress div.bar-info").css "width", percent_buffered + "%"
           @resize()
-      catch
