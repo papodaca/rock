@@ -20,6 +20,18 @@ define ->
         @ptr -= 1
       @array[@ptr]
 
+    peek: ->
+      if @array.length > @ptr+1
+        @array[@ptr+1]
+      else
+        @current()
+
+    peekBack: ->
+      if @ptr > 0
+        @array[@ptr-1]
+      else
+        @current()
+
     current: ->
       @array[@ptr]
 
