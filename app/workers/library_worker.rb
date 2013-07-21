@@ -1,14 +1,15 @@
 require 'taglib'
 require 'find'
-require 'lastfm'
+require 'glutton_lastfm'
 require 'fog'
 
 TMP_FILE_LOCATION = $APP_CONFIG["temp_dir"] + "/rockTempAudio"
 
 class LibraryWorker
+	include Sidekiq::Worker
 	include AwsHelper
 
-	def self.scan(libraryId)
+	def perform(libraryId)
 		library = Library.find(libraryId)
 		rootPath = library.data_file.path
 
@@ -26,9 +27,8 @@ class LibraryWorker
 		library.progress = nil
 		library.save
 	end
-	##handle_asynchronously :scan
 
-	def self.scanLocalDir(rootPath, library)
+	def scanLocalDir(rootPath, library)
 		totalFilesFound = Dir[File.join(rootPath, '**', '*')].count { |f| File.file?(f) }
 		totalFilesProcessed = 0
 		puts "found #{totalFilesFound} files."
@@ -51,7 +51,7 @@ class LibraryWorker
 		end
 	end
 
-	def self.scanS3Bucket(rootPath, library)
+	def scanS3Bucket(rootPath, library)
 		bucket = getS3Bucket(rootPath)
 
 		puts "processing bucket: #{bucket.key}"
@@ -82,20 +82,19 @@ class LibraryWorker
 		end
 	end
 
-	def self.updateLibrary(library, totalFilesProcessed, totalFilesFound)
+	def updateLibrary(library, totalFilesProcessed, totalFilesFound)
 			library.progress = ((Float(totalFilesProcessed) / Float(totalFilesFound)) * 100).floor
 			library.save
 			puts "scanned #{library.progress}%"
 	end
 
-	def self.saveSong(data, path, mediaTypeId, libraryId)
-		lfm = Lastfm.new($APP_CONFIG['lastfm_api_key'], $APP_CONFIG['lastfm_api_secret'])
+	def saveSong(data, path, mediaTypeId, libraryId)
 
 		#get or create artist
 		artist = Artist.where(:name => data[:artist]).first
 		if artist == nil
 			puts "creating album"
-			artId =  getArt(lfm.artist.get_info(:artist => data[:artist])['image'])
+			artId =  getArt(data[:artist])
 			artist = Artist.create(:name => data[:artist])
 			artist.art_id = artId
 			artist.save
@@ -106,7 +105,7 @@ class LibraryWorker
 		album = Album.where(:name => data[:album], :artist_id => artist.id).first
 		if album == nil
 			puts "creating album"
-			artId = getArt(lfm.album.get_info(:artist => data[:artist], :album => data[:album])['image'])
+			artId = getArt(data[:artist], data[:album])
 			album = Album.create(:name => data[:album])
 			album.artist_id = artist.id
 			album.art_id = artId
@@ -136,7 +135,7 @@ class LibraryWorker
 		song.save
 	end
 
-	def self.getFileData(path)
+	def getFileData(path)
 		data = {}
 		TagLib::FileRef.open(path) do |file|
 			t = file.tag
@@ -154,22 +153,29 @@ class LibraryWorker
 		return data
 	end
 
-	def self.isS3Bucket?(path)
+	def isS3Bucket?(path)
 		/[s,S]3:\/\/.+$/.match(path) != nil
 	end
-	def self.getMediaType(path, selector)
+	def getMediaType(path, selector)
 		ext = getExtension(path)
 		return nil if ext == nil or ext == ""
 		return MediaType.where(selector => true, :extension => ext).first
 	end
-	def self.getExtension(path)
+	def getExtension(path)
 		matches = /\.([0-9a-zA-Z]+)$/.match(path)
 		return matches.captures.first if matches != nil
 		return nil
 	end
-	def self.getArt(images)
+	def getArt(artist, album = nil)
 		begin
-			art = images[images.index { |x| x['size'] == "large"}]['content']
+			lfm = GluttonLastfm.new($APP_CONFIG['lastfm_api_key'])
+			images = nil
+			if album != nil
+				images = lfm.album_info(artist, album)['image']
+			else
+				images = lfm.artist_info(artist)['image']
+			end
+			art = images[images.index { |x| x['size'] == "large"}]['__content__']
 			dataArt = DataFile.create(:path => art)
 			mediaType = getMediaType(art, :image)
 			return nil if mediaType == nil
@@ -181,11 +187,11 @@ class LibraryWorker
 			else
 				return nil
 			end
-		rescue Lastfm::ApiError
+		rescue GluttonLastfm::Unauthorized, GluttonLastfm::NotFound, GluttonLastfm::QueryStatusFail, GluttonLastfm::QueryArgumentFail, GluttonLastfm::UnknownFail, REXML::ParseException
 			return nil
 		end
 	end
-	def self.songExists?(path)
+	def songExists?(path)
 		return true if DataFile.where(:path => path).count > 0
 		return false
 	end

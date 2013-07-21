@@ -7,7 +7,7 @@ class LibrariesController < ApplicationController
   def create
     file = DataFile.create(:path => params[:path])
     newLibrary = Library.create(:name => params[:name], :data_file_id => file.id, :progress => 0)
-    LibraryWorker.scan(newLibrary.id)
+    LibraryWorker.perform_async(newLibrary.id)
     @library = newLibrary
   end
 
@@ -15,7 +15,7 @@ class LibrariesController < ApplicationController
     library = Library.find(params[:id])
     library.progress = 0
     library.save
-    LibraryWorker.scan(library.id)
+    LibraryWorker.perform_async(library.id)
     @library = library
   end
 

@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rock::Application.routes.draw do
   root to: "main#index"
 
@@ -35,6 +37,8 @@ Rock::Application.routes.draw do
       end
     end
   end
+
+  mount Sidekiq::Web => '/sidekiq'
 
   match "*path" => "main#index", :via => :get
 

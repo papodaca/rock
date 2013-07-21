@@ -9,123 +9,107 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313232536) do
+ActiveRecord::Schema.define(version: 20130313232536) do
 
-  create_table "albums", :force => true do |t|
+  create_table "albums", force: true do |t|
     t.string   "name"
     t.integer  "art_id"
     t.integer  "artist_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "artists", :force => true do |t|
+  create_table "artists", force: true do |t|
     t.string   "name"
     t.integer  "art_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "arts", :force => true do |t|
+  create_table "arts", force: true do |t|
     t.integer  "data_file_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "data_files", :force => true do |t|
+  create_table "data_files", force: true do |t|
     t.string   "path"
     t.integer  "media_type_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "genres", :force => true do |t|
+  create_table "genres", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "libraries", :force => true do |t|
+  create_table "libraries", force: true do |t|
     t.string   "name"
     t.integer  "progress"
     t.integer  "data_file_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "media_types", :force => true do |t|
+  create_table "media_types", force: true do |t|
     t.string   "mime_type"
     t.string   "extension"
     t.boolean  "audio"
     t.boolean  "image"
     t.boolean  "feed"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "playlist_elements", :force => true do |t|
+  create_table "playlist_elements", force: true do |t|
     t.integer  "order"
     t.integer  "playlist_id"
     t.integer  "song_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "playlists", :force => true do |t|
+  create_table "playlists", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "podcast_episodes", :force => true do |t|
+  create_table "podcast_episodes", force: true do |t|
     t.integer  "podcast_id"
     t.integer  "song_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "podcasts", :force => true do |t|
+  create_table "podcasts", force: true do |t|
     t.string   "name"
     t.integer  "data_file_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "roles", :force => true do |t|
+  create_table "roles", force: true do |t|
     t.string   "name"
     t.integer  "level"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "sessions", :force => true do |t|
+  create_table "sessions", force: true do |t|
     t.string   "session_key"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_key"], :name => "index_sessions_on_session_key"
+  add_index "sessions", ["session_key"], name: "index_sessions_on_session_key", using: :btree
 
-  create_table "songs", :force => true do |t|
+  create_table "songs", force: true do |t|
     t.string   "title"
     t.integer  "track"
     t.integer  "disk"
@@ -135,36 +119,36 @@ ActiveRecord::Schema.define(:version => 20130313232536) do
     t.integer  "artist_id"
     t.integer  "data_file_id"
     t.integer  "library_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "user_podcast_episodes", :force => true do |t|
+  create_table "user_podcast_episodes", force: true do |t|
     t.integer  "location"
     t.boolean  "played"
     t.integer  "user_id"
     t.integer  "podcast_eposode_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "user_podcast_subscriptions", :force => true do |t|
+  create_table "user_podcast_subscriptions", force: true do |t|
     t.integer  "user_id"
     t.integer  "podcast_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "password_hash"
     t.string   "password_salt"
     t.integer  "role_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end
