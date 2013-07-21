@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_filter :require_login, :only => [:create]
+  skip_before_action :verify_authenticity_token
   def create
     user = User.where(:email => params[:email]).first
     if user == nil || user.auth(params[:password]) == false

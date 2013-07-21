@@ -1,5 +1,6 @@
 class SongsController < ApplicationController
   include AwsHelper
+  skip_before_action :verify_authenticity_token
 
   def index
     page, count = getPageValues()
