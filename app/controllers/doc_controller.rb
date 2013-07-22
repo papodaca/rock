@@ -282,6 +282,23 @@ class DocController < ApplicationController
                 :reason => "Invalid email and password"
               }
             ]
+          }, {
+            :httpMethod => "DELETE",
+            :summary => "Destroy a session.",
+            :nickname => "destroySession",
+            :parameters => [ getSessionParameter ]
+          }
+        ]
+      },{
+        :path => "/sessions/test",
+        :description => "test a sessions with this API",
+        :operations => [
+          {
+            :httpMethod => "GET",
+            :summary => "test a session.",
+            :nickname => "testSession",
+            :parameters => [ getSessionParameter ],
+            :errorResponses => [ getInvalidSession ]
           }
         ]
       }
@@ -303,6 +320,10 @@ class DocController < ApplicationController
       :session_key => {
         :id => "session_key",
         :properties => {
+          :id => {
+            :type => "integer",
+            :required => true
+          },
           :session_key => {
             :type => "string",
             :required => true
