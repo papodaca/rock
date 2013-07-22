@@ -4,3 +4,4 @@ lastfm_api_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 lastfm_api_secret: XXXXXXXXXXXXXXXXXXXXXXX
 temp_dir: /dev/shm
 base_path: /
+cron_password: abc123

@@ -36,6 +36,7 @@ Rock::Application.routes.draw do
         get 'artists'
       end
     end
+    get '/cron/:cron_password', to: "cron#process"
   end
 
   mount Sidekiq::Web => '/sidekiq'
