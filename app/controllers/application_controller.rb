@@ -7,11 +7,12 @@ class ApplicationController < ActionController::Base
   private
 
   def require_login
-    if request.headers['session_key'].present?
-      @currentSession = Session.where(:session_key => request.headers['session_key']).first
-    elsif params[:session_key].present?
+    @currentSession = nil
+    if request.headers['Session-key'].present? and !@currentSession.present?
+      @currentSession = Session.where(:session_key => request.headers['Session-key']).first
+    elsif params[:session_key].present? and !@currentSession.present?
       @currentSession = Session.where(:session_key => params[:session_key]).first
-    elsif cookies["_Rock_session_key"].present?
+    elsif cookies["_Rock_session_key"].present? and !@currentSession.present?
       @currentSession = Session.where(:session_key => cookies["_Rock_session_key"]).first
     end
     if @currentSession.present?

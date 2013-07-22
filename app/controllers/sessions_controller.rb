@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  def logout
+  def destroy
     if cookies["_Rock_session_key"].present?
       cookies["_Rock_session_key"] = nil
     end

@@ -43,7 +43,7 @@ define [
       @setPerminateCookie @sessionKey, key
     @destroySession: ->
       $.ajax
-        url: "#{@basePath}api/sessions/logout"
+        url: "#{@basePath}api/sessions"
         contentType: "application/json"
         data: JSON.stringify
           session_key: @getCookie @session_key

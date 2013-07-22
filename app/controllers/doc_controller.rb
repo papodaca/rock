@@ -26,7 +26,7 @@ class DocController < ApplicationController
 
   def getSessionParameter
     {
-      :name => "session_key",
+      :name => "Session-key",
       :description => "A session key",
       :paramType => "header",
       :required => true,
