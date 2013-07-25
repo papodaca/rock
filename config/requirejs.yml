@@ -1,3 +1,5 @@
+modules:
+  - name: 'Rock'
 paths:
     jquery: "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery"
     "jquery.bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap"
