@@ -5,7 +5,7 @@
         <button id="backButton" class="btn btn-inverse btn-playback" rel="tooltip" title="Back"><i class="icon-backward"></i></button>
         <button id="playPauseButton" class="btn btn-success btn-playback"><i class="icon-play"></i></button>
         <button id="forwardButton" class="btn btn-inverse btn-playback" ><i class="icon-forward"></i></button>
-        <button class="btn btn-info btn-playback" ><i class="icon-chevron-sign-up"></i></button>
+        <button id="queueButton" class="btn btn-info btn-playback" ><i class="icon-chevron-sign-up"></i></button>
         <button id="muteButton" class="btn btn-playback" ><i class="icon-volume-off"></i></button>
         <button id="volumeButton" class="btn btn-playback" ><i class="icon-volume-up"></i></button>
         <audio id="audioPlayer" preload="auto"></audio>
@@ -31,5 +31,21 @@
       </div>
       <div id="echo" class="span">50%</div>
     </div>
+  </div>
+</div>
+<div id="queuePopover" class="popover fade hide top out row span4 section" style="display: none; z-index: 1040;max-width:585px;">
+  <div class="arrow"></div>
+  <div class="popover-content">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th style="width:20px;"></th>
+          <th class="span3">Title</th>
+          <th class="span1">Length</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
 </div>

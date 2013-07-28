@@ -4,17 +4,20 @@ define [
   "jquery",
   "lib/Queue",
   "lib/Util",
-  "hbs!template/AudioPlayerView"
+  "hbs!template/AudioPlayerView",
+  "hbs!template/QueueItem"
 ], (
   Backbone,
   _,
   $,
   Queue,
   Util,
-  Template
+  Template,
+  QueueItem
 ) ->
   Backbone.View.extend
     template: Template
+    QueueItemTemplate: QueueItem
     audioPlayer: null
     playing: false
     queue: new Queue()
@@ -29,6 +32,7 @@ define [
       "click #playbackBar div.progress": "playbackBarClick"
       "click #forwardButton": "nextSong"
       "click #backButton": "previousSong"
+      "click #queueButton": "queueButtonClick"
 
     initialize: ->
       @render()
@@ -38,9 +42,15 @@ define [
     enqueue: (value) ->
       if value.push? #this is an array
         _.each value, (song) =>
-          @queue.enqueue song
+          @addSong song
       else
-        @queue.enqueue value
+        @addSong value
+
+    addSong: (song) ->
+      @queue.enqueue song
+      content = @QueueItemTemplate song
+      @$("#queuePopover .popover-content table tbody").append content
+      @queuePopoverLocation true
 
     emptyQueue: () ->
       @playing = false
@@ -49,6 +59,7 @@ define [
       @$("#playProgress a.brand").html ""
       @$("#playbackBar div.progress div.bar").css "width", 0 + "%"
       @$("#playbackBar div.progress div.bar-info").css "width", 0 + "%"
+      @$("#queuePopover .popover-content table tbody").empty()
       @queue.empty()
 
     render: ->
@@ -57,6 +68,34 @@ define [
 
     calculatePercentage: (x, width) ->
       (x / width) * 100
+
+    queuePopoverVisible: false
+    queueButtonClick: (event) ->
+      @queuePopoverLocation()
+      unless @queuePopoverVisible
+        @$("#queuePopover").css "display", "block"
+        _.delay (->
+          @$("#queuePopover").removeClass "out"
+          @$("#queuePopover").addClass "in"
+        ), 5, this
+        @queuePopoverVisible = true
+      else
+        @$("#queuePopover").removeClass "in"
+        @$("#queuePopover").addClass "out"
+        _.delay (->
+          @$("#queuePopover").css "display", "none"
+        ), 250, this
+        @queuePopoverVisible = false
+
+    queuePopoverLocation: (force) ->
+      button = @$("#queueButton")
+      popover = @$("#queuePopover .popover-content")
+      p = button.offset()
+      if @$("#queuePopover").css("display") isnt "none" or force
+        p.left = p.left - (popover.outerWidth(true) / 2) + (button.outerWidth() / 2) + 10
+        p.top = p.top - (popover.outerHeight(true) - 20) - (button.outerHeight() / 2)
+        @$("#queuePopover").css "top", p.top + "px"
+        @$("#queuePopover").css "left", p.left - 30 + "px"
 
     volumePopoverVisible: false
     volumeButtonClick: (event) ->
@@ -81,8 +120,8 @@ define [
       popover = @$("#volumePopover .popover-content")
       p = button.offset()
       if @$("#volumePopover").css("display") isnt "none" or force
-        p.left = p.left - (popover.outerWidth(true) / 2) + (button.outerWidth() / 2)
-        p.top = p.top - (popover.outerHeight(true) / 2) - (button.outerHeight() / 2)
+        p.left = p.left - (popover.outerWidth(true) / 2) + (button.outerWidth() / 2) + 10
+        p.top = p.top - (popover.outerHeight(true) - 20) - (button.outerHeight() / 2)
         @$("#volumePopover").css "top", p.top + "px"
         @$("#volumePopover").css "left", p.left - 30 + "px"
 
@@ -125,6 +164,7 @@ define [
 
     resize: ->
       @volumePopoverLocation()
+      @queuePopoverLocation()
       if @audioPlayer.src is ""
         @$("#playProgress").addClass "hidden"
         @$("#playbackBar").addClass "hidden"
@@ -157,6 +197,8 @@ define [
         @setPlaying()
 
     play: () ->
+      @$("#queuePopover .popover-content table tbody").children().removeClass("info")
+      $(@$("#queuePopover .popover-content table tbody").children().get(@queue.ptr)).addClass("info")
       @audioPlayer.src = "#{Util.basePath}api/songs/#{@currentSong.id}/stream"
       console.log "Playing: #{@currentSong.title}"
       @audioPlayer.play()
