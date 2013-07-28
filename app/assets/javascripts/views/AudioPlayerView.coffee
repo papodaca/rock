@@ -88,14 +88,7 @@ define [
         @queuePopoverVisible = false
 
     queuePopoverLocation: (force) ->
-      button = @$("#queueButton")
-      popover = @$("#queuePopover .popover-content")
-      p = button.offset()
-      if @$("#queuePopover").css("display") isnt "none" or force
-        p.left = p.left - (popover.outerWidth(true) / 2) + (button.outerWidth() / 2) + 10
-        p.top = p.top - (popover.outerHeight(true) - 20) - (button.outerHeight() / 2)
-        @$("#queuePopover").css "top", p.top + "px"
-        @$("#queuePopover").css "left", p.left - 30 + "px"
+      @popoverLocation force, @$("#queueButton"), @$("#queuePopover")
 
     volumePopoverVisible: false
     volumeButtonClick: (event) ->
@@ -116,14 +109,16 @@ define [
         @volumePopoverVisible = false
 
     volumePopoverLocation: (force) ->
-      button = @$("#volumeButton")
-      popover = @$("#volumePopover .popover-content")
-      p = button.offset()
-      if @$("#volumePopover").css("display") isnt "none" or force
-        p.left = p.left - (popover.outerWidth(true) / 2) + (button.outerWidth() / 2) + 10
-        p.top = p.top - (popover.outerHeight(true) - 20) - (button.outerHeight() / 2)
-        @$("#volumePopover").css "top", p.top + "px"
-        @$("#volumePopover").css "left", p.left - 30 + "px"
+      @popoverLocation force, @$("#volumeButton"), @$("#volumePopover")
+
+    popoverLocation: (force, button, popover) ->
+      if popover.css("display") isnt "none" or force
+        innerPopover = $(popover).children(".popover-content")
+        p = button.offset()
+        p.left = p.left - (innerPopover.outerWidth(true) / 2) + (button.outerWidth() / 2) - 23
+        p.top = p.top - (innerPopover.outerHeight(true) - 15) - (button.outerHeight() / 2)
+        popover.css "top", p.top + "px"
+        popover.css "left", p.left + "px"
 
     muteButtonClick: (event) ->
       @$(event.currentTarget).toggleClass "btn-danger"
